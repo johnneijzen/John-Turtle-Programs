@@ -85,7 +85,7 @@ function forwardM()
       for slot = 5, 16 do
         turtle.select(slot)
         turtle.dropDown()
-	    sleep(0.5) -- Small fix for slow pc
+	sleep(0.5) -- Small fix for slow pc
       end
       turtle.select(5) -- temp fix still checking
     end
