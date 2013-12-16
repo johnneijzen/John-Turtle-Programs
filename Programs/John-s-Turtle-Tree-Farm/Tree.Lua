@@ -4,7 +4,8 @@
 --  0.01 - First Draft
 --  0.02 - Rewritting
 --  0.03 - Making Turtle go back to start
---Locals
+
+-- Locals
 local sappishing = turtle.getItemCount(1)
 local ItemFuel = turtle.getItemCount(2)
 local WC = 0
@@ -17,7 +18,7 @@ local lc = 0
 local x = 0
 local SideC = 0
 
---Main Program
+-- Main Program
 function start()
   turtle.forward()
   if turtle.compare() then
@@ -36,7 +37,7 @@ function start()
   end
 end
 
---Tree Cutter
+-- Tree Cutter
 function TreeCutter()
   turtle.select(2)
   repeat
@@ -53,7 +54,7 @@ function TreeCutter()
   down()
 end 
 
---Tree Planter
+-- Tree Planter
 function TreePlant()
   turtle.dig()
   turtle.forward()
@@ -106,7 +107,8 @@ function long()
   start()
 end
 
---Back To Home Program
+
+-- Back To Home Program -- Still need to do this.
 function home()
   if Long == 1 then
     print("Program Half Way Done")
