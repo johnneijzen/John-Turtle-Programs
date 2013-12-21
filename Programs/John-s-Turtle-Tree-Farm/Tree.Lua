@@ -1,13 +1,17 @@
 -- Current Version
---  0.03
+--  0.04
 -- ChangeLogs
 --  0.01 - First Draft
 --  0.02 - Rewritting
 --  0.03 - Making Turtle go back to start
+--  0.04 - Updating Lot stuff
 
--- Locals
-local sappishing = turtle.getItemCount(1)
-local ItemFuel = turtle.getItemCount(2)
+--Locals
+local tree = turtle.getItemCount(3)
+local tree1 = turtle.getItemCount(4)
+local compareblock = turtle.getItemCount(5)
+local ItemFuel = turtle.getItemCount(1)
+local ItemFuel1 = turtle.getItemCount(2)
 local WC = 0
 local TD = 0
 local UC = 0
@@ -17,10 +21,12 @@ local long = 0
 local lc = 0
 local x = 0
 local SideC = 0
+local auto = 0
 
--- Main Program
+--Main Program
 function start()
   turtle.forward()
+  turtle.select(5)
   if turtle.compare() then
     turtle.dig()
     turtle.forward()
@@ -37,9 +43,8 @@ function start()
   end
 end
 
--- Tree Cutter
+--Tree Cutter
 function TreeCutter()
-  turtle.select(2)
   repeat
   if turtle.compareUp() then
     turtle.digUp()
@@ -54,15 +59,22 @@ function TreeCutter()
   down()
 end 
 
--- Tree Planter
+--Tree Planter
 function TreePlant()
   turtle.dig()
   turtle.forward()
   turtle.forward()
   turtle.turnLeft()
   turtle.turnLeft()
-  turtle.select(1)
-  turtle.place()
+  if tree > 0 then
+    turtle.select(3)
+    turtle.place()
+    tree = tree - 1
+  elseif tree1 > 0 then
+    turtle.select(4)
+    turtle.place()
+    tree1 = tree1 - 1
+  end
   turtle.turnLeft()
   turtle.turnLeft()
   run()
@@ -98,20 +110,45 @@ end
 function long()
   WC = 0
   LC = LC + 1
-  turtle.forward
-  turtle.turnRight
-  turtle.forward
-  turtle.forward
-  turtle.turnRight
+  turtle.forward()
+  turtle.turnRight()
+  turtle.forward()
+  turtle.forward()
+  turtle.turnRight()
   SideC = SideC + 2
   start()
 end
 
-
--- Back To Home Program -- Still need to do this.
+--Back To Home Program
 function home()
   if Long == 1 then
-    print("Program Half Way Done")
+    turtle.forward()
+	turtle.turnRight()
+	for Back = 1 , SideC do
+	  turtle.forward()
+	end
+    turtle.turnLeft()
+	turtle.forward()
+	turtle.turnLeft()
+	turtle.turnLeft()
+	if auto == 0 then
+	  print("Program is done")
+	else
+      turtle.turnRight()
+	  for slot = 6, 16 do
+        turtle.select(slot)
+        turtle.drop()
+	    sleep(1)
+      end
+      turtle.turnLeft()
+	  turtle.turnLeft()
+	  for slot = 1, 2 do
+        turtle.select(slot)
+        turtle.drop()
+	    sleep(1)
+	  end
+	  -- Still have work Here add code to get items from chest and maybe furnace code.
+	end
   end
 end
 
@@ -123,6 +160,9 @@ wide = tonumber(input)
 print("How long for saplings")
 input2 = io.read()
 long = tonumber(input2)
+print("you want automatic. 1 = yes 0 = no")
+input3 = io.read()
+auto = input3
 print("Turtle go to work")
 turtle.forward()
 start()
