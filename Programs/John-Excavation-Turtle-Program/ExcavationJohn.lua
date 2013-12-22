@@ -1,8 +1,8 @@
 -- This Version
---  0.02
+--  0.03
 -- Changelogs
 --  0.01 -- First Draft
---  0.02 -- i forget to put fuel code in
+--  0.03 -- Fixing some stuff
 
 -- Locals
 local wide = 0
@@ -69,42 +69,41 @@ end
 function long()
   repeat
     turtle.dig
-	if turtle.forward then
-	  LC = LC + 1
-	end  
-	turtle.digUp
-	turtle.digDown
-	if turtle.getItemCount(16)>0 then -- If slot 16 in turtle has item slot 5 to 16 will go to chest
-      turtle.select(3)
-      turtle.placeUp()
-      chest = chest - 1
-      for slot = 4, 16 do
-        turtle.select(slot)
-        turtle.dropUp()
-	    sleep(1) -- Small fix for slow pc because i had people problem with this
-      end
-      turtle.select(4)
-    end
-	repeat -- Fuel
+	    if turtle.forward then
+	      LC = LC + 1
+	    end  
+	  turtle.digUp
+	  turtle.digDown
+	    if turtle.getItemCount(16)>0 then -- If slot 16 in turtle has item slot 5 to 16 will go to chest
+        turtle.select(3)
+        turtle.placeUp()
+        Chest = Chest - 1
+          for slot = 4, 16 do
+            turtle.select(slot)
+            turtle.dropUp()
+	          sleep(1) -- Small fix for slow pc because i had people problem with this
+          end
+        turtle.select(4)
+        end
+	  repeat -- Fuel
       if turtle.getFuelLevel() == "unlimited" then 
          print("NO NEED FOR FUEL")
          Needfuel = 0
-      elseif turtle.getFuelLevel() < 600 then
+      elseif turtle.getFuelLevel() < 300 then
         if FuelCount > 0 then
-		 turtle.select(1)
-         turtle.refuel(10)
-         Needfuel = 1
-         FuelCount = FuelCount - 10
-		else
-		 turtle.select(2)
-         turtle.refuel(10)
-         Needfuel = 1
-         FuelCount1 = FuelCount1 - 10
-		end
-      elseif NeedFuel == 1 then
-         Needfuel = 0
-      end
-    until NeedFuel == 0
+		      turtle.select(1)
+          turtle.refuel(10)
+          Needfuel = 1
+          FuelCount = FuelCount - 10
+	    	else
+	  	    turtle.select(2)
+          turtle.refuel(10)
+          Needfuel = 1
+          FuelCount1 = FuelCount1 - 10
+		    elseif NeedFuel == 1 then
+          Needfuel = 0
+        end
+	  until NeedFuel == 0
   until long = LC
   if wide = WC then
     run()
