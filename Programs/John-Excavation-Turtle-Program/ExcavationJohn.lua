@@ -1,7 +1,8 @@
 -- This Version
---  0.01
+--  0.02
 -- Changelogs
 --  0.01 -- First Draft
+--  0.02 -- i forget to put fuel code in
 
 -- Locals
 local wide = 0
@@ -84,6 +85,26 @@ function long()
       end
       turtle.select(4)
     end
+	repeat -- Fuel
+      if turtle.getFuelLevel() == "unlimited" then 
+         print("NO NEED FOR FUEL")
+         Needfuel = 0
+      elseif turtle.getFuelLevel() < 600 then
+        if FuelCount > 0 then
+		 turtle.select(1)
+         turtle.refuel(10)
+         Needfuel = 1
+         FuelCount = FuelCount - 10
+		else
+		 turtle.select(2)
+         turtle.refuel(10)
+         Needfuel = 1
+         FuelCount1 = FuelCount1 - 10
+		end
+      elseif NeedFuel == 1 then
+         Needfuel = 0
+      end
+    until NeedFuel == 0
   until long = LC
   if wide = WC then
     run()
@@ -134,4 +155,6 @@ input3 = io.read()
 high = tonumber(input3)
 high = high - 5
 print("turtle now starting")
+turtle.select(1)
+turtle.refuel(4)
 Check()
