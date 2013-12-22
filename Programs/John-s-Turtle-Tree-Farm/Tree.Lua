@@ -123,32 +123,32 @@ end
 function home()
   if Long == 1 then
     turtle.forward()
-      turtle.turnRight()
-	for Back = 1 , SideC do
+    turtle.turnRight()
+      for Back = 1 , SideC do
 	  turtle.forward()
-	end
-      turtle.turnLeft()
-      turtle.forward()
-      turtle.turnLeft()
-      turtle.turnLeft()
-      if auto == 0 then
-	print("Program is done")
-      else
-        turtle.turnRight()
-	for slot = 6, 16 do
-          turtle.select(slot)
-          turtle.drop()
-	  sleep(1)
-        end
-        turtle.turnLeft()
-	turtle.turnLeft()
-	for slot = 1, 2 do
-          turtle.select(slot)
-          turtle.drop()
-	  sleep(1)
-	end
-	  -- Still have work Here add code to get items from chest and maybe furnace code.
-	end
+      end
+    turtle.turnLeft()
+    turtle.forward()
+    turtle.turnLeft()
+    turtle.turnLeft()
+  end
+  if auto == 0 then
+     print("Program is done")
+  else
+    turtle.turnRight()
+    for slot = 6, 16 do
+       turtle.select(slot)
+       turtle.drop()
+       sleep(1)
+    end
+    turtle.turnLeft()
+    turtle.turnLeft()
+    for slot = 1, 2 do
+      turtle.select(slot)
+      turtle.drop()
+      sleep(1)
+    end
+     -- Still have work Here add code to get items from chest and maybe furnace code.
   end
 end
 
