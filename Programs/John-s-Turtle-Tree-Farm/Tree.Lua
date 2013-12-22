@@ -46,13 +46,13 @@ end
 --Tree Cutter
 function TreeCutter()
   repeat
-  if turtle.compareUp() then
-    turtle.digUp()
-    TT = 0
-    UC = UC + 1
-  else
-    TT = 1
-  end
+    if turtle.compareUp() then
+      turtle.digUp()
+      TT = 0
+      UC = UC + 1
+    else
+      TT = 1
+    end
   turtle.up()
   until TT == 1
   turtle.forward()
@@ -123,30 +123,30 @@ end
 function home()
   if Long == 1 then
     turtle.forward()
-	turtle.turnRight()
+      turtle.turnRight()
 	for Back = 1 , SideC do
 	  turtle.forward()
 	end
-    turtle.turnLeft()
-	turtle.forward()
-	turtle.turnLeft()
-	turtle.turnLeft()
-	if auto == 0 then
-	  print("Program is done")
-	else
-      turtle.turnRight()
-	  for slot = 6, 16 do
-        turtle.select(slot)
-        turtle.drop()
-	    sleep(1)
-      end
       turtle.turnLeft()
-	  turtle.turnLeft()
-	  for slot = 1, 2 do
-        turtle.select(slot)
-        turtle.drop()
-	    sleep(1)
-	  end
+      turtle.forward()
+      turtle.turnLeft()
+      turtle.turnLeft()
+      if auto == 0 then
+	print("Program is done")
+      else
+        turtle.turnRight()
+	for slot = 6, 16 do
+          turtle.select(slot)
+          turtle.drop()
+	  sleep(1)
+        end
+        turtle.turnLeft()
+	turtle.turnLeft()
+	for slot = 1, 2 do
+          turtle.select(slot)
+          turtle.drop()
+	  sleep(1)
+	end
 	  -- Still have work Here add code to get items from chest and maybe furnace code.
 	end
   end
