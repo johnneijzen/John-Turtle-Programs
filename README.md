@@ -6,5 +6,9 @@ I will make turtle program and it just my hobbie so it all free of charge and so
 Programs i`m making:
 
 John Strip Mining Turtle(100% done and working i`m just updating stuff if is needed)
+
 John Turtle Tree Farm (80% done still working on it)
-John Excavation Turtle Program (50% done still working on it)
+
+John Excavation Turtle Program (80% done)
+
+I working on this on 30 dec i`m not here for 2 days
