@@ -1,8 +1,7 @@
 -- This Version
---  0.04
+--  0.05
 -- Changelogs
---  0.01 -- First Draft
---  0.04 -- Fixing Spacing my notepad++ is making lot error
+--  0.05 - Minor bug fixing
 
 -- Locals
 local wide = 0
@@ -149,9 +148,11 @@ print("Note: This Program Stop Before Bedrock.")
 print("How long you want")
 input = io.read()
 wide = tonumber(input)
+wide = wide - 1
 print("How wide you want")
 input2 = io.read()
 long = tonumber(input2)
+long = long -1
 print("What is turtle high aka Y value")
 input3 = io.read()
 high = tonumber(input3)
