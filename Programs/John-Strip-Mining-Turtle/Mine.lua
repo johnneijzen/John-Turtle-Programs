@@ -2,7 +2,7 @@
 -- 2.01
 -- ChangeLogs
 -- 2.00 - Now on Github
--- 2.01 - Space to Tab (Lot Clear to See)
+-- 2.01 - Space to Tab (Lot Clear to See) 4.279 kb to 4.042 kb
 
 --Local
 local Mines = 0 -- Multi Mines Yes Or No 1 = yes and 0 = no
