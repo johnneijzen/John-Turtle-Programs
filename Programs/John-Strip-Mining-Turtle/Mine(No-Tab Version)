@@ -3,6 +3,7 @@
 -- ChangeLogs
 -- 2.00 - Now on Github
 -- 2.01 - Space to Tab (Lot Clear to See)
+-- 2.02 - Github see taps as 8 not 4 so i change all taps to space
 
 --Local
 local Mines = 0 -- Multi Mines Yes Or No 1 = yes and 0 = no
