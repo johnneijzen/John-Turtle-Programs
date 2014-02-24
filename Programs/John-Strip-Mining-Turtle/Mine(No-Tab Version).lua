@@ -16,7 +16,7 @@ local MD = 3 -- How Many Blocks Apart From Each Mine
 local MineTimes = 0 -- If Multi Mines Are ON then This will keep Count
 local Fuel = 0 -- if 2 then it is unlimited no fuel needed
 local NeedFuel = 0 -- If Fuel Need Then 1 if not Then 0
-local Error = 0
+local Error = 0 -- 1 = Error 0 = No Error
 
 --Checking
 function check()
@@ -88,7 +88,7 @@ function forwardM()
         turtle.dropDown()
         sleep(0.5) -- Small fix for slow pc
       end
-      turtle.select(5) -- temp fix still checking
+      turtle.select(5)
     end
     repeat
       if turtle.getFuelLevel() == "unlimited" then 
