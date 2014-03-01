@@ -1,8 +1,9 @@
 -- This Version
---  0.06
+--  0.08
 -- Changelogs
 --  0.05 - Minor bug fixing
 --  0.06 - Taps To Space
+--  0.08 - Too much error from beta testing
 
 -- Locals
 local wide = 0
@@ -14,7 +15,7 @@ local HC = 0
 local FuelCount = turtle.getItemCount(1)
 local FuelCount1 = turtle.getItemCount(2)
 local Chest = turtle.getItemCount(3)
-local Totalblocks = wide x long x high
+local Totalblocks = 0
 local LSorWS = 0
 local Error = 0
 local recheck = 0
@@ -32,7 +33,7 @@ function check()
     print("please put chests in 3 slot")
     Error = 1
   end
-  if Error = 1 then 
+  if Error == 1 then 
     print("Items are missing please try again")
     sleep(10)
     recheck()
@@ -44,15 +45,17 @@ end
 
 -- Run Command
 function run()
-  turtle.digDown
-  turtle.down
-  turtle.digDown
-  turtle.down
-  turtle.digdown
+  turtle.digDown()
+  turtle.down()
+  turtle.digDown()
+  turtle.down()
+  turtle.digDown()
   WC = 0 
   LC = 0
   HC = HC + 3
-  if high == HC
+  if high == HC then
+    print("done")
+  else
     long()
   end
 end
@@ -69,12 +72,12 @@ end
 -- Mining Long
 function long()
   repeat
-    turtle.dig
+    turtle.dig()
     if turtle.forward then
       LC = LC + 1
     end  
-    turtle.digUp
-    turtle.digDown
+    turtle.digUp()
+    turtle.digDown()
     if turtle.getItemCount(16)>0 then -- If slot 16 in turtle has item slot 5 to 16 will go to chest
       turtle.select(3)
       turtle.placeUp()
@@ -108,8 +111,8 @@ function long()
         Needfuel = 0
       end
     until NeedFuel == 0
-  until long = LC
-  if wide = WC then
+  until long == LC
+  if wide == WC then
     run()
   else 
     wide()
@@ -118,7 +121,7 @@ end
 
 -- Mining Wide
 function wide()
-  if LSorWS = 0 then
+  if LSorWS == 0 then
     turtle.turnRight()
     turtle.dig()
     turtle.forward()
@@ -154,12 +157,15 @@ wide = wide - 1
 print("How wide you want")
 input2 = io.read()
 long = tonumber(input2)
-long = long -1
+long = long - 1
 print("What is turtle high aka Y value")
 input3 = io.read()
 high = tonumber(input3)
 high = high - 5
+print("caluclating")
+Totalblocks = wide * long * high
 print("turtle now starting")
 turtle.select(1)
 turtle.refuel(4)
-Check()
+HC = 0
+check()
