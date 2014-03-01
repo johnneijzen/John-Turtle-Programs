@@ -1,8 +1,6 @@
 -- This Version
 --  0.08
 -- Changelogs
---  0.05 - Minor bug fixing
---  0.06 - Taps To Space
 --  0.08 - Too much error from beta testing
 
 -- Locals
