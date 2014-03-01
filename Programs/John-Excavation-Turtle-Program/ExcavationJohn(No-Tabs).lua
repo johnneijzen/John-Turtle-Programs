@@ -54,7 +54,7 @@ function run()
   if high == HC then
     print("done")
   else
-    long()
+    long1()
   end
 end
 
@@ -68,7 +68,7 @@ function recheck()
 end 
 
 -- Mining Long
-function long()
+function long1()
   repeat
     turtle.dig()
     if turtle.forward then
@@ -141,7 +141,7 @@ function wide()
   if Wide == WC then
     Run()
   else
-    Long()
+    long1()
   end
 end
 
@@ -162,8 +162,9 @@ high = tonumber(input3)
 high = high - 5
 print("caluclating")
 Totalblocks = wide * long * high
+print("Total amount for block to mine")
+print(Totalblocks)
 print("turtle now starting")
 turtle.select(1)
 turtle.refuel(4)
-HC = 0
 check()
