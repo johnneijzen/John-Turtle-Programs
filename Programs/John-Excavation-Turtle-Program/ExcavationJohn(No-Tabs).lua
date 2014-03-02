@@ -144,8 +144,8 @@ function wide()
     turtle.turnRight()
     LSorWS = 0
   end
-    Lc = 0
-    Wc = Wc + 1
+  Lc = 0
+  Wc = Wc + 1
   if Wide == WC then
     run()
   else
