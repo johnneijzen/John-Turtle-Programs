@@ -1,9 +1,10 @@
 -- This Version
--- 2.02
+-- 2.03
 -- ChangeLogs
 -- 2.00 - Now on Github
 -- 2.01 - Space to Tab (Lot Clear to See)
 -- 2.02 - Moving Tabs to space because of Github See tab as 8 not 4 and my tabs size are 2 sometimes 4
+-- 2.03 - Minor Clean Up
 
 --Local
 local Mines = 0 -- Multi Mines Yes Or No 1 = yes and 0 = no
@@ -16,7 +17,7 @@ local MD = 3 -- How Many Blocks Apart From Each Mine
 local MineTimes = 0 -- If Multi Mines Are ON then This will keep Count
 local Fuel = 0 -- if 2 then it is unlimited no fuel needed
 local NeedFuel = 0 -- If Fuel Need Then 1 if not Then 0
-local Error = 0 -- If Error = 0 then no error if is 1 then error
+local Error = 0 -- 0 = No Error and 1 = Error
 
 --Checking
 function check()
@@ -86,9 +87,9 @@ function forwardM()
       for slot = 5, 16 do
         turtle.select(slot)
         turtle.dropDown()
-        sleep(1.5) --
+        sleep(1.5)
       end
-      turtle.select(5) -- temp fix still checking
+      turtle.select(5)
     end
     repeat
       if turtle.getFuelLevel() == "unlimited" then 
