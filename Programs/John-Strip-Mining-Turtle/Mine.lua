@@ -1,8 +1,7 @@
 -- This Version
--- 2.02
+-- 2.04
 -- ChangeLogs
--- 2.00 - Now on Github
--- 2.02 - Space to Tab (Lot Clear to See) 4.279 kb to 4.042 kb
+-- 2.04 - Adding Lefr or Right Support
 
 --Local
 local Mines = 0 -- Multi Mines Yes Or No 1 = yes and 0 = no
@@ -15,7 +14,8 @@ local MD = 3 -- How Many Blocks Apart From Each Mine
 local MineTimes = 0 -- If Multi Mines Are ON then This will keep Count
 local Fuel = 0 -- if 2 then it is unlimited no fuel needed
 local NeedFuel = 0 -- If Fuel Need Then 1 if not Then 0
-local Error = 0 -- 1 = Error 0 = No Error
+local Error = 0 -- 0 = No Error and 1 = Error
+local Way = 0 -- 0 = Left and 1 = Right
 
 --Checking
 function check()
@@ -65,8 +65,8 @@ function forwardM()
 		if turtle.detectUp() then
 			turtle.digUp()
 		end
-		turtle.select(4)
-		turtle.placeDown()
+			turtle.select(4)
+			turtle.placeDown()
 		if onlight == 10 then -- Every 10 Block turtle place torch
 			turtle.turnLeft()
 			turtle.turnLeft()
@@ -85,9 +85,9 @@ function forwardM()
 			for slot = 5, 16 do
 				turtle.select(slot)
 				turtle.dropDown()
-				sleep(0.5) -- Small fix for slow pc
+				sleep(1.5)
 			end
-			turtle.select(5) -- temp fix still checking
+			turtle.select(5)
 		end
 		repeat
 			if turtle.getFuelLevel() == "unlimited" then 
@@ -135,8 +135,13 @@ end
 
 -- Multimines Program
 function MultiMines()
-	turtle.turnRight()
-	turtle.down()
+	if Way == 0 then
+		turtle.turnLeft()
+		turtle.down()
+	else
+		turtle.turnRight()
+		turtle.down()
+	end
 	repeat
 		if turtle.detect() then
 			turtle.dig()
@@ -148,7 +153,11 @@ function MultiMines()
 			turtle.digUp()
 		end
 	until MD == 0
-	turtle.turnRight()
+	if Way == 0 then
+		turtle.turnLeft()
+	else
+		turtle.turnRight()
+	end
 	if MineTimes == 0 then
 		print("Turtle is done")
 	else
@@ -168,7 +177,7 @@ end
 
 -- Error
 function Test()
-	print("Pls Recheck And try aging")
+	print("Please Recheck And try again")
 end
 
 -- Start
@@ -178,6 +187,10 @@ input = io.read()
 distance = tonumber(input)
 TF = distance
 TB = distance
+print("Left or Right")
+print("0 = Left and 1 = Right")
+input4 = io.read()
+Way = input4
 print("To Want Multiple Strip Mines No = 0, Yes = 1")
 input2 = io.read()
 Mines = tonumber(input2)
@@ -185,7 +198,5 @@ if Mines == 1 then
 	print("How Many Times")
 	input3 = io.read()
 	MineTimes = tonumber(input3)
-	check()
-else
-	check()
 end
+check()
