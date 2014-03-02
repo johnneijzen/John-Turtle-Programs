@@ -1,7 +1,7 @@
 -- This Version
 -- 2.04
 -- ChangeLogs
--- 2.04 - Adding Lefr or Right Support
+-- 2.04 - Adding Left or Right Support
 
 --Local
 local Mines = 0 -- Multi Mines Yes Or No 1 = yes and 0 = no
