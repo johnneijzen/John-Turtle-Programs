@@ -1,10 +1,7 @@
 -- This Version
--- 2.03
+-- 2.04
 -- ChangeLogs
--- 2.00 - Now on Github
--- 2.01 - Space to Tab (Lot Clear to See)
--- 2.02 - Moving Tabs to space because of Github See tab as 8 not 4 and my tabs size are 2 sometimes 4
--- 2.03 - Minor Clean Up
+-- 2.04 - Adding Lefr or Right Support
 
 --Local
 local Mines = 0 -- Multi Mines Yes Or No 1 = yes and 0 = no
@@ -18,6 +15,7 @@ local MineTimes = 0 -- If Multi Mines Are ON then This will keep Count
 local Fuel = 0 -- if 2 then it is unlimited no fuel needed
 local NeedFuel = 0 -- If Fuel Need Then 1 if not Then 0
 local Error = 0 -- 0 = No Error and 1 = Error
+local Way = 0 -- 0 = Left and 1 = Right
 
 --Checking
 function check()
@@ -137,8 +135,13 @@ end
 
 -- Multimines Program
 function MultiMines()
-  turtle.turnRight()
-  turtle.down()
+  if Way == 0 then
+    turtle.turnLeft()
+    turtle.down()
+  else
+    turtle.turnRight()
+    turtle.down()
+  end
   repeat
     if turtle.detect() then
       turtle.dig()
@@ -150,7 +153,11 @@ function MultiMines()
       turtle.digUp()
     end
   until MD == 0
-  turtle.turnRight()
+  if Way == 0 then
+    turtle.turnLeft()
+  else
+    turtle.turnRight()
+  end
   if MineTimes == 0 then
     print("Turtle is done")
   else
@@ -170,7 +177,7 @@ end
 
 -- Error
 function Test()
-  print("Pls Recheck And try aging")
+  print("Please Recheck And try again")
 end
 
 -- Start
@@ -180,6 +187,10 @@ input = io.read()
 distance = tonumber(input)
 TF = distance
 TB = distance
+print("Left or Right")
+print("0 = Left and 1 = Right")
+input4 = io.read()
+Way = input4
 print("To Want Multiple Strip Mines No = 0, Yes = 1")
 input2 = io.read()
 Mines = tonumber(input2)
@@ -187,7 +198,5 @@ if Mines == 1 then
   print("How Many Times")
   input3 = io.read()
   MineTimes = tonumber(input3)
-  check()
-else
-  check()
 end
+check()
