@@ -65,8 +65,8 @@ function forwardM()
 		if turtle.detectUp() then
 			turtle.digUp()
 		end
-			turtle.select(4)
-			turtle.placeDown()
+		turtle.select(4)
+		turtle.placeDown()
 		if onlight == 10 then -- Every 10 Block turtle place torch
 			turtle.turnLeft()
 			turtle.turnLeft()
