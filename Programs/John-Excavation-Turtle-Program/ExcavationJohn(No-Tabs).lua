@@ -1,8 +1,7 @@
 -- This Version
---  0.11
+--  0.12
 -- Changelogs
---  0.10 Rewrite
---  0.11 Minor Bug Fixing and Change spacing
+--  0.12 Fixing Fuel Thing
 
 -- local
 local Wide = 0
@@ -18,6 +17,7 @@ local TotalBlocks = 0
 local LSorWS = 0
 local Error = 0
 local Recheck = 0
+local NoFuelNeed = 0
 
 -- Checking
 function check()
@@ -93,31 +93,24 @@ function long()
         turtle.dropUp()
         sleep(1.5) -- Small fix for slow pc because i had people problem with this
       end
-      turtle.select(4)
+    turtle.select(4)
     end
-    repeat -- Fuel
-      if turtle.getFuelLevel() == "unlimited" then 
-        print("NO NEED FOR FUEL")
-        NeedFuel = 0
-      elseif turtle.getFuelLevel() < 300 then
-        if FuelCount > 10 then
+    if NoFuelNeed == 0 then
+		  for turtle.getFuelLevel() < 300 do
+			  if FuelCount > 10 then
           turtle.select(1)
           turtle.refuel(10)
-          NeedFuel = 1
           FuelCount = FuelCount - 10
-        elseif FuelCount1 > 10 then
+				elseif FuelCount1 > 10 then
           turtle.select(2)
           turtle.refuel(10)
-          NeedFuel = 1
           FuelCount1 = FuelCount1 - 10
         else
           print("out of fuel")
         end
-      elseif NeedFuel == 1 then
-        Needfuel = 0
-      end
-    until NeedFuel == 0
-  until Long == Lc
+			end
+		end
+	until Long == Lc
   if Wide == Wc then
     run()
   else 
@@ -175,6 +168,7 @@ print(Totalblocks)
 print("turtle now starting")
 if turtle.getFuelLevel() == "unlimited" then 
   print("your turtle config does need fuel")
+	NoFuelNeed = 1
 elseif turtle.getFuelLevel() < 200 then
   turtle.select(1)
   turtle.refuel(2)
