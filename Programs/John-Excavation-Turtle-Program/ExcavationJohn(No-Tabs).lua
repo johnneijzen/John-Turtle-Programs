@@ -96,21 +96,21 @@ function long()
     turtle.select(4)
     end
     if NoFuelNeed == 0 then
-		  for turtle.getFuelLevel() < 300 do
-			  if FuelCount > 10 then
+      for turtle.getFuelLevel() < 300 do
+        if FuelCount > 10 then
           turtle.select(1)
           turtle.refuel(10)
           FuelCount = FuelCount - 10
-				elseif FuelCount1 > 10 then
+        elseif FuelCount1 > 10 then
           turtle.select(2)
           turtle.refuel(10)
           FuelCount1 = FuelCount1 - 10
         else
           print("out of fuel")
         end
-			end
-		end
-	until Long == Lc
+      end
+    end
+  until Long == Lc
   if Wide == Wc then
     run()
   else 
@@ -168,7 +168,7 @@ print(Totalblocks)
 print("turtle now starting")
 if turtle.getFuelLevel() == "unlimited" then 
   print("your turtle config does need fuel")
-	NoFuelNeed = 1
+  NoFuelNeed = 1
 elseif turtle.getFuelLevel() < 200 then
   turtle.select(1)
   turtle.refuel(2)
