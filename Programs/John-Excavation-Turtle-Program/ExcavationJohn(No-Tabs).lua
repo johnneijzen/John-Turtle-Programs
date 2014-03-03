@@ -71,12 +71,12 @@ function run()
   if High == Hc then
     print("done")
   else
-    long()
+    Lenght()
   end
 end
 
 -- Mining for length
-function long()
+function Lenght()
   repeat
     turtle.dig()
     if turtle.forward() then
@@ -96,14 +96,14 @@ function long()
     turtle.select(4)
     end
     if NoFuelNeed == 0 then
-      for turtle.getFuelLevel() < 300 do
+      if turtle.getFuelLevel() < 300 then
         if FuelCount > 10 then
           turtle.select(1)
-          turtle.refuel(10)
+          turtle.refuel(12)
           FuelCount = FuelCount - 10
         elseif FuelCount1 > 10 then
           turtle.select(2)
-          turtle.refuel(10)
+          turtle.refuel(12)
           FuelCount1 = FuelCount1 - 10
         else
           print("out of fuel")
@@ -134,7 +134,7 @@ function wide()
     turtle.forward()
     turtle.digUp()
     turtle.digDown()
-    turtle.turnRight()
+    turtle.turnLeft()
     LSorWS = 0
   end
   Lc = 0
@@ -142,7 +142,7 @@ function wide()
   if Wide == WC then
     run()
   else
-    long()
+    Lenght()
   end
 end
 
@@ -151,18 +151,18 @@ print("Welcome To Excavation Turtle Program")
 print("Note: This Program Stop Before Bedrock.")
 print("How long you want")
 input = io.read()
-wide = tonumber(input)
-wide = wide - 1
+Wide = tonumber(input)
+Wide = Wide - 1
 print("How wide you want")
 input2 = io.read()
-long = tonumber(input2)
-long = long - 1
+Long = tonumber(input2)
+Long = Long - 1
 print("What is turtle high aka Y value")
 input3 = io.read()
-high = tonumber(input3)
-high = high - 5
+High = tonumber(input3)
+High = High - 5
 print("caluclating")
-Totalblocks = wide * long * high
+Totalblocks = Wide * Long * High
 print("Total amount for block to mine is")
 print(Totalblocks)
 print("turtle now starting")
