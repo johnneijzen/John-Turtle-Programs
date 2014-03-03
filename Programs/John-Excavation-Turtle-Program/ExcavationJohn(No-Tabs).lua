@@ -2,6 +2,9 @@
 --  0.12
 -- Changelogs
 --  0.12 Fixing Fuel Thing
+-- To Do List
+-- Fix Right Turn
+-- I think i will add Chest code so when turtle find chest it drop it contain in turtle
 
 -- local
 local Wide = 0
