@@ -1,10 +1,7 @@
 -- This Version
---  0.12
+--  0.13
 -- Changelogs
---  0.12 Fixing Fuel Thing
--- To Do List
--- Fix Right Turn
--- I think i will add Chest code so when turtle find chest it drop it contain in turtle
+--  0.13 I think i fixed Turn Error
 
 -- local
 local Wide = 0
@@ -115,6 +112,7 @@ function Lenght()
     end
   until Long == Lc
   if Wide == Wc then
+    turtle.turnRight()
     run()
   else 
     wide()
