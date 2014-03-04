@@ -1,7 +1,7 @@
 -- This Version
---  0.13
+--  0.14
 -- Changelogs
---  0.13 I think i fixed Turn Error
+--  0.13 Add Counter to mining block
 
 -- local
 local Wide = 0
