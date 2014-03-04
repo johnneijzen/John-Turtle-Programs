@@ -18,6 +18,7 @@ local LSorWS = 0
 local Error = 0
 local Recheck = 0
 local NoFuelNeed = 0
+local TotalBlockDone = 0
 
 -- Checking
 function check()
@@ -81,6 +82,8 @@ function Lenght()
     turtle.dig()
     if turtle.forward() then
       Lc = Lc + 1
+      TotalBlockDone = TotalBlockDone + 3
+      print(TotalBlock - TotalBlockDone)
     end  
     turtle.digUp()
     turtle.digDown()
