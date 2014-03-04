@@ -1,7 +1,7 @@
 -- This Version
 --  0.14
 -- Changelogs
---  0.13 Add Counter to mining block
+--  0.14 Add Counter to mining block
 
 -- local
 local Wide = 0
