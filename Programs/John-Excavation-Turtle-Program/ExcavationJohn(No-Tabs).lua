@@ -83,7 +83,7 @@ function Lenght()
     if turtle.forward() then
       Lc = Lc + 1
       TotalBlockDone = TotalBlockDone + 3
-      print(TotalBlock - TotalBlockDone)
+      print(TotalBlocks - TotalBlockDone)
     end  
     turtle.digUp()
     turtle.digDown()
@@ -144,6 +144,7 @@ function wide()
   Lc = 0
   Wc = Wc + 1
   if Wide == WC then
+    turtle.turnRight()
     run()
   else
     Lenght()
