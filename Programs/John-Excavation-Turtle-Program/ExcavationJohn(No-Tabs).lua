@@ -1,7 +1,7 @@
 -- This Version
---  0.16
+--  0.17
 -- Changelogs
---  0.16 More Fix Turn Error
+--  0.17 Bug Fix Not going 3 down but 2 down error
 
 -- local
 local Wide = 0
@@ -46,7 +46,10 @@ function check()
     recheck()
   else 
     print("all items are there turtle will start")
-    run()
+    Wc = 0 
+    Lc = 0
+    Hc = Hc + 3
+    Lenght()
   end 
 end
 
@@ -66,6 +69,7 @@ function run()
   turtle.digDown()
   turtle.down()
   turtle.digDown()
+  turtle.down
   Wc = 0 
   Lc = 0
   Hc = Hc + 3
