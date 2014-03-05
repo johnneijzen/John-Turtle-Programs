@@ -1,7 +1,7 @@
 -- This Version
---  0.15
+--  0.16
 -- Changelogs
---  0.15 Fix Turn Error
+--  0.16 More Fix Turn Error
 
 -- local
 local Wide = 0
@@ -116,6 +116,7 @@ function Lenght()
   until Long == Lc
   if Wide == Wc then
     turtle.turnRight()
+    LSorWS = 0
     run()
   else 
     wide()
@@ -145,6 +146,7 @@ function wide()
   Wc = Wc + 1
   if Wide == WC then
     turtle.turnRight()
+    LSorWS = 0
     run()
   else
     Lenght()
