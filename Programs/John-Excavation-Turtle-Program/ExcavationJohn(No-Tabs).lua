@@ -46,6 +46,11 @@ function check()
     recheck()
   else 
     print("all items are there turtle will start")
+    turtle.digDown()
+    turtle.down()
+    turtle.digDown()
+    turtle.down()
+    turtle.digDown()
     Wc = 0 
     Lc = 0
     Hc = Hc + 3
