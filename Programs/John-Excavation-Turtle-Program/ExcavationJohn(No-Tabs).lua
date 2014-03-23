@@ -1,7 +1,7 @@
 -- This Version
---  0.18
+--  0.19
 -- Changelogs
---  0.18 Forget one () dam whole program did not work
+--  0.19 Fixed TotalBlock probleem
 
 -- local
 local Wide = 0
@@ -178,9 +178,9 @@ input3 = io.read()
 High = tonumber(input3)
 High = High - 5
 print("caluclating")
-Totalblocks = Wide * Long * High
+TotalBlocks = Wide * Long * High
 print("Total amount for block to mine is")
-print(Totalblocks)
+print(TotalBlocks)
 print("turtle now starting")
 if turtle.getFuelLevel() == "unlimited" then 
   print("your turtle config does need fuel")
