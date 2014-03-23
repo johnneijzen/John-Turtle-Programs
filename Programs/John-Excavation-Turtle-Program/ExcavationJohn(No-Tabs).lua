@@ -1,7 +1,7 @@
 -- This Version
---  0.17
+--  0.18
 -- Changelogs
---  0.17 Bug Fix Not going 3 down but 2 down error
+--  0.18 Forget one () dam whole program did not work
 
 -- local
 local Wide = 0
@@ -74,7 +74,7 @@ function run()
   turtle.digDown()
   turtle.down()
   turtle.digDown()
-  turtle.down
+  turtle.down()
   Wc = 0 
   Lc = 0
   Hc = Hc + 3
