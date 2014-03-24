@@ -1,7 +1,7 @@
 -- This Version
---  0.12
+--  0.20
 -- Changelogs
---  0.12 Fixing Fuel Thing
+--  0.20 trying to major bug with gravel in wide code
 
 -- local
 local Wide = 0
@@ -18,6 +18,8 @@ local LSorWS = 0
 local Error = 0
 local Recheck = 0
 local NoFuelNeed = 0
+local TotalBlockDone = 0
+local WideCheck = 0
 
 -- Checking
 function check()
@@ -45,7 +47,15 @@ function check()
 		recheck()
 	else 
 		print("all items are there turtle will start")
-		run()
+		turtle.digDown()
+		turtle.down()
+		turtle.digDown()
+		turtle.down()
+		turtle.digDown()
+		Wc = 0 
+		Lc = 0
+		Hc = Hc + 3
+		Lenght()
 	end 
 end
 
@@ -65,22 +75,25 @@ function run()
 	turtle.digDown()
 	turtle.down()
 	turtle.digDown()
+	turtle.down()
 	Wc = 0 
 	Lc = 0
 	Hc = Hc + 3
 	if High == Hc then
 		print("done")
 	else
-		long()
+		Lenght()
 	end
 end
 
 -- Mining for length
-function long()
+function Lenght()
 	repeat
 		turtle.dig()
 		if turtle.forward() then
 			Lc = Lc + 1
+			TotalBlockDone = TotalBlockDone + 3
+			print(TotalBlocks - TotalBlockDone)
 		end  
 		turtle.digUp()
 		turtle.digDown()
@@ -96,14 +109,14 @@ function long()
 		turtle.select(4)
 		end
 		if NoFuelNeed == 0 then
-			for turtle.getFuelLevel() < 300 do
+			if turtle.getFuelLevel() < 300 then
 				if FuelCount > 10 then
 					turtle.select(1)
-					turtle.refuel(10)
+					turtle.refuel(12)
 					FuelCount = FuelCount - 10
 				elseif FuelCount1 > 10 then
 					turtle.select(2)
-					turtle.refuel(10)
+					turtle.refuel(12)
 					FuelCount1 = FuelCount1 - 10
 				else
 					print("out of fuel")
@@ -112,6 +125,8 @@ function long()
 		end
 	until Long == Lc
 	if Wide == Wc then
+		turtle.turnRight()
+		LSorWS = 0
 		run()
 	else 
 		wide()
@@ -123,7 +138,13 @@ function wide()
 	if LSorWS == 0 then
 		turtle.turnRight()
 		turtle.dig()
-		turtle.forward()
+		if turtle.forward() then
+			turtle.digUp()
+		else
+			turtle.dig()
+			turtle.dig() -- Why two dig if are 2 gravel stuck it will fix it
+			turtle.forward()
+		end	
 		turtle.digUp()
 		turtle.digDown()
 		turtle.turnRight()
@@ -131,18 +152,26 @@ function wide()
 	else 
 		turtle.turnLeft()
 		turtle.dig()
-		turtle.forward()
+		if turtle.forward() then
+			turtle.digUp()
+		else
+			turtle.dig()
+			turtle.dig() -- Why two dig if are 2 gravel stuck it will fix it
+			turtle.forward()
+		end	
 		turtle.digUp()
 		turtle.digDown()
-		turtle.turnRight()
+		turtle.turnLeft()
 		LSorWS = 0
 	end
 	Lc = 0
 	Wc = Wc + 1
 	if Wide == WC then
+		turtle.turnRight()
+		LSorWS = 0
 		run()
 	else
-		long()
+		Lenght()
 	end
 end
 
@@ -151,20 +180,20 @@ print("Welcome To Excavation Turtle Program")
 print("Note: This Program Stop Before Bedrock.")
 print("How long you want")
 input = io.read()
-wide = tonumber(input)
-wide = wide - 1
+Wide = tonumber(input)
+Wide = Wide - 1
 print("How wide you want")
 input2 = io.read()
-long = tonumber(input2)
-long = long - 1
+Long = tonumber(input2)
+Long = Long - 1
 print("What is turtle high aka Y value")
 input3 = io.read()
-high = tonumber(input3)
-high = high - 5
+High = tonumber(input3)
+High = High - 5
 print("caluclating")
-Totalblocks = wide * long * high
+TotalBlocks = Wide * Long * High
 print("Total amount for block to mine is")
-print(Totalblocks)
+print(TotalBlocks)
 print("turtle now starting")
 if turtle.getFuelLevel() == "unlimited" then 
 	print("your turtle config does need fuel")
