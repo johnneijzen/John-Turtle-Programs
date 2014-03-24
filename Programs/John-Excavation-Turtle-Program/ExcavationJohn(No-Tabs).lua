@@ -138,7 +138,7 @@ function wide()
     turtle.turnRight()
     turtle.dig()
     if turtle.forward() then
-      turtle.digUp()
+      turtle.digDown()
     else
       turtle.dig()
       turtle.dig() -- Why two dig if are 2 gravel stuck it will fix it
@@ -152,7 +152,7 @@ function wide()
     turtle.turnLeft()
     turtle.dig()
     if turtle.forward() then
-      turtle.digUp()
+      turtle.digDown()
     else
       turtle.dig()
       turtle.dig() -- Why two dig if are 2 gravel stuck it will fix it
