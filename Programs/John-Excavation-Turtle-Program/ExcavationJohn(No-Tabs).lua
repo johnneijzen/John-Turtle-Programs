@@ -1,7 +1,7 @@
 -- This Version
---  0.19
+--  0.20
 -- Changelogs
---  0.19 Fixed TotalBlock probleem
+--  0.20 trying to major bug with gravel in wide code
 
 -- local
 local Wide = 0
@@ -137,7 +137,13 @@ function wide()
   if LSorWS == 0 then
     turtle.turnRight()
     turtle.dig()
-    turtle.forward()
+    if turtle.forward() then
+      turtle.digUp()
+    else
+      turtle.dig()
+      turtle.dig() -- Why two dig if are 2 gravel stuck it will fix it
+      turtle.forward()
+    end 
     turtle.digUp()
     turtle.digDown()
     turtle.turnRight()
@@ -145,7 +151,13 @@ function wide()
   else 
     turtle.turnLeft()
     turtle.dig()
-    turtle.forward()
+    if turtle.forward() then
+      turtle.digUp()
+    else
+      turtle.dig()
+      turtle.dig() -- Why two dig if are 2 gravel stuck it will fix it
+      turtle.forward()
+    end 
     turtle.digUp()
     turtle.digDown()
     turtle.turnLeft()
