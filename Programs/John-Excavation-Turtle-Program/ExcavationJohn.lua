@@ -1,25 +1,27 @@
 -- This Version
---  0.20
+--  0.23
 -- Changelogs
---  0.20 trying to major bug with gravel in wide code
+--  0.21 Fixing Gravel block chest bug
+--  0.22 Improving Mining Speed by adding turtle.detect(), turtle.detectDown(), turtle.detectUp()
+--  0.23 Adding More Comments so can keep Track and remove blank space and fixing one bug
 
 -- local
-local Wide = 0
-local Wc = 0
-local Long = 0
-local Lc = 0
-local High = 0
-local Hc = 0
-local FuelCount = turtle.getItemCount(1)
-local FuelCount1 = turtle.getItemCount(2)
-local Chest = turtle.getItemCount(3)
-local TotalBlocks = 0
-local LSorWS = 0
-local Error = 0
-local Recheck = 0
-local NoFuelNeed = 0
-local TotalBlockDone = 0
-local WideCheck = 0
+local Wide = 0  -- How Wide 
+local Wc = 0 -- Wide Counter
+local Long = 0 -- How Long
+local Lc = 0 -- Long Counter
+local High = 0 -- How High
+local Hc = 0 -- Hign Counter
+local FuelCount = turtle.getItemCount(1) -- Fuel Counter
+local FuelCount1 = turtle.getItemCount(2) -- Fuel 2 Counter
+local Chest = turtle.getItemCount(3) -- Chest Counter
+local TotalBlocks = 0 -- TotalBlocks
+local LSorWS = 0 -- Go Left or Go Right This is for Wide Code
+local Error = 0 -- Error Code
+local Recheck = 0 -- Recheck Code
+local NoFuelNeed = 0 -- If computercraft Config Has Fuel Off then this is 1 but not then it is 0
+local TotalBlockDone = 0 -- How many Block Mined
+local BlockUp = 0 -- Fixing to Chest Probleem and moving probleem
 
 -- Checking
 function check()
@@ -40,23 +42,23 @@ function check()
 	else
 		print("turtle has chest")
 	end
-	if Error == 1 then 
+	if Error == 1 then
 		print("Items are missing please try again")
 		print("turtle will recheck in 15 sec")
 		sleep(15)
 		recheck()
-	else 
+	else
 		print("all items are there turtle will start")
 		turtle.digDown()
 		turtle.down()
 		turtle.digDown()
 		turtle.down()
 		turtle.digDown()
-		Wc = 0 
+		Wc = 0
 		Lc = 0
 		Hc = Hc + 3
 		Lenght()
-	end 
+	end
 end
 
 -- Recheck  if user forget something turtle will check after 15 sec
@@ -66,9 +68,9 @@ function recheck()
 	Chest = turtle.getItemCount(3)
 	Error = 0
 	check()
-end 
+end
 
--- Run Command
+-- Run Command aka start up command
 function run()
 	turtle.digDown()
 	turtle.down()
@@ -76,7 +78,8 @@ function run()
 	turtle.down()
 	turtle.digDown()
 	turtle.down()
-	Wc = 0 
+	turtle.digDown()
+	Wc = 0
 	Lc = 0
 	Hc = Hc + 3
 	if High == Hc then
@@ -89,24 +92,44 @@ end
 -- Mining for length
 function Lenght()
 	repeat
-		turtle.dig()
+		if turtle.detect() then
+			turtle.dig()
+		end
 		if turtle.forward() then
 			Lc = Lc + 1
 			TotalBlockDone = TotalBlockDone + 3
 			print(TotalBlocks - TotalBlockDone)
-		end  
-		turtle.digUp()
-		turtle.digDown()
+		end
+		if turtle.detectUp() then
+			turtle.digUp()
+		end
+		if turtle.detectDown() then
+			turtle.digDown()
+		end
 		if turtle.getItemCount(16)>0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
+			if turtle.detectUp() then -- The Fix to Gravel Chest Bug. It check if gravel above then it dig three times
+				repeat
+					turtle.digUp()
+					sleep(2)
+					if turtle.detectUp() then
+						BlockUp = 0
+					else
+						BlockUp = 1
+					end
+				until BlockUp == 1
+			end
 			turtle.select(3)
 			turtle.placeUp()
 			Chest = Chest - 1
 			for slot = 4, 16 do
 				turtle.select(slot)
 				turtle.dropUp()
-				sleep(1.5) -- Small fix for slow pc because i had people problem with this
+				sleep(1.0) -- Small fix for slow pc because i had people problem with this
 			end
-		turtle.select(4)
+			if Chest == 0 then
+				print("Out Of Chest")
+				sleep(300000)
+			end
 		end
 		if NoFuelNeed == 0 then
 			if turtle.getFuelLevel() < 300 then
@@ -120,6 +143,7 @@ function Lenght()
 					FuelCount1 = FuelCount1 - 10
 				else
 					print("out of fuel")
+					sleep(300000)
 				end
 			end
 		end
@@ -128,7 +152,7 @@ function Lenght()
 		turtle.turnRight()
 		LSorWS = 0
 		run()
-	else 
+	else
 		wide()
 	end
 end
@@ -138,27 +162,39 @@ function wide()
 	if LSorWS == 0 then
 		turtle.turnRight()
 		turtle.dig()
-		if turtle.forward() then
-			turtle.digUp()
-		else
-			turtle.dig()
-			turtle.dig() -- Why two dig if are 2 gravel stuck it will fix it
-			turtle.forward()
-		end	
+			if turtle.forward() then
+				turtle.digDown()
+			else
+				repeat -- Fix to moving Probleem let it first remove before moving ageing
+					turtle.dig()
+					sleep(3)
+					if turtle.forward() then
+						BlockUp = 0
+					else
+						BlockUp = 1
+					end
+				until BlockUp == 1
+			end
 		turtle.digUp()
 		turtle.digDown()
 		turtle.turnRight()
 		LSorWS = 1
-	else 
+	else
 		turtle.turnLeft()
 		turtle.dig()
-		if turtle.forward() then
-			turtle.digUp()
-		else
-			turtle.dig()
-			turtle.dig() -- Why two dig if are 2 gravel stuck it will fix it
-			turtle.forward()
-		end	
+			if turtle.forward() then
+				turtle.digDown()
+			else
+				repeat -- Fix to moving Probleem let it first remove before moving ageing
+					turtle.dig()
+					sleep(3)
+					if turtle.forward() then
+						BlockUp = 0
+					else
+						BlockUp = 1
+					end
+				until BlockUp == 1
+			end
 		turtle.digUp()
 		turtle.digDown()
 		turtle.turnLeft()
@@ -178,6 +214,8 @@ end
 -- Starting
 print("Welcome To Excavation Turtle Program")
 print("Note: This Program Stop Before Bedrock.")
+print("Slot 1: Fuel, Slot 2:Fuel, Slot 3:Chest")
+print("Note: if now put item in then it say error just wait for recheck")
 print("How long you want")
 input = io.read()
 Wide = tonumber(input)
