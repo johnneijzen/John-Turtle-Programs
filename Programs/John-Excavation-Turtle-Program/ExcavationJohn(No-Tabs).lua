@@ -1,11 +1,12 @@
 -- This Version
---  0.24
+--  0.25
 -- Changelogs
 --  0.21 Fixing Gravel block chest bug
 --  0.22 Improving Mining Speed by adding turtle.detect(), turtle.detectDown(), turtle.detectUp()
 --  0.23 Adding More Comments so can keep Track and remove blank space and fixing two Bug.
 --  0.24 Better Fix to UI and More Bug Fixing
-
+--  0.25 Fixing My Programming error
+ 
 -- local
 local Wide = 0  -- How Wide 
 local Wc = 0 -- Wide Counter
@@ -174,7 +175,7 @@ function wide()
           else
             BlockUp = 1
           end
-        until BlockUp == 1
+        until BlockUp == 0
       end
     turtle.digUp()
     turtle.digDown()
@@ -194,8 +195,8 @@ function wide()
           else
             BlockUp = 1
           end
-        until BlockUp == 1
-      end
+        until BlockUp == 0
+      end 
     turtle.digUp()
     turtle.digDown()
     turtle.turnLeft()
