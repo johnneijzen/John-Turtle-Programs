@@ -1,11 +1,13 @@
 -- This Version
---  0.25
+--  0.26
 -- Changelogs
 --  0.21 Fixing Gravel block chest bug
 --  0.22 Improving Mining Speed by adding turtle.detect(), turtle.detectDown(), turtle.detectUp()
 --  0.23 Adding More Comments so can keep Track and remove blank space and fixing two Bug.
 --  0.24 Better Fix to UI and More Bug Fixing
 --  0.25 Fixing My Programming error
+--  0.26 Trying to fix Chest Bug
+
  
 -- local
 local Wide = 0  -- How Wide 
@@ -108,25 +110,23 @@ function Lenght()
     if turtle.detectDown() then
       turtle.digDown()
     end
-    if turtle.getItemCount(16)>0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
-      if turtle.detectUp() then -- The Fix to Gravel Chest Bug. It check if gravel above then it dig three times
-        repeat
-          turtle.digUp()
-          sleep(2)
-          if turtle.detectUp() then
-            BlockUp = 0
-          else
-            BlockUp = 1
-          end
-        until BlockUp == 1
-      end
+    if turtle.getItemCount(16)> 0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
+      repeat -- The Fix to Gravel Chest Bug. It check if gravel above then it dig three times
+        turtle.digUp()
+        sleep(2)
+        if turtle.detectUp() then
+          BlockUp = 0
+        else
+          BlockUp = 1
+        end
+      until BlockUp == 1
       turtle.select(3)
       turtle.placeUp()
       Chest = Chest - 1
       for slot = 4, 16 do
         turtle.select(slot)
         turtle.dropUp()
-        sleep(1.0) -- Small fix for slow pc because i had people problem with this
+        sleep(1.5) -- Small fix for slow pc because i had people problem with this
       end
       if Chest == 0 then
         print("Out Of Chest")
