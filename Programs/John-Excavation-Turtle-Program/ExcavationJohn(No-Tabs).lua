@@ -7,6 +7,7 @@
 --  0.24 Better Fix to UI and More Bug Fixing
 --  0.25 Fixing My Programming error
 --  0.26 Trying to fix Chest Bug
+--  0.27 FIxed Chest Bug My Bad 
 
  
 -- local
@@ -128,6 +129,7 @@ function Lenght()
         turtle.dropUp()
         sleep(1.5) -- Small fix for slow pc because i had people problem with this
       end
+      turtle.select(4)
       if Chest == 0 then
         print("Out Of Chest")
         sleep(300000)
