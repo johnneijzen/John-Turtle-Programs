@@ -1,5 +1,5 @@
 -- This Version
---  0.26
+--  0.27
 -- Changelogs
 --  0.21 Fixing Gravel block chest bug
 --  0.22 Improving Mining Speed by adding turtle.detect(), turtle.detectDown(), turtle.detectUp()
