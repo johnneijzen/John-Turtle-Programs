@@ -1,5 +1,5 @@
 -- This Version
---  0.27
+--  0.28
 -- Changelogs
 --  0.21 Fixing Gravel block chest bug
 --  0.22 Improving Mining Speed by adding turtle.detect(), turtle.detectDown(), turtle.detectUp()
@@ -7,7 +7,8 @@
 --  0.24 Better Fix to UI and More Bug Fixing
 --  0.25 Fixing My Programming error
 --  0.26 Trying to fix Chest Bug
---  0.27 FIxed Chest Bug My Bad 
+--  0.27 Fixed Chest Bug My Bad 
+--  0.28 Improving Wide Code By adding turtle.detect() , turtle.detectUp() , turtle.detectDown() so it bit fast and stable
 
  
 -- local
@@ -165,42 +166,54 @@ end
 function wide()
   if LSorWS == 0 then
     turtle.turnRight()
-    turtle.dig()
-      if turtle.forward() then
-        turtle.digDown()
-      else
-        repeat -- Fix to moving Probleem let it first remove before moving ageing
-          turtle.dig()
-          sleep(2)
-          if turtle.forward() then
-            BlockUp = 0
-          else
-            BlockUp = 1
-          end
-        until BlockUp == 0
-      end
-    turtle.digUp()
-    turtle.digDown()
+    if turtle.detect() then
+      turtle.dig()
+    end
+    if turtle.forward() then
+      turtle.digDown()
+    else
+      repeat -- Fix to moving Probleem let it first remove before moving ageing
+        turtle.dig()
+        sleep(2)
+        if turtle.forward() then
+          BlockUp = 0
+        else
+          BlockUp = 1
+        end
+      until BlockUp == 0
+    end
+    if turtle.detectUp() then
+      turtle.digUp()
+    end
+    if turtle.detectDown() then
+      turtle.digDown()
+    end
     turtle.turnRight()
     LSorWS = 1
   else
     turtle.turnLeft()
-    turtle.dig()
-      if turtle.forward() then
-        turtle.digDown()
-      else
-        repeat -- Fix to moving Probleem let it first remove before moving ageing
-          turtle.dig()
-          sleep(2)
-          if turtle.forward() then
-            BlockUp = 0
-          else
-            BlockUp = 1
-          end
-        until BlockUp == 0
-      end 
-    turtle.digUp()
-    turtle.digDown()
+    if turtle.detect() then
+      turtle.dig()
+    end
+    if turtle.forward() then
+      turtle.digDown()
+    else
+      repeat -- Fix to moving Probleem let it first remove before moving ageing
+        turtle.dig()
+        sleep(2)
+        if turtle.forward() then
+          BlockUp = 0
+        else
+          BlockUp = 1
+        end
+      until BlockUp == 0
+    end   
+    if turtle.detectUp() then
+      turtle.digUp()
+    end
+    if turtle.detectDown() then
+      turtle.digDown()
+    end
     turtle.turnLeft()
     LSorWS = 0
   end
