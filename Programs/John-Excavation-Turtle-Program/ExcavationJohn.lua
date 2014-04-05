@@ -1,5 +1,5 @@
 -- This Version
---  0.29
+--  0.30
 -- Changelogs
 --  0.21 Fixing Gravel block chest bug
 --  0.22 Improving Mining Speed by adding turtle.detect(), turtle.detectDown(), turtle.detectUp()
@@ -10,6 +10,7 @@
 --  0.27 Fixed Chest Bug My Bad 
 --  0.28 Improving Wide Code By adding turtle.detect() , turtle.detectUp() , turtle.detectDown() so it bit fast and stable
 --  0.29 Rewrite of Everything
+--  0.30 More Rewriting
 
 -- Local Variables
 local Wide = 0  -- How Wide 
@@ -47,7 +48,7 @@ local function Length() -- Length Mine
 	end
 end
 
-local function Wide() -- Wide Around Right
+local function Wide1() -- Wide Around Right
 	turtle.turnRight()
 	if turtle.detect() then
 		turtle.dig()
@@ -69,7 +70,7 @@ local function Wide() -- Wide Around Right
 	if turtle.detectUp() then
 		turtle.digUp()
 	end
-	if turtle.detechDown() then
+	if turtle.detectDown() then
 		turtle.digDown()
 	end
 	turtle.turnRight()
@@ -100,7 +101,7 @@ local function Wide2() -- Wide Around Left
 	if turtle.detectUp() then
 		turtle.digUp()
 	end
-	if turtle.detechDown() then
+	if turtle.detectDown() then
 		turtle.digDown()
 	end
 	turtle.turnLeft()
@@ -110,7 +111,7 @@ local function Wide2() -- Wide Around Left
 end
 
 -- High Code
-local function High()
+local function High1()
 	turtle.digDown()
 	turtle.down()
 	turtle.digDown()
@@ -176,7 +177,7 @@ local function Refuel()
 	end
 end
 
-local function Chest()
+local function Chest1()
 	if turtle.getItemCount(16)> 0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
 		repeat -- The Fix to Gravel Chest Bug. It check if gravel above then it dig three times
 			turtle.digUp()
@@ -219,17 +220,20 @@ function MainPart()
 		repeat
 			Length()
 			Refuel()
-			Chest()
+			Chest1()
 			if Long == Lc then
 				if LSorWS == 0 then
-					Wide()
+					Wide1()
 				else
 					Wide2()
 				end
 			end
 		until Wide == Wc
-		High()
-	until High = Hc
+		Length()
+		turtle.turnRight()
+		LSorWS = 0
+		High1()
+	until High == Hc
 end
 
 -- Starting
@@ -262,9 +266,11 @@ elseif turtle.getFuelLevel() < 200 then
 	turtle.refuel(2)
 end
 Check()
-repeat Error == 1 then
-	Recheck()
-	Check()
-until Error = 0
+if Error == 1 then
+	repeat
+		Recheck()
+		Check()
+	until Error == 0
+end
 Start()
 MainPart()
