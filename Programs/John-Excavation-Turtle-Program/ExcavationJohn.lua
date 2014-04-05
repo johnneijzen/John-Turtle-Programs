@@ -203,6 +203,17 @@ local function Chest()
 	end
 end
 
+local function Start()
+	turtle.digDown()
+	turtle.down()
+	turtle.digDown()
+	turtle.down()
+	turtle.digDown()
+	Wc = 0
+	Lc = 0
+	Hc = Hc + 3
+end
+
 function MainPart()
 	repeat
 		repeat
@@ -255,4 +266,5 @@ repeat Error == 1 then
 	Recheck()
 	Check()
 until Error = 0
+Start()
 MainPart()
