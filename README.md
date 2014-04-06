@@ -16,14 +16,14 @@ John Turtle Tunnel ( 10$ done i just start with that program)
 
 Pastebin Links
 
-John Strip Mining Turtle[Beta]
-http://pastebin.com/GxixXmy6 
-
 John Strip Mining Turtle[Working]
 http://pastebin.com/cWwJ0FYW
 
 John Excavation Turtle Program[Fully Working]
 http://pastebin.com/rR9JXSvy
+
+John Excavation Turtle Program[Beta]
+http://pastebin.com/EjJu2bbP
 
 John`s Turtle Tree Farm[Work In Process]
 http://pastebin.com/5evgj6Mv
