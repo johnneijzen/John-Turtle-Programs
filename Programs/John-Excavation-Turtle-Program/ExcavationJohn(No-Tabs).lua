@@ -1,5 +1,5 @@
 -- This Version
---  0.28
+--  0.31 4/7/2014
 -- Changelogs
 --  0.21 Fixing Gravel block chest bug
 --  0.22 Improving Mining Speed by adding turtle.detect(), turtle.detectDown(), turtle.detectUp()
@@ -9,9 +9,10 @@
 --  0.26 Trying to fix Chest Bug
 --  0.27 Fixed Chest Bug My Bad 
 --  0.28 Improving Wide Code By adding turtle.detect() , turtle.detectUp() , turtle.detectDown() so it bit fast and stable
+--  0.30 Rewrite of Everything
+--  0.31 Extreme Bugs Fixing
 
- 
--- local
+-- Local Variables
 local Wide = 0  -- How Wide 
 local Wc = 0 -- Wide Counter
 local Long = 0 -- How Long
@@ -29,8 +30,102 @@ local NoFuelNeed = 0 -- If computercraft Config Has Fuel Off then this is 1 but 
 local TotalBlockDone = 0 -- How many Block Mined
 local BlockUp = 0 -- Fixing to Chest Probleem and moving probleem
 
+-- Local Functions
+local function Length1() -- Length Mine
+  if turtle.detect() then
+    turtle.dig()
+  end
+  if turtle.forward() then
+    Lc = Lc + 1
+    TotalBlockDone = TotalBlockDone + 3
+    print(TotalBlocks - TotalBlockDone)
+  end
+  if turtle.detectUp() then
+    turtle.digUp()
+  end
+  if turtle.detectDown() then
+    turtle.digDown()
+  end
+end
+
+local function Wide1() -- Wide Around Right
+  turtle.turnRight()
+  if turtle.detect() then
+    turtle.dig()
+    sleep(2) -- Minor bug fix if there is gravel
+  end
+  if turtle.forward() then
+    turtle.digDown()
+  else
+    repeat
+      turtle.dig()
+      sleep(2)
+      if turtle.forward() then
+        BlockUp = 0
+      else
+        BlockUp = 1
+      end
+    until BlockUp == 0
+  end
+  if turtle.detectUp() then
+    turtle.digUp()
+  end
+  if turtle.detectDown() then
+    turtle.digDown()
+  end
+  turtle.turnRight()
+  LSorWS = 1
+  Lc = 0
+  Wc = Wc + 1
+end
+
+local function Wide2() -- Wide Around Left
+  turtle.turnLeft()
+  if turtle.detect() then
+    turtle.dig()
+    sleep(2) -- Minor bug fix if there is gravel
+  end
+  if turtle.forward() then
+    turtle.digDown()
+  else
+    repeat
+      turtle.dig()
+      sleep(2)
+      if turtle.forward() then
+        BlockUp = 0
+      else
+        BlockUp = 1
+      end
+    until BlockUp == 0
+  end
+  if turtle.detectUp() then
+    turtle.digUp()
+  end
+  if turtle.detectDown() then
+    turtle.digDown()
+  end
+  turtle.turnLeft()
+  LSorWS = 0
+  Lc = 0
+  Wc = Wc + 1
+end
+
+-- High Code
+local function High1()
+  turtle.digDown()
+  turtle.down()
+  turtle.digDown()
+  turtle.down()
+  turtle.digDown()
+  turtle.down()
+  turtle.digDown()
+  Wc = 0
+  Lc = 0
+  Hc = Hc + 3
+end
+
 -- Checking
-function check()
+local function Check()
   if FuelCount == 0 then
     print("Turtle has no fuel")
     print("put fuel in 1 first and second slot")
@@ -50,36 +145,67 @@ function check()
   end
   if Error == 1 then
     print("Items are missing please try again")
-    print("turtle will recheck in 15 sec")
-    sleep(15)
-    recheck()
-  else
-    print("all items are there turtle will start")
-    turtle.digDown()
-    turtle.down()
-    turtle.digDown()
-    turtle.down()
-    turtle.digDown()
-    Wc = 0
-    Lc = 0
-    Hc = Hc + 3
-    Lenght()
+    print("turtle will recheck in 10 sec")
   end
 end
 
--- Recheck  if user forget something turtle will check after 15 sec
-function recheck()
+-- Recheck if user forget something turtle will check after 15 sec
+local function Recheck()
   FuelCount = turtle.getItemCount(1)
   FuelCount1 = turtle.getItemCount(2)
   Chest = turtle.getItemCount(3)
   Error = 0
-  check()
 end
 
--- Run Command aka start up command
-function run()
-  turtle.digDown()
-  turtle.down()
+-- Refuel
+local function Refuel()
+  if NoFuelNeed == 0 then
+    if turtle.getFuelLevel() < 300 then
+      if FuelCount > 10 then
+        turtle.select(1)
+        turtle.refuel(12)
+        FuelCount = FuelCount - 10
+      elseif FuelCount1 > 10 then
+        turtle.select(2)
+        turtle.refuel(12)
+        FuelCount1 = FuelCount1 - 10
+      else
+        print("out of fuel")
+        os.shutdown()
+      end
+    end
+  end
+end
+
+local function Chest1()
+  if turtle.getItemCount(16)> 0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
+    repeat -- The Fix to Gravel Chest Bug. It check if gravel above then it dig three times
+      turtle.digUp()
+      sleep(2)
+      if turtle.detectUp() then
+        turtle.digUp()
+        BlockUp = 0
+      else
+        BlockUp = 1
+      end
+    until BlockUp == 1
+    turtle.select(3)
+    turtle.placeUp()
+    Chest = Chest - 1
+    for slot = 4, 16 do
+      turtle.select(slot)
+      sleep(1.5) -- Small fix for slow pc because i had people problem with this
+      turtle.dropUp()
+    end
+    turtle.select(4)
+    if Chest == 0 then
+      print("Out Of Chest")
+      os.shutdown()
+    end
+  end
+end
+
+local function Start()
   turtle.digDown()
   turtle.down()
   turtle.digDown()
@@ -88,144 +214,30 @@ function run()
   Wc = 0
   Lc = 0
   Hc = Hc + 3
-  if High == Hc then
-    print("done")
-  else
-    Lenght()
-  end
 end
 
--- Mining for length
-function Lenght()
+function MainPart()
   repeat
-    if turtle.detect() then
-      turtle.dig()
-    end
-    if turtle.forward() then
-      Lc = Lc + 1
-      TotalBlockDone = TotalBlockDone + 3
-      print(TotalBlocks - TotalBlockDone)
-    end
-    if turtle.detectUp() then
-      turtle.digUp()
-    end
-    if turtle.detectDown() then
-      turtle.digDown()
-    end
-    if turtle.getItemCount(16)> 0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
-      repeat -- The Fix to Gravel Chest Bug. It check if gravel above then it dig three times
-        turtle.digUp()
-        sleep(2)
-        if turtle.detectUp() then
-          BlockUp = 0
+    repeat
+      Length1()
+      Refuel()
+      Chest1()
+      if Long == Lc then
+        if LSorWS == 0 then
+          Wide1()
         else
-          BlockUp = 1
-        end
-      until BlockUp == 1
-      turtle.select(3)
-      turtle.placeUp()
-      Chest = Chest - 1
-      for slot = 4, 16 do
-        turtle.select(slot)
-        turtle.dropUp()
-        sleep(1.5) -- Small fix for slow pc because i had people problem with this
-      end
-      turtle.select(4)
-      if Chest == 0 then
-        print("Out Of Chest")
-        sleep(300000)
-      end
-    end
-    if NoFuelNeed == 0 then
-      if turtle.getFuelLevel() < 300 then
-        if FuelCount > 10 then
-          turtle.select(1)
-          turtle.refuel(12)
-          FuelCount = FuelCount - 10
-        elseif FuelCount1 > 10 then
-          turtle.select(2)
-          turtle.refuel(12)
-          FuelCount1 = FuelCount1 - 10
-        else
-          print("out of fuel")
-          sleep(300000)
+          Wide2()
         end
       end
-    end
-  until Long == Lc
-  if Wide == Wc then
+    until Wide == Wc
+    repeat
+      Length1()
+    until Long == Lc
     turtle.turnRight()
     LSorWS = 0
-    run()
-  else
-    wide()
-  end
-end
-
--- Mining Wide
-function wide()
-  if LSorWS == 0 then
-    turtle.turnRight()
-    if turtle.detect() then
-      turtle.dig()
-    end
-    if turtle.forward() then
-      turtle.digDown()
-    else
-      repeat -- Fix to moving Probleem let it first remove before moving ageing
-        turtle.dig()
-        sleep(2)
-        if turtle.forward() then
-          BlockUp = 0
-        else
-          BlockUp = 1
-        end
-      until BlockUp == 0
-    end
-    if turtle.detectUp() then
-      turtle.digUp()
-    end
-    if turtle.detectDown() then
-      turtle.digDown()
-    end
-    turtle.turnRight()
-    LSorWS = 1
-  else
-    turtle.turnLeft()
-    if turtle.detect() then
-      turtle.dig()
-    end
-    if turtle.forward() then
-      turtle.digDown()
-    else
-      repeat -- Fix to moving Probleem let it first remove before moving ageing
-        turtle.dig()
-        sleep(2)
-        if turtle.forward() then
-          BlockUp = 0
-        else
-          BlockUp = 1
-        end
-      until BlockUp == 0
-    end   
-    if turtle.detectUp() then
-      turtle.digUp()
-    end
-    if turtle.detectDown() then
-      turtle.digDown()
-    end
-    turtle.turnLeft()
-    LSorWS = 0
-  end
-  Lc = 0
-  Wc = Wc + 1
-  if Wide == WC then
-    turtle.turnRight()
-    LSorWS = 0
-    run()
-  else
-    Lenght()
-  end
+    High1()
+  until High == Hc
+  print("Turtle Is Done")
 end
 
 -- Starting
@@ -257,4 +269,13 @@ elseif turtle.getFuelLevel() < 200 then
   turtle.select(1)
   turtle.refuel(2)
 end
-check()
+Check()
+if Error == 1 then
+  repeat
+    sleep(10)
+    Recheck()
+    Check()
+  until Error == 0
+end
+Start()
+MainPart()
