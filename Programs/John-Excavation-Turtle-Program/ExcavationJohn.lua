@@ -145,7 +145,7 @@ local function Check()
 	end
 	if Error == 1 then
 		print("Items are missing please try again")
-		print("turtle will recheck in 15 sec")
+		print("turtle will recheck in 10 sec")
 	end
 end
 
@@ -272,6 +272,7 @@ end
 Check()
 if Error == 1 then
 	repeat
+		sleep(10)
 		Recheck()
 		Check()
 	until Error == 0
