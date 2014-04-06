@@ -1,5 +1,5 @@
 -- This Version
---  0.30
+--  0.31 4/7/2014
 -- Changelogs
 --  0.21 Fixing Gravel block chest bug
 --  0.22 Improving Mining Speed by adding turtle.detect(), turtle.detectDown(), turtle.detectUp()
@@ -9,8 +9,8 @@
 --  0.26 Trying to fix Chest Bug
 --  0.27 Fixed Chest Bug My Bad 
 --  0.28 Improving Wide Code By adding turtle.detect() , turtle.detectUp() , turtle.detectDown() so it bit fast and stable
---  0.29 Rewrite of Everything
---  0.30 More Rewriting
+--  0.30 Rewrite of Everything
+--  0.31 Extreme Bugs Fixing
 
 -- Local Variables
 local Wide = 0  -- How Wide 
@@ -31,7 +31,7 @@ local TotalBlockDone = 0 -- How many Block Mined
 local BlockUp = 0 -- Fixing to Chest Probleem and moving probleem
 
 -- Local Functions
-local function Length() -- Length Mine
+local function Length1() -- Length Mine
 	if turtle.detect() then
 		turtle.dig()
 	end
@@ -183,6 +183,7 @@ local function Chest1()
 			turtle.digUp()
 			sleep(2)
 			if turtle.detectUp() then
+				turtle.digUp()
 				BlockUp = 0
 			else
 				BlockUp = 1
@@ -193,8 +194,8 @@ local function Chest1()
 		Chest = Chest - 1
 		for slot = 4, 16 do
 			turtle.select(slot)
-			turtle.dropUp()
 			sleep(1.5) -- Small fix for slow pc because i had people problem with this
+			turtle.dropUp()
 		end
 		turtle.select(4)
 		if Chest == 0 then
@@ -218,7 +219,7 @@ end
 function MainPart()
 	repeat
 		repeat
-			Length()
+			Length1()
 			Refuel()
 			Chest1()
 			if Long == Lc then
@@ -229,11 +230,14 @@ function MainPart()
 				end
 			end
 		until Wide == Wc
-		Length()
+		repeat
+			Length1()
+		until Long == Lc
 		turtle.turnRight()
 		LSorWS = 0
 		High1()
 	until High == Hc
+	print("Turtle Is Done")
 end
 
 -- Starting
