@@ -1,5 +1,5 @@
 -- This Version
---  0.31 4/7/2014
+--  0.32 4/7/2014 2:30 AM
 -- Changelogs
 --  0.21 Fixing Gravel block chest bug
 --  0.22 Improving Mining Speed by adding turtle.detect(), turtle.detectDown(), turtle.detectUp()
@@ -11,6 +11,7 @@
 --  0.28 Improving Wide Code By adding turtle.detect() , turtle.detectUp() , turtle.detectDown() so it bit fast and stable
 --  0.30 Rewrite of Everything
 --  0.31 Extreme Bugs Fixing
+--  0.32 Change Speed of Wide so wont look like program stop but if gravel in way it still works and change speed of Chest Code
 
 -- Local Variables
 local Wide = 0  -- How Wide 
@@ -52,14 +53,13 @@ local function Wide1() -- Wide Around Right
 	turtle.turnRight()
 	if turtle.detect() then
 		turtle.dig()
-		sleep(2) -- Minor bug fix if there is gravel
+		sleep(0.6) -- Minor bug fix if there is gravel
 	end
 	if turtle.forward() then
-		turtle.digDown()
 	else
 		repeat
 			turtle.dig()
-			sleep(2)
+			sleep(0.6)
 			if turtle.forward() then
 				BlockUp = 0
 			else
@@ -83,14 +83,13 @@ local function Wide2() -- Wide Around Left
 	turtle.turnLeft()
 	if turtle.detect() then
 		turtle.dig()
-		sleep(2) -- Minor bug fix if there is gravel
+		sleep(0.6) -- Minor bug fix if there is gravel
 	end
 	if turtle.forward() then
-		turtle.digDown()
 	else
 		repeat
 			turtle.dig()
-			sleep(2)
+			sleep(0.6)
 			if turtle.forward() then
 				BlockUp = 0
 			else
@@ -181,7 +180,7 @@ local function Chest1()
 	if turtle.getItemCount(16)> 0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
 		repeat -- The Fix to Gravel Chest Bug. It check if gravel above then it dig three times
 			turtle.digUp()
-			sleep(2)
+			sleep(0.8)
 			if turtle.detectUp() then
 				turtle.digUp()
 				BlockUp = 0
@@ -194,7 +193,7 @@ local function Chest1()
 		Chest = Chest - 1
 		for slot = 4, 16 do
 			turtle.select(slot)
-			sleep(1.5) -- Small fix for slow pc because i had people problem with this
+			sleep(1.45) -- Small fix for slow pc because i had people problem with this
 			turtle.dropUp()
 		end
 		turtle.select(4)
