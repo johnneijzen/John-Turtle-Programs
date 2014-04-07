@@ -1,5 +1,5 @@
 -- This Version
---  0.35 4/8/2014 1:30 AM
+--  0.36 4/8/2014 2:00 AM
 -- Changelogs
 --  0.30 Rewrite of Everything
 --  0.31 Extreme Bugs Fixing
@@ -7,6 +7,7 @@
 --  0.33 Weird Chest Bug With Gravel Fix. So i change speed of chest to 1 sec i hope that fix it.
 --  0.34 I think i found out want was making items on ground when turtle go back it cant bump it item so it on floor i now fix it.
 --  0.35 Opps Fuel Code was worng
+--  0.36 Fully Bug Where Items fall on ground it was Length Code
 
 -- Local Variables
 local Wide = 0  -- How Wide 
@@ -32,6 +33,19 @@ local function Length1() -- Length Mine
 		turtle.dig()
 	end
 	if turtle.forward() then
+		Lc = Lc + 1
+		TotalBlockDone = TotalBlockDone + 3
+		print(TotalBlocks - TotalBlockDone)
+	else
+		repeat
+			turtle.dig()
+			sleep(0.6)
+			if turtle.forward() then
+				BlockUp = 0
+			else
+				BlockUp = 1
+			end
+		until BlockUp == 0
 		Lc = Lc + 1
 		TotalBlockDone = TotalBlockDone + 3
 		print(TotalBlocks - TotalBlockDone)
