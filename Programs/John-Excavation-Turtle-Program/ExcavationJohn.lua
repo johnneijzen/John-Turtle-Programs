@@ -7,7 +7,7 @@
 --  0.33 Weird Chest Bug With Gravel Fix. So i change speed of chest to 1 sec i hope that fix it.
 --  0.34 I think i found out want was making items on ground when turtle go back it cant bump it item so it on floor i now fix it.
 --  0.35 Opps Fuel Code was worng
---  0.36 Fully Bug Where Items fall on ground it was Length Code
+--  0.36 Fully Fixed Bug Where Items fall on ground it was Length Code
 
 -- Local Variables
 local Wide = 0  -- How Wide 
