@@ -1,17 +1,10 @@
 -- This Version
---  0.32 4/7/2014 2:30 AM
+--  0.33 4/8/2014 12:37 AM
 -- Changelogs
---  0.21 Fixing Gravel block chest bug
---  0.22 Improving Mining Speed by adding turtle.detect(), turtle.detectDown(), turtle.detectUp()
---  0.23 Adding More Comments so can keep Track and remove blank space and fixing two Bug.
---  0.24 Better Fix to UI and More Bug Fixing
---  0.25 Fixing My Programming error
---  0.26 Trying to fix Chest Bug
---  0.27 Fixed Chest Bug My Bad 
---  0.28 Improving Wide Code By adding turtle.detect() , turtle.detectUp() , turtle.detectDown() so it bit fast and stable
 --  0.30 Rewrite of Everything
 --  0.31 Extreme Bugs Fixing
 --  0.32 Change Speed of Wide so wont look like program stop but if gravel in way it still works and change speed of Chest Code
+--  0.33 Weird Chest Bug With Gravel Fix. So i change speed of chest to 1 sec i hope that fix it.
 
 -- Local Variables
 local Wide = 0  -- How Wide 
@@ -180,7 +173,7 @@ local function Chest1()
 	if turtle.getItemCount(16)> 0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
 		repeat -- The Fix to Gravel Chest Bug. It check if gravel above then it dig three times
 			turtle.digUp()
-			sleep(0.8)
+			sleep(1)
 			if turtle.detectUp() then
 				turtle.digUp()
 				BlockUp = 0
