@@ -1,10 +1,11 @@
 -- This Version
---  0.33 4/8/2014 12:37 AM
+--  0.34 4/8/2014 12:50 AM
 -- Changelogs
 --  0.30 Rewrite of Everything
 --  0.31 Extreme Bugs Fixing
 --  0.32 Change Speed of Wide so wont look like program stop but if gravel in way it still works and change speed of Chest Code
 --  0.33 Weird Chest Bug With Gravel Fix. So i change speed of chest to 1 sec i hope that fix it.
+--  0.34 I think i found out want was making items on ground when turtle go back it cant bump it item so it on floor i now fix it.
 
 -- Local Variables
 local Wide = 0  -- How Wide 
@@ -224,6 +225,8 @@ function MainPart()
 		until Wide == Wc
 		repeat
 			Length1()
+			Refuel()
+			Chest1()
 		until Long == Lc
 		turtle.turnRight()
 		LSorWS = 0
