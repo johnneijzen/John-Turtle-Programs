@@ -1,5 +1,5 @@
 -- This Version
---  0.36 4/8/2014 2:00 AM
+--  0.37 4/10/2014 2:00 AM
 -- Changelogs
 --  0.30 Rewrite of Everything
 --  0.31 Extreme Bugs Fixing
@@ -8,6 +8,7 @@
 --  0.34 I think i found out want was making items on ground when turtle go back it cant bump it item so it on floor i now fix it.
 --  0.35 Opps Fuel Code was worng
 --  0.36 Fully Fixed Bug Where Items fall on ground it was Length Code
+--  0.37 Change: Until High == Hc To Until High <= Hc so if number is not divible by 3 will stop when it past high limit
 
 -- Local Variables
 local Wide = 0  -- How Wide 
@@ -246,7 +247,7 @@ function MainPart()
 		turtle.turnRight()
 		LSorWS = 0
 		High1()
-	until High == Hc
+	until High <= Hc
 	print("Turtle Is Done")
 end
 
