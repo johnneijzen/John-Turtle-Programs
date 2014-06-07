@@ -3,9 +3,10 @@
 -- ChangeLogs
 --  0.01 - First Draft
 -- TODO
---  Back Program
---  Other Stuff Named TODO
---  And Testing
+--  Back Program P.s I`m do this Fast As Possible
+--  Fuel Program P.s I`m do this Fast As Possible
+--  Other Stuff Named TODO This After Done others
+--  And Testing after done with back and fuel programs
 
 -- Locals Variables
 -- Inventory Locals 
