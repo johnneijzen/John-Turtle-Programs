@@ -1,10 +1,10 @@
 -- This Version
--- 2.04
+-- 2.05
 -- ChangeLogs
 -- 2.04 - Adding Left or Right Support
+-- 2.05 - Changing Lot Code For Some Stable And Cleaner Code
 
 --Local
-local Mines = 0 -- Multi Mines Yes Or No 1 = yes and 0 = no
 local distance = 0 -- How Far Did User Pick
 local onlight = 0 -- When to Place Torch
 local torch = turtle.getItemCount(1) -- How many items are in slot 1 (torch)
@@ -18,7 +18,7 @@ local Error = 0 -- 0 = No Error and 1 = Error
 local Way = 0 -- 0 = Left and 1 = Right
 
 --Checking
-function check()
+local function Check()
   if torch == 0 then
     print("There are no torch's in Turtle")
     Error = 1
@@ -44,16 +44,18 @@ function check()
       Needfuel = 0
     end
   until NeedFuel == 0
-  if Error == 1 then
-    Test()
-  else
-    forwardM()
-  end
 end
 
+-- Recheck if user forget something turtle will check after 15 sec
+local function Recheck()
+  FuelCount = turtle.getItemCount(1)
+  FuelCount1 = turtle.getItemCount(2)
+  Chest = turtle.getItemCount(3)
+  Error = 0
+end
 
 --Mining
-function forwardM()
+local function ForwardM()
   repeat
     if turtle.detect() then
       turtle.dig()
@@ -103,13 +105,10 @@ function forwardM()
       end
     until NeedFuel == 0
   until TF == 0
-  if TF == 0 then
-    backA()
-  end
 end
 
 --Warm Up For Back Program
-function backA() -- To make turn around so it can go back
+local function WarmUpForBackProgram() -- To make turn around so it can go back
   turtle.turnLeft()
   turtle.turnLeft()
   turtle.up()
@@ -117,7 +116,7 @@ function backA() -- To make turn around so it can go back
 end
 
 --Back Program
-function back()
+local function Back()
   repeat
     if turtle.forward() then -- sometimes sand and gravel and block and mix-up distance
       TB = TB - 1
@@ -126,15 +125,10 @@ function back()
       turtle.dig()
     end
   until TB == 0
-  if Mines == 1 then
-    MultiMines()
-  else
-    print("Turtle done")
-  end
 end
 
 -- Multimines Program
-function MultiMines()
+local function MultiMines()
   if Way == 0 then
     turtle.turnLeft()
     turtle.down()
@@ -162,12 +156,11 @@ function MultiMines()
     print("Turtle is done")
   else
     MineTimes = MineTimes - 1
-    Restart()
   end
 end
 
 -- Restart 
-function Restart()
+local function Restart()
   TF = distance
   TB = distance
   MD = 3
@@ -175,9 +168,15 @@ function Restart()
   forwardM()
 end
 
--- Error
-function Test()
-  print("Please Recheck And try again")
+-- Starting 
+function Start()
+  repeat
+    ForwardM()
+	WarmUpForBackProgram()
+	Back()
+	MultiMines()
+	Restart()
+  until MineTimes == 0
 end
 
 -- Start
@@ -191,12 +190,15 @@ print("Left or Right")
 print("0 = Left and 1 = Right")
 input4 = io.read()
 Way = input4
-print("To Want Multiple Strip Mines No = 0, Yes = 1")
+print("How Many Times")
 input2 = io.read()
-Mines = tonumber(input2)
-if Mines == 1 then
-  print("How Many Times")
-  input3 = io.read()
-  MineTimes = tonumber(input3)
+MineTimes = tonumber(input3)
+Check()
+if Error == 1 then 
+  repeat
+    sleep(10)
+    Recheck()
+    Check()
+  until Error == 0
 end
-check()
+Start()
