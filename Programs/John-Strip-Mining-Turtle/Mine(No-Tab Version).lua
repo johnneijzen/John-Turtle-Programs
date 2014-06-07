@@ -1,8 +1,9 @@
 -- This Version
--- 2.05
+-- 2.06
 -- ChangeLogs
 -- 2.04 - Adding Left or Right Support
 -- 2.05 - Changing Lot Code For Some Stable And Cleaner Code
+-- 2.06 - Ops Forget Fuel Chcking Code after rewrtitting
 
 --Local
 local distance = 0 -- How Far Did User Pick
@@ -30,6 +31,12 @@ local function Check()
     Error = 1
   else
     print("There are chest in turtle")
+  end
+  if ItemFuel == 0 then
+    print("No Fuel Items")
+    error = 1
+  else
+    print("there is fuel")
   end
   repeat
     if turtle.getFuelLevel() == "unlimited" then 
