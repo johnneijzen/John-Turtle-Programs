@@ -48,9 +48,9 @@ end
 
 -- Recheck if user forget something turtle will check after 15 sec
 local function Recheck()
-  FuelCount = turtle.getItemCount(1)
-  FuelCount1 = turtle.getItemCount(2)
-  Chest = turtle.getItemCount(3)
+  torch = turtle.getItemCount(1)
+  chest = turtle.getItemCount(2)
+  ItemFuel = turtle.getItemCount(3)
   Error = 0
 end
 
