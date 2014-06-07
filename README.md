@@ -40,3 +40,6 @@ http://www.computercraft.info/forums2/index.php?/topic/17667-john-excavation-tur
 
 John Strip Mining Turtle[Working]
 http://www.computercraft.info/forums2/index.php?/topic/15292-version-200-john-strip-mining-turtle/page__p__145639#entry145639
+
+Note:
+8/8/2014 Or sooner I will Retest Most My Turtle Programs till then there bit buggy
