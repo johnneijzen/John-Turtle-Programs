@@ -139,6 +139,8 @@ end
 
 -- Starting
 print("Welecome to Turtle Tree Logger Program")
+print("Fuel in slot 1 & 2, and Sapling in slot 3 & 4, and one piece of wood that you are farming in slot 5")
+print("Note: If it says that items are missing but they are there just wait for recheck program that happen every 10 sec")
 print("How wide for Saplings")
 input = io.read()
 wide = tonumber(input)
