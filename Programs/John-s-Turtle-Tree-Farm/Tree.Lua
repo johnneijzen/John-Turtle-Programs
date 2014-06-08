@@ -1,10 +1,14 @@
 -- Current Version
---  0.02
+--  0.05
 -- ChangeLogs
 --  0.01 - First Draft
 --  0.02 - Added Fuel Code
+--  0.03 - Testing and Debugging and fixing values
+--  0.04 - Adding Plant code on Cutter Program
+--  0.05 - More Spacing Cleaning and Small Debugs
 -- TODO
---  Back Program and Side Program P.s I`m do this Fast As Possible
+--  Back Program  P.s I`m do this Fast As Possible somewhere between version 0.06 to 0.09
+--  Wide Program Aka Side Program I`m do this Fast As Possible somewhere between version 0.06 to 0.09
 --  Other Stuff Named TODO This After Done others
 --  And Testing after done with back and fuel programs
 
@@ -30,7 +34,7 @@ local furnace = 0 -- Feature-request TODO
 local x = 0 -- I dont use this only for loop
 
 -- Local Programs
-local function check
+local function check()
   if noFuelNeeded == 0 then
     if fuel == 0 and fuel1 == 0 then
       print("turtle has no fuel")
@@ -41,13 +45,27 @@ local function check
   if Sapling1 == 0 and Sapling2 == 0 then
     print("turtle has no sapling")
     print("put Sapling in 3nd and 4nd slot")
-	itemError = 1
+    itemError = 1
+  end
+  if treeBlock == 0 then
+    print("turtle has no tree block to compair with")
+    print("Put tree block in slot 5")
+    itemError = 1
   end
   if itemError == 1 then
     print("Items are missing please try again")
-    print("turtle will recheck in 10 sec")
-	sleep(10)
+    print("turtle will recheck in 8 sec")
+    sleep(8)
   end
+end
+
+local function reCheck()
+  fuel = turtle.getItemCount(1)
+  fuel1 = turtle.getItemCount(2)
+  sapling1 = turtle.getItemCount(3)
+  sapling2 = turtle.getItemCount(4)
+  treeBlock = turtle.getItemCount(5)
+  itemError = 0
 end
 
 local function treeDetecter()
@@ -55,12 +73,12 @@ local function treeDetecter()
   turtle.select(5)
   if turtle.compare() then
     turtle.dig()
-	turtle.forward()
-	longCount = longCount + 1
+    turtle.forward()
+    longCount = longCount + 1
     treeDetect = 1
   else
     longCount = longCount + 1
-	treeDetect = 0
+    treeDetect = 0
   end
 end
 
@@ -68,13 +86,32 @@ local function treeCutter()
   repeat
     turtle.select(5)
     if turtle.compareUp() then
-	  turtle.digUp()
-	  turtleReachTop = 0
-	  upCount = 0
-	else
-	  turtleReachTop = 1
-	end
-  until turtleReachTop = 1
+      turtle.digUp()
+      turtle.up()
+      turtleReachTop = 0
+      upCount = upCount + 1
+    else
+      turtleReachTop = 1
+    end
+  until turtleReachTop == 1
+  repeat
+    turtle.down()
+    upCount = upCount - 1
+  until upCount == 0
+  turtle.forward()
+  turtle.turnLeft()
+  turtle.turnLeft()
+  if sapling1 > 0 then
+    turtle.select(3)
+    turtle.place()
+    sapling1 = sapling1 - 1
+  elseif sapling2 > 0 then
+    turtle.select(4)
+    turtle.place()
+    sapling2 = sapling2 - 1
+  end
+  turtle.turnLeft()
+  turtle.turnLeft()
 end
 
 local function treePlant()
@@ -99,14 +136,14 @@ end
 local function reFuel()
   if noFuelNeeded == 0 then
     if turtle.getFuelLevel() < 100 then
-      if fuel1 > 10 then
+      if fuel > 10 then
         turtle.select(1)
         turtle.refuel(10)
-        FuelCount = FuelCount - 10
-      elseif fuel2 > 10 then
+        fuel = fuel - 10
+      elseif fuel1 > 10 then
         turtle.select(2)
         turtle.refuel(10)
-        FuelCount1 = FuelCount1 - 10
+        fuel1 = fuel1 - 10
       else
         print("out of fuel")
         os.shutdown()
@@ -116,25 +153,23 @@ local function reFuel()
 end
 
 local function back() --TODO
-
 end
 
 local function side() --TODO
 end
 
-function Start()
+function start()
+  turtle.forward()
   repeat
-    repeat
-      turtle.forward()
-	  reFuel()
-      treeDetecter()
-      if treeDetect = 1 then
-        treeCutter()
-      else
-        treePlant()
-      end
-	until long == longcount
-  until wide == wideCount
+    treeDetect = 0
+    reFuel()
+    treeDetecter()
+    if treeDetect == 1 then
+      treeCutter()
+    else
+      treePlant()
+    end
+  until long == longcount
 end
 
 -- Starting
@@ -158,8 +193,8 @@ end
 check()
 if itemError == 1 then
   repeat
-    itemError == 0
-	check()
+    reCheck()
+    check()
   until itemError == 0
 end
 start()
