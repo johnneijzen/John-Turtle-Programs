@@ -1,11 +1,12 @@
 -- Current Version
---  0.05
+--  0.06
 -- ChangeLogs
 --  0.01 - First Draft
 --  0.02 - Added Fuel Code
 --  0.03 - Testing and Debugging and fixing values
 --  0.04 - Adding Plant code on Cutter Program
 --  0.05 - More Spacing Cleaning and Small Debugs
+--  0.06 - Starting Working on Back And Wide Programs 6/9/2014
 -- TODO
 --  Back Program  P.s I`m do this Fast As Possible somewhere between version 0.06 to 0.09
 --  Wide Program Aka Side Program I`m do this Fast As Possible somewhere between version 0.06 to 0.09
@@ -26,12 +27,14 @@ local wide = 0
 local long = 0
 local wideCount = 0
 local longCount = 0
-local sideCount = 0
+local sideMoveCount = 0 
+local otherSideMoveCount = 0 -- TODO or not need later
 local upCount = 0
 local turtleReachTop = 0
 local treeDetect = 0
+local facing = 0 -- If turtle is forward then it is 0 if is going back then is 1
 local furnace = 0 -- Feature-request TODO
-local x = 0 -- I dont use this only for loop
+local x = 0 -- I don't use this only for loop it may be remove later on.
 
 -- Local Programs
 local function check()
@@ -152,24 +155,52 @@ local function reFuel()
   end
 end
 
-local function back() --TODO
+local function wide() --TODO
+  turtle.forward() -- to make it simple for me
+  turtle.turnRight()
+  turtle.forward()
+  turtle.forward()
+  turtle.forward()
+  turtle.turnRight()
+  wideCount = wideCount + 1
+  sideCount = sideCount + 3 
+  if facing == 0 then
+    facing = 1
+  else 
+    facing = 0
+  end
 end
 
-local function side() --TODO
+local function back() --TODO
+  if facing == 1 then
+    turtle.forward()
+	turtle.turnRight()
+	repeat
+	  turtle.forward()
+	  sideCount = sideCount - 1
+	until sideCount == 0 
+	turtle.turnRight()
+	turtle.back()
+  end
+end
+
+local function chest() -- TODO 
 end
 
 function start()
   turtle.forward()
   repeat
-    treeDetect = 0
-    reFuel()
-    treeDetecter()
-    if treeDetect == 1 then
-      treeCutter()
-    else
-      treePlant()
-    end
-  until long == longcount
+    repeat
+      treeDetect = 0
+      reFuel()
+      treeDetecter()
+      if treeDetect == 1 then
+        treeCutter()
+      else
+        treePlant()
+      end
+    until long == longCount
+  until wide == wideCount
 end
 
 -- Starting
