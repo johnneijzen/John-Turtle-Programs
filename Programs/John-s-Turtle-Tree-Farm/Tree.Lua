@@ -1,5 +1,5 @@
 -- Current Version
---  0.06
+--  0.07
 -- ChangeLogs
 --  0.01 - First Draft
 --  0.02 - Added Fuel Code
@@ -7,6 +7,7 @@
 --  0.04 - Adding Plant code on Cutter Program
 --  0.05 - More Spacing Cleaning and Small Debugs
 --  0.06 - Starting Working on Back And Wide Programs 6/9/2014
+--  0.07 - More Bug Fixing. Note: Still need lot of stuff
 -- TODO
 --  Back Program  P.s I`m do this Fast As Possible somewhere between version 0.06 to 0.09
 --  Wide Program Aka Side Program I`m do this Fast As Possible somewhere between version 0.06 to 0.09
@@ -155,15 +156,16 @@ local function reFuel()
   end
 end
 
-local function wide() --TODO
+local function side() --TODO
   turtle.forward() -- to make it simple for me
   turtle.turnRight()
   turtle.forward()
   turtle.forward()
   turtle.forward()
   turtle.turnRight()
+  longCount = 0
   wideCount = wideCount + 1
-  sideCount = sideCount + 3 
+  sideMoveCount = sideMoveCount + 3 
   if facing == 0 then
     facing = 1
   else 
@@ -177,7 +179,7 @@ local function back() --TODO
 	turtle.turnRight()
 	repeat
 	  turtle.forward()
-	  sideCount = sideCount - 1
+	  sideMoveCount = sideMoveCount - 1
 	until sideCount == 0 
 	turtle.turnRight()
 	turtle.back()
@@ -200,19 +202,22 @@ function start()
         treePlant()
       end
     until long == longCount
+    side()
   until wide == wideCount
+  back()
 end
 
 -- Starting
 print("Welecome to Turtle Tree Logger Program")
 print("Fuel in slot 1 & 2, and Sapling in slot 3 & 4, and one piece of wood that you are farming in slot 5")
 print("Note: If it says that items are missing but they are there just wait for recheck program that happen every 10 sec")
-print("How wide for Saplings")
-input = io.read()
-wide = tonumber(input)
 print("How long for saplings")
 input2 = io.read()
 long = tonumber(input2)
+print("How wide for Saplings")
+input = io.read()
+wide = tonumber(input)
+wide = wide + 1
 print("Turtle go to work")
 if turtle.getFuelLevel() == "unlimited" then 
   print("your turtle config does need fuel")
