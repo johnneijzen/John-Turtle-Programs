@@ -1,5 +1,5 @@
 -- Current Version
---  0.07
+--  0.08
 -- ChangeLogs
 --  0.01 - First Draft
 --  0.02 - Added Fuel Code
@@ -8,6 +8,7 @@
 --  0.05 - More Spacing Cleaning and Small Debugs
 --  0.06 - Starting Working on Back And Wide Programs 6/9/2014
 --  0.07 - More Bug Fixing. Note: Still need lot of stuff
+--  0.08 - Trying Fixing back code and add left stuff on side program and Add debugging that will be remove in version 0.10 or 0.12 i just have them to test if things are working
 -- TODO
 --  Back Program  P.s I`m do this Fast As Possible somewhere between version 0.06 to 0.09
 --  Wide Program Aka Side Program I`m do this Fast As Possible somewhere between version 0.06 to 0.09
@@ -39,6 +40,7 @@ local x = 0 -- I don't use this only for loop it may be remove later on.
 
 -- Local Programs
 local function check()
+  print("function check() start") -- Debugs
   if noFuelNeeded == 0 then
     if fuel == 0 and fuel1 == 0 then
       print("turtle has no fuel")
@@ -61,18 +63,22 @@ local function check()
     print("turtle will recheck in 8 sec")
     sleep(8)
   end
+  print("function check() done") -- Debugs
 end
 
 local function reCheck()
+  print("function reCheck() start") -- Debugs
   fuel = turtle.getItemCount(1)
   fuel1 = turtle.getItemCount(2)
   sapling1 = turtle.getItemCount(3)
   sapling2 = turtle.getItemCount(4)
   treeBlock = turtle.getItemCount(5)
   itemError = 0
+  print("function reCheck() done") -- Debugs
 end
 
 local function treeDetecter()
+  print("function treeDetecter() starts") -- Debugs
   turtle.forward()
   turtle.select(5)
   if turtle.compare() then
@@ -84,9 +90,11 @@ local function treeDetecter()
     longCount = longCount + 1
     treeDetect = 0
   end
+  print("function treeDetecter() done") -- Debugs
 end
 
 local function treeCutter()
+  print("function treeCutter() start") -- Debugs
   repeat
     turtle.select(5)
     if turtle.compareUp() then
@@ -116,9 +124,11 @@ local function treeCutter()
   end
   turtle.turnLeft()
   turtle.turnLeft()
+  print("function treeCutter() done") -- Debugs
 end
 
 local function treePlant()
+  print("function treePlant() starts") -- Debugs
   turtle.dig()
   turtle.forward()
   turtle.forward()
@@ -135,9 +145,11 @@ local function treePlant()
   end
   turtle.turnLeft()
   turtle.turnLeft()
+  print("function treePlant() done") -- Debugs
 end
 
 local function reFuel()
+  print("function reFuel() starts") -- Debugs
   if noFuelNeeded == 0 then
     if turtle.getFuelLevel() < 100 then
       if fuel > 10 then
@@ -154,26 +166,35 @@ local function reFuel()
       end
     end
   end
+  print("function reFuel() Done") -- Debugs
 end
 
 local function side() --TODO
+  print("function side() starts") -- Debugs
   turtle.forward() -- to make it simple for me
-  turtle.turnRight()
-  turtle.forward()
-  turtle.forward()
-  turtle.forward()
-  turtle.turnRight()
   longCount = 0
   wideCount = wideCount + 1
   sideMoveCount = sideMoveCount + 3 
   if facing == 0 then
+    turtle.turnRight()
+    turtle.forward()
+    turtle.forward()
+    turtle.forward()
+    turtle.turnRight()
     facing = 1
   else 
     facing = 0
+	turtle.turnLeft()
+    turtle.forward()
+    turtle.forward()
+    turtle.forward()
+    turtle.turnLeft()
   end
+  print("function side() Done") -- Debugs
 end
 
 local function back() --TODO
+  print("function back() starts") -- Debugs
   if facing == 1 then
     turtle.forward()
 	turtle.turnRight()
@@ -184,12 +205,14 @@ local function back() --TODO
 	turtle.turnRight()
 	turtle.back()
   end
+  print("function back() done") -- Debugs
 end
 
 local function chest() -- TODO 
 end
 
 function start()
+  print("function start() starts") -- Debugs
   turtle.forward()
   repeat
     repeat
@@ -205,6 +228,7 @@ function start()
     side()
   until wide == wideCount
   back()
+  print("function start() done") -- Debugs
 end
 
 -- Starting
