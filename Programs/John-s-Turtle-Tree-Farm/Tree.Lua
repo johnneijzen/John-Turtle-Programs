@@ -1,5 +1,5 @@
 -- Current Version
---  0.08
+--  0.09
 -- ChangeLogs
 --  0.01 - First Draft
 --  0.02 - Added Fuel Code
@@ -9,6 +9,7 @@
 --  0.06 - Starting Working on Back And Wide Programs 6/9/2014
 --  0.07 - More Bug Fixing. Note: Still need lot of stuff
 --  0.08 - Trying Fixing back code and add left stuff on side program and Add debugging that will be remove in version 0.10 or 0.12 i just have them to test if things are working
+--  0.09 - Done Fixing Back Code now working on chest and bit more tweaking on back code
 -- TODO
 --  Back Program  P.s I`m do this Fast As Possible somewhere between version 0.06 to 0.09
 --  Wide Program Aka Side Program I`m do this Fast As Possible somewhere between version 0.06 to 0.09
@@ -173,7 +174,6 @@ local function side() --TODO
   print("function side() starts") -- Debugs
   turtle.forward() -- to make it simple for me
   longCount = 0
-  wideCount = wideCount + 1
   sideMoveCount = sideMoveCount + 3 
   if facing == 0 then
     turtle.turnRight()
@@ -197,13 +197,22 @@ local function back() --TODO
   print("function back() starts") -- Debugs
   if facing == 1 then
     turtle.forward()
-	turtle.turnRight()
-	repeat
-	  turtle.forward()
-	  sideMoveCount = sideMoveCount - 1
-	until sideCount == 0 
-	turtle.turnRight()
-	turtle.back()
+    turtle.turnRight()
+    repeat
+      turtle.forward()
+      sideMoveCount = sideMoveCount - 1
+    until sideMoveCount == 0 
+    turtle.turnRight()
+    turtle.back()
+  else
+    turtle.forward()
+    turtle.turnLeft()
+    repeat
+      turtle.forward()
+      sideMoveCount = sideMoveCount - 1
+    until sideMoveCount == 0 
+    turtle.turnLeft()
+    turtle.back()  
   end
   print("function back() done") -- Debugs
 end
@@ -225,7 +234,10 @@ function start()
         treePlant()
       end
     until long == longCount
-    side()
+    wideCount = wideCount + 1
+    if wide ~= wideCount then 
+      side()
+    end
   until wide == wideCount
   back()
   print("function start() done") -- Debugs
@@ -241,7 +253,6 @@ long = tonumber(input2)
 print("How wide for Saplings")
 input = io.read()
 wide = tonumber(input)
-wide = wide + 1
 print("Turtle go to work")
 if turtle.getFuelLevel() == "unlimited" then 
   print("your turtle config does need fuel")
