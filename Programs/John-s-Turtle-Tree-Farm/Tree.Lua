@@ -1,5 +1,5 @@
 -- Current Version
---  0.09
+--  0.10
 -- ChangeLogs
 --  0.01 - First Draft
 --  0.02 - Added Fuel Code
@@ -10,11 +10,11 @@
 --  0.07 - More Bug Fixing. Note: Still need lot of stuff
 --  0.08 - Trying Fixing back code and add left stuff on side program and Add debugging that will be remove in version 0.10 or 0.12 i just have them to test if things are working
 --  0.09 - Done Fixing Back Code now working on chest and bit more tweaking on back code
+--  0.10 - Adding Chest Code and Enderchest Not Tested i will soon.
 -- TODO
---  Back Program  P.s I`m do this Fast As Possible somewhere between version 0.06 to 0.09
---  Wide Program Aka Side Program I`m do this Fast As Possible somewhere between version 0.06 to 0.09
 --  Other Stuff Named TODO This After Done others
 --  And Testing after done with back and fuel programs
+--  Fixing Spacing I think i will use tabs for this version 0.11 or 0.12
 
 -- Locals Variables
 -- Inventory Locals 
@@ -37,6 +37,8 @@ local turtleReachTop = 0
 local treeDetect = 0
 local facing = 0 -- If turtle is forward then it is 0 if is going back then is 1
 local furnace = 0 -- Feature-request TODO
+local enderChestOn = 0 -- Feature-request TODO
+local enderChestWay = 0 -- Feature-request TODO
 local x = 0 -- I don't use this only for loop it may be remove later on.
 
 -- Local Programs
@@ -217,7 +219,72 @@ local function back() --TODO
   print("function back() done") -- Debugs
 end
 
-local function chest() -- TODO 
+local function chest()
+  turtle.turnRight()
+  for slot = 6, 16 do
+    turtle.select(slot)
+    sleep(1.45) -- Small fix for slow pc because i had people problem with this
+    turtle.drop()
+  end
+  turtle.turnLeft()
+  turtle.turnLeft()
+  turtle.select(3)
+  turtle.suck()
+  sapling1 = turtle.getItemCount(3)
+  turtle.select(4)
+  turtle.suck()
+  sapling2 = turtle.getItemCount(4)
+  turtle.turnRight()
+  turtle.select(6)
+ end
+ 
+local function enderChest()
+  if turtle.getItemCount(13) > 1 then
+    turtle.select(14)
+    turtle.placeDown()
+    for slot = 6, 13 do
+      turtle.select(slot)
+      sleep(1.45) -- Small fix for slow pc because i had people problem with this
+      turtle.dropDown()
+    end
+    turtle.select(14)
+	turtle.digDown()
+	turtle.select(6)
+  end
+  if sapling1 < 32 or Sapling2 < 32 then
+	turtle.select(15)
+	turtle.placeDown()
+	if sapling1 < 32 then
+	  turtle.select(3)
+	  turtle.suckDown()
+	  sapling1 = turtle.getItemCount(3)
+	end
+	if sapling2 < 32 then
+	  turtle.select(4)
+	  turtle.suckDown()
+	  sapling2 = turtle.getItemCount(4)
+	end
+	turtle.select(15)
+	turtle.digDown()
+	turtle.select(6)
+  end
+  if fuel < 32 or fuel1 < 32 then
+    turtle.select(16)
+	turtle.placeDown()
+    if fuel < 32 then
+	  turtle.select(1)
+	  turtle.suckDown()
+	  fuel = turtle.getItemCount(1)
+	end
+	if fuel1 < 32 then 
+	  turtle.select(2)
+	  turtle.suckDown()
+	  fuel1 = turtle.getItemCount(2)
+	end
+	turtle.select(16)
+	turtle.digDown()
+	turtle.select(6)
+  end
 end
 
 function start()
@@ -233,6 +300,9 @@ function start()
       else
         treePlant()
       end
+	  if enderChestOn == 1
+	    enderChest()
+	  end
     until long == longCount
     wideCount = wideCount + 1
     if wide ~= wideCount then 
@@ -240,6 +310,9 @@ function start()
     end
   until wide == wideCount
   back()
+  if enderChestOn == 0
+    chest()
+  end
   print("function start() done") -- Debugs
 end
 
@@ -248,12 +321,20 @@ print("Welecome to Turtle Tree Logger Program")
 print("Fuel in slot 1 & 2, and Sapling in slot 3 & 4, and one piece of wood that you are farming in slot 5")
 print("Note: If it says that items are missing but they are there just wait for recheck program that happen every 10 sec")
 print("How long for saplings")
-input2 = io.read()
-long = tonumber(input2)
+input1 = io.read()
+long = tonumber(input1)
 print("How wide for Saplings")
-input = io.read()
-wide = tonumber(input)
+input2 = io.read()
+wide = tonumber(input2)
+print("Normal Chest = 0 and EnderChest = 1")
+input3 = io.read()
+enderChestOn = input3
 print("Turtle go to work")
+if enderChestOn = 1 then
+  local enderChestItem1 = turtle.getItemCount(16)
+  local enderChestItem2 = turtle.getItemCount(15)
+  local enderChestItem3 = turtle.getItemCount(14)
+end
 if turtle.getFuelLevel() == "unlimited" then 
   print("your turtle config does need fuel")
   noFuelNeeded = 1
