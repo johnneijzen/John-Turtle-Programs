@@ -235,7 +235,7 @@ local function chest()
   sapling2 = turtle.getItemCount(4)
   turtle.turnRight()
   turtle.select(6)
- end
+end
  
 local function enderChest()
   if turtle.getItemCount(13) > 1 then
