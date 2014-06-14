@@ -38,7 +38,6 @@ local treeDetect = 0
 local facing = 0 -- If turtle is forward then it is 0 if is going back then is 1
 local furnace = 0 -- Feature-request TODO
 local enderChestOn = 0 -- Feature-request TODO
-local enderChestWay = 0 -- Feature-request TODO
 local x = 0 -- I don't use this only for loop it may be remove later on.
 
 -- Local Programs
