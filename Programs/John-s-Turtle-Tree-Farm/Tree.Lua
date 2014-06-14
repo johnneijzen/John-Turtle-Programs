@@ -300,7 +300,7 @@ function start()
       else
         treePlant()
       end
-	  if enderChestOn == 1
+	  if enderChestOn == 1 then
 	    enderChest()
 	  end
     until long == longCount
@@ -310,7 +310,7 @@ function start()
     end
   until wide == wideCount
   back()
-  if enderChestOn == 0
+  if enderChestOn == 0 then
     chest()
   end
   print("function start() done") -- Debugs
@@ -330,7 +330,7 @@ print("Normal Chest = 0 and EnderChest = 1")
 input3 = io.read()
 enderChestOn = input3
 print("Turtle go to work")
-if enderChestOn = 1 then
+if enderChestOn == 1 then
   local enderChestItem1 = turtle.getItemCount(16)
   local enderChestItem2 = turtle.getItemCount(15)
   local enderChestItem3 = turtle.getItemCount(14)
