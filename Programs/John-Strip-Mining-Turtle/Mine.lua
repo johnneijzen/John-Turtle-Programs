@@ -1,9 +1,11 @@
 -- This Version
--- 2.06
+-- 2.08
 -- ChangeLogs
 -- 2.04 - Adding Left or Right Support
 -- 2.05 - Changing Lot Code For Some Stable And Cleaner Code
 -- 2.06 - Ops Forget Fuel Chcking Code after rewrtitting
+-- 2.07 - Woops My Bad i wrote back() not Back()
+-- 2.08 - Fixing Imputs
 
 --Local
 local distance = 0 -- How Far Did User Pick
@@ -119,7 +121,6 @@ local function WarmUpForBackProgram() -- To make turn around so it can go back
   turtle.turnLeft()
   turtle.turnLeft()
   turtle.up()
-  back()
 end
 
 --Back Program
@@ -195,10 +196,10 @@ TF = distance
 TB = distance
 print("Left or Right")
 print("0 = Left and 1 = Right")
-input4 = io.read()
-Way = input4
-print("How Many Times")
 input2 = io.read()
+Way = tonumber(input2)
+print("How Many Times")
+input3 = io.read()
 MineTimes = tonumber(input3)
 Check()
 if Error == 1 then 
