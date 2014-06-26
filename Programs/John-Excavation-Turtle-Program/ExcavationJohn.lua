@@ -258,19 +258,19 @@ print("Note: This Program Stop Before Bedrock.")
 print("Slot 1: Fuel, Slot 2:Fuel, Slot 3:Chest")
 print("Note: if now put item in then it say error just wait for recheck")
 print("How long you want")
-input = io.read()
+local input = io.read()
 Wide = tonumber(input)
 Wide = Wide - 1
 print("How wide you want")
-input2 = io.read()
+local input2 = io.read()
 Long = tonumber(input2)
 Long = Long - 1
 print("How Deep You Want")
-input3 = io.read()
+local input3 = io.read()
 High = tonumber(input3)
 print("caluclating")
-TotalBlocks = Wide * Long * High
-print("Total amount for block to mine is")
+local TotalBlocks = Wide * Long * High
+print("Total amount for block to mine is: "..TotalBlocks)
 print(TotalBlocks)
 print("turtle now starting")
 if turtle.getFuelLevel() == "unlimited" then 
