@@ -144,7 +144,7 @@ local function Check()
 		print("turtle has Fuel")
 	end
 	if FuelCount1 == 0 then
-		print("turtle has no extra fuel but if is short job it okey")
+		print("turtle has no extra fuel but if is short job then it's okay")
 	end
 	if Chest == 0 then
 		print("No chest in Turtle")
