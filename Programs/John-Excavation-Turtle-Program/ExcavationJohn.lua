@@ -12,9 +12,10 @@
 --  0.38 Change: Remove -5 on high so you can have you own hight
 
 -- Local Variables
-local Wide = 0  -- How Wide 
+local args = {...} --Taking arguments to make it simpler
+local Wide = args[1]  -- How Wide 
 local Wc = 0 -- Wide Counter
-local Long = 0 -- How Long
+local Long = args[2] -- How Long
 local Lc = 0 -- Long Counter
 local High = 0 -- How High
 local Hc = 0 -- Hign Counter
@@ -25,9 +26,10 @@ local TotalBlocks = 0 -- TotalBlocks
 local LSorWS = 0 -- Go Left or Go Right This is for Wide Code
 local Error = 0 -- Error Code
 local Recheck = 0 -- Recheck Code
-local NoFuelNeed = 0 -- If computercraft Config Has Fuel Off then this is 1 but not then it is 0
+local NoFuelNeed = 0 -- If computercraft Config Has Fuel Off then this is 1 but if not then it is 0
 local TotalBlockDone = 0 -- How many Block Mined
-local BlockUp = 0 -- Fixing to Chest Probleem and moving probleem
+local BlockUp = 0 -- Fix to Chest Problem and moving problem
+local Enderchest = args[3] --Enderchest support
 
 -- Local Functions
 local function Length1() -- Length Mine
@@ -204,13 +206,19 @@ local function Chest1()
 		Chest = Chest - 1
 		for slot = 4, 16 do
 			turtle.select(slot)
-			sleep(1.45) -- Small fix for slow pc because i had people problem with this
+			sleep(1.45) -- Small fix for slow pc because people had problems with this
 			turtle.dropUp()
 		end
 		turtle.select(4)
-		if Chest == 0 then
+		if Chest == 0 and enderchest == 0 then
 			print("Out Of Chest")
 			os.shutdown()
+		elseif enderchest == 1 then
+			turtle.select(3)
+			turtle.digUp()
+			turtle.select(4)
+		elseif enderchest == 0 and Chest == 0
+			print("Someone either forgot the enderchest or didn't use the correct 3rd argument")
 		end
 	end
 end
@@ -254,27 +262,38 @@ end
 
 -- Starting
 print("Welcome To Excavation Turtle Program")
-print("Note: This Program Stop Before Bedrock.")
-print("Slot 1: Fuel, Slot 2:Fuel, Slot 3:Chest")
-print("Note: if now put item in then it say error just wait for recheck")
-print("How long you want")
-input = io.read()
-Wide = tonumber(input)
-Wide = Wide - 1
-print("How wide you want")
-input2 = io.read()
-Long = tonumber(input2)
-Long = Long - 1
-print("How Deep You Want")
-input3 = io.read()
-High = tonumber(input3)
-print("caluclating")
-TotalBlocks = Wide * Long * High
-print("Total amount for block to mine is")
+print("Note: This Program Stops Before Bedrock.")
+print("Slots 1&2: Fuel, Slot 3:Chest")
+print("Note: if you put item in now but it says error, just wait for a recheck")
+if not Wide then print("How long do you want?")
+	input = io.read()
+	Wide = tonumber(input)
+	Wide = Wide - 1
+end
+
+if not Long then print("How wide do you want?")
+	input2 = io.read()
+	Long = tonumber(input2)
+	Long = Long - 1
+end
+
+if not High then print("How Deep Do You Want?")
+	input3 = io.read()
+	High = tonumber(input3)
+end
+
+slowprint("Calculating")
+area = Wide * Long
+TotalBlocks = area * High
+print("Total amount of blocks to mine is")
 print(TotalBlocks)
+print("Estimate on how much fuel it will use in coal")
+totalFuel = TotalBlocks / 3
+totalCoal = totalFuel / 8
+print(totalCoal)
 print("turtle now starting")
 if turtle.getFuelLevel() == "unlimited" then 
-	print("your turtle config does need fuel")
+	print("your turtle config does not need fuel")
 	NoFuelNeed = 1
 elseif turtle.getFuelLevel() < 200 then
 	turtle.select(1)
