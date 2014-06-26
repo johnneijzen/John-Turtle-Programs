@@ -1,11 +1,12 @@
 -- This Version
--- 2.08
+-- 2.09
 -- ChangeLogs
 -- 2.04 - Adding Left or Right Support
 -- 2.05 - Changing Lot Code For Some Stable And Cleaner Code
 -- 2.06 - Ops Forget Fuel Chcking Code after rewrtitting
 -- 2.07 - Woops My Bad i wrote back() not Back()
 -- 2.08 - Fixing Imputs
+-- 2.09 - Forget That i change remove line of code since i use local function now
 
 --Local
 local distance = 0 -- How Far Did User Pick
@@ -173,7 +174,6 @@ local function Restart()
   TB = distance
   MD = 3
   onlight = 0
-  forwardM()
 end
 
 -- Starting 
