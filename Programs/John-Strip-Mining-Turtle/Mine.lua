@@ -1,5 +1,5 @@
 -- This Version
--- 2.10 10/5/2014
+-- 2.11 10/5/2014
 -- ChangeLogs
 -- 2.04 - Adding Left or Right Support
 -- 2.05 - Changing Lot Code For Some Stable And Cleaner Code
@@ -9,6 +9,7 @@
 -- 2.09 - Forget That i change remove line of code since i use local function now
 -- 2.10 - Minor error with back that it leave one block in wall
 --	  Change: Torch spacing to 8 from 10
+-- 2.11 - Change: Right to left and Left to Right better understand
 -- ToDoList
 -- Add Code to place torch each time it starts
 -- Add Fuel Code so can know almost how much fuel you need
@@ -147,7 +148,7 @@ end
 
 -- Multimines Program
 local function MultiMines()
-	if Way == 0 then
+	if Way == 1 then
 		turtle.turnLeft()
 		turtle.down()
 	else
@@ -165,7 +166,7 @@ local function MultiMines()
 			turtle.digUp()
 		end
 	until MD == 0
-	if Way == 0 then
+	if Way == 1 then
 		turtle.turnLeft()
 	else
 		turtle.turnRight()
