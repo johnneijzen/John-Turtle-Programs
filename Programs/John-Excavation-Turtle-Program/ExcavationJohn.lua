@@ -1,5 +1,5 @@
 -- This Version
---  0.38 4/10/2014 2:00 AM
+--  0.40 10/5/2014
 -- Changelogs
 --  0.30 Rewrite of Everything
 --  0.31 Extreme Bugs Fixing
@@ -8,8 +8,14 @@
 --  0.34 I think i found out want was making items on ground when turtle go back it cant bump it item so it on floor i now fix it.
 --  0.35 Opps Fuel Code was worng
 --  0.36 Fully Fixed Bug Where Items fall on ground it was Length Code
---  0.37 Change: Until High == Hc To Until High <= Hc so if number is not divible by 3 will stop when it past high limit
+--  0.37 Change: Until High == Hc To Until High <= Hc so if number is not divisible by 3 will stop when it past high limit
 --  0.38 Change: Remove -5 on high so you can have you own hight
+--  0.39 Change: TotalBlock calculating has change to after is done doing length so it wont spam and percentage so it is to read
+--               And Add Feature CoalNeeded This Not 100% or not at all but i will find better way.
+--  0.40 Lot Change in CoalNeeded and it now print Corrent Block to need to dig
+-- TODO
+--  Fix Total blocks code
+--  CleanUp Code Bit Like Change Name Thing and Other Stuff so it clean like my tree program
 
 -- Local Variables
 local Wide = 0  -- How Wide 
@@ -27,6 +33,10 @@ local Error = 0 -- Error Code
 local Recheck = 0 -- Recheck Code
 local NoFuelNeed = 0 -- If computercraft Config Has Fuel Off then this is 1 but not then it is 0
 local TotalBlockDone = 0 -- How many Block Mined
+local ProcessRaw = 0
+local Process = 0
+local CoalNeeded = 0
+local EnderChest = 0
 local BlockUp = 0 -- Fixing to Chest Probleem and moving probleem
 
 -- Local Functions
@@ -37,7 +47,6 @@ local function Length1() -- Length Mine
 	if turtle.forward() then
 		Lc = Lc + 1
 		TotalBlockDone = TotalBlockDone + 3
-		print(TotalBlocks - TotalBlockDone)
 	else
 		repeat
 			turtle.dig()
@@ -64,7 +73,7 @@ local function Wide1() -- Wide Around Right
 	turtle.turnRight()
 	if turtle.detect() then
 		turtle.dig()
-		sleep(0.6) -- Minor bug fix if there is gravel
+		sleep(0.6)
 	end
 	if turtle.forward() then
 	else
@@ -144,7 +153,7 @@ local function Check()
 		print("turtle has Fuel")
 	end
 	if FuelCount1 == 0 then
-		print("turtle has no extra fuel but if is short job then it's okay")
+		print("turtle has no extra fuel but if is short job it okey")
 	end
 	if Chest == 0 then
 		print("No chest in Turtle")
@@ -233,6 +242,10 @@ function MainPart()
 			Refuel()
 			Chest1()
 			if Long == Lc then
+				Process = TotalBlockDone / TotalBlocks * 100
+				ProcessRaw = TotalBlocks - TotalBlockDone
+				print("How Much Is Done: " .. math.floor(Process+0.5) .. "%")
+				print("TotalBlocks Still Need To Dig Is " .. ProcessRaw)
 				if LSorWS == 0 then
 					Wide1()
 				else
@@ -268,10 +281,13 @@ Long = Long - 1
 print("How Deep You Want")
 input3 = io.read()
 High = tonumber(input3)
-print("caluclating")
+print("calculating")
 TotalBlocks = Wide * Long * High
-print("Total amount for block to mine is")
-print(TotalBlocks)
+print("Total amount for block to mine is " .. TotalBlocks)
+CoalNeeded = TotalBlocks / 3 / 80
+print("Total amount for Coal needed is " .. math.floor(CoalNeeded+0.5) .. ". Not 100% Corrent you need more that given")
+print("Sleep for 15 sec before starting. So can read what is above")
+sleep(15)
 print("turtle now starting")
 if turtle.getFuelLevel() == "unlimited" then 
 	print("your turtle config does need fuel")
