@@ -1,5 +1,5 @@
 -- This Version
--- 2.10
+-- 2.10 10/5/2014
 -- ChangeLogs
 -- 2.04 - Adding Left or Right Support
 -- 2.05 - Changing Lot Code For Some Stable And Cleaner Code
@@ -9,6 +9,11 @@
 -- 2.09 - Forget That i change remove line of code since i use local function now
 -- 2.10 - Minor error with back that it leave one block in wall
 --	  Change: Torch spacing to 8 from 10
+-- ToDoList
+-- Add Code to place torch each time it starts
+-- Add Fuel Code so can know almost how much fuel you need
+-- Add second fuel slot if you go allout diggin
+-- Mabye add code that make turtle make new line of tunnels
 
 --Local
 local distance = 0 -- How Far Did User Pick
