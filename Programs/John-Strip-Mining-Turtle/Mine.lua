@@ -1,5 +1,5 @@
 -- This Version
--- 2.11 10/5/2014
+-- 2.12 10/6/2014
 -- ChangeLogs
 -- 2.04 - Adding Left or Right Support
 -- 2.05 - Changing Lot Code For Some Stable And Cleaner Code
@@ -10,6 +10,7 @@
 -- 2.10 - Minor error with back that it leave one block in wall
 --	  Change: Torch spacing to 8 from 10
 -- 2.11 - Change: Right to left and Left to Right better understand
+-- 2.12 - Add Stop Code when item are gone
 -- ToDoList
 -- Add Code to place torch each time it starts
 -- Add Fuel Code so can know almost how much fuel you need
@@ -88,26 +89,35 @@ local function ForwardM()
 		turtle.select(4)
 		turtle.placeDown()
 		if onlight == 8 then -- Every 10 Block turtle place torch
-			turtle.turnLeft()
-			turtle.turnLeft()
-			turtle.select(1)
-			turtle.place()
-			turtle.turnLeft()
-			turtle.turnLeft()
-			torch = torch - 1
-			onlight = onlight - 8
+			if torch > 0 then
+				turtle.turnLeft()
+				turtle.turnLeft()
+				turtle.select(1)
+				turtle.place()
+				turtle.turnLeft()
+				turtle.turnLeft()
+				torch = torch - 1
+				onlight = onlight - 8
+			else
+				print("turtle run out of torchs")
+				os.shutdown()
+			end
 		end
 		if turtle.getItemCount(16)>0 then -- If slot 16 in turtle has item slot 5 to 16 will go to chest
-			turtle.select(2)
-			turtle.digDown()
-			turtle.placeDown()
-			chest = chest - 1
-			for slot = 5, 16 do
-				turtle.select(slot)
-				turtle.dropDown()
-				sleep(1.5)
-			end
-			turtle.select(5)
+			if chest > 0 then
+				turtle.select(2)
+				turtle.digDown()
+				turtle.placeDown()
+				chest = chest - 1
+				for slot = 5, 16 do
+					turtle.select(slot)
+					turtle.dropDown()
+					sleep(1.5)
+				end
+				turtle.select(5)
+			else
+				print("turtle run out of chest")
+				os.shutdown()
 		end
 		repeat
 			if turtle.getFuelLevel() == "unlimited" then 
@@ -118,6 +128,9 @@ local function ForwardM()
 				turtle.refuel(1)
 				Needfuel = 1
 				ItemFuel = ItemFuel - 1
+			elseif ItemFuel == 0 then
+				print("turtle run out of fuel")
+				os.shutdown()
 			elseif NeedFuel == 1 then
 				Needfuel = 0
 			end
