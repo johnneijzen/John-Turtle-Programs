@@ -101,7 +101,7 @@ local function ForwardM()
 				turtle.dropDown()
 				sleep(1.5)
 			end
-		turtle.select(5)
+			turtle.select(5)
 		end
 		repeat
 			if turtle.getFuelLevel() == "unlimited" then 
