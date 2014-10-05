@@ -1,5 +1,5 @@
 -- This Version
---  0.40 10/5/2014
+--  0.41 10/6/2014
 -- Changelogs
 --  0.30 Rewrite of Everything
 --  0.31 Extreme Bugs Fixing
@@ -13,6 +13,7 @@
 --  0.39 Change: TotalBlock calculating has change to after is done doing length so it wont spam and percentage so it is to read
 --               And Add Feature CoalNeeded This Not 100% or not at all but i will find better way.
 --  0.40 Lot Change in CoalNeeded and it now print Corrent Block to need to dig
+--  0.41 Trying to High problem and TotalBlocks Problems
 -- TODO
 --  Fix Total blocks code
 --  CleanUp Code Bit Like Change Name Thing and Other Stuff so it clean like my tree program
@@ -140,7 +141,6 @@ local function High1()
 	turtle.digDown()
 	Wc = 0
 	Lc = 0
-	Hc = Hc + 3
 end
 
 -- Checking
@@ -232,7 +232,6 @@ local function Start()
 	turtle.digDown()
 	Wc = 0
 	Lc = 0
-	Hc = Hc + 3
 end
 
 function MainPart()
@@ -260,7 +259,10 @@ function MainPart()
 		until Long == Lc
 		turtle.turnRight()
 		LSorWS = 0
-		High1()
+		Hc = Hc + 3
+		if High <= Hc then
+			High1()
+		end
 	until High <= Hc
 	print("Turtle Is Done")
 end
@@ -282,7 +284,7 @@ print("How Deep You Want")
 input3 = io.read()
 High = tonumber(input3)
 print("calculating")
-TotalBlocks = Wide * Long * High
+TotalBlocks = (Wide + 1) * (Long + 1) * High -- 1 is add because above it removed for wide and long code
 print("Total amount for block to mine is " .. TotalBlocks)
 CoalNeeded = TotalBlocks / 3 / 80
 print("Total amount for Coal needed is " .. math.floor(CoalNeeded+0.5) .. ". Not 100% Corrent you need more that given")
