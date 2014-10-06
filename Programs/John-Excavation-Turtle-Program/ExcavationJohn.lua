@@ -1,19 +1,17 @@
 -- This Version
---  0.41 10/6/2014
+--  0.43 10/6/2014
 -- Changelogs
---  0.30 Rewrite of Everything
---  0.31 Extreme Bugs Fixing
---  0.32 Change Speed of Wide so wont look like program stop but if gravel in way it still works and change speed of Chest Code
---  0.33 Weird Chest Bug With Gravel Fix. So i change speed of chest to 1 sec i hope that fix it.
---  0.34 I think i found out want was making items on ground when turtle go back it cant bump it item so it on floor i now fix it.
---  0.35 Opps Fuel Code was worng
---  0.36 Fully Fixed Bug Where Items fall on ground it was Length Code
 --  0.37 Change: Until High == Hc To Until High <= Hc so if number is not divisible by 3 will stop when it past high limit
 --  0.38 Change: Remove -5 on high so you can have you own hight
 --  0.39 Change: TotalBlock calculating has change to after is done doing length so it wont spam and percentage so it is to read
 --               And Add Feature CoalNeeded This Not 100% or not at all but i will find better way.
 --  0.40 Lot Change in CoalNeeded and it now print Corrent Block to need to dig
 --  0.41 Trying to High problem and TotalBlocks Problems
+--  0.42 Fully Fix and compressing code to make it easier and Fully Working TotalBlock Counter So i hope that charcoal system 
+--       Code as normal and 100% corrent Amount but i`m not sure yet 
+--  0.43 i`m Lowering Fuel Limits so can this use turtle when you only need 3 coal for ex. and it uses less fuel now
+--       Limit is now 160 from 200 and refuel is now 1 from 10 so i will use one coal still it reach 160 it this makes
+--	 more fuel friendly and change check of item from instant to 15 sec so you have time to think
 -- TODO
 --  Fix Total blocks code
 --  CleanUp Code Bit Like Change Name Thing and Other Stuff so it clean like my tree program
@@ -47,7 +45,6 @@ local function Length1() -- Length Mine
 	end
 	if turtle.forward() then
 		Lc = Lc + 1
-		TotalBlockDone = TotalBlockDone + 3
 	else
 		repeat
 			turtle.dig()
@@ -59,7 +56,6 @@ local function Length1() -- Length Mine
 			end
 		until BlockUp == 0
 		Lc = Lc + 1
-		TotalBlockDone = TotalBlockDone + 3
 		print(TotalBlocks - TotalBlockDone)
 	end
 	if turtle.detectUp() then
@@ -68,6 +64,7 @@ local function Length1() -- Length Mine
 	if turtle.detectDown() then
 		turtle.digDown()
 	end
+	TotalBlockDone = TotalBlockDone + 3
 end
 
 local function Wide1() -- Wide Around Right
@@ -98,6 +95,7 @@ local function Wide1() -- Wide Around Right
 	LSorWS = 1
 	Lc = 0
 	Wc = Wc + 1
+	TotalBlockDone = TotalBlockDone + 3
 end
 
 local function Wide2() -- Wide Around Left
@@ -128,6 +126,7 @@ local function Wide2() -- Wide Around Left
 	LSorWS = 0
 	Lc = 0
 	Wc = Wc + 1
+	TotalBlockDone = TotalBlockDone + 3
 end
 
 -- High Code
@@ -141,6 +140,7 @@ local function High1()
 	turtle.digDown()
 	Wc = 0
 	Lc = 0
+	TotalBlockDone = TotalBlockDone + 3
 end
 
 -- Checking
@@ -178,21 +178,23 @@ end
 
 -- Refuel
 local function Refuel()
-	if NoFuelNeed == 0 then
-		if turtle.getFuelLevel() < 300 then
-			if FuelCount > 10 then
-				turtle.select(1)
-				turtle.refuel(10)
-				FuelCount = FuelCount - 10
-			elseif FuelCount1 > 10 then
-				turtle.select(2)
-				turtle.refuel(10)
-				FuelCount1 = FuelCount1 - 10
-			else
-				print("out of fuel")
-				os.shutdown()
+	if NoFuelNeed == 0 then	
+		repeat
+			if turtle.getFuelLevel() < 160 then
+				if FuelCount > 0 then
+					turtle.select(1)
+					turtle.refuel(1)
+					FuelCount = FuelCount - 1
+				elseif FuelCount1 > 0 then
+					turtle.select(2)
+					turtle.refuel(1)
+					FuelCount1 = FuelCount1 - 1
+				else
+					print("out of fuel")
+					os.shutdown()
+				end
 			end
-		end
+		until turtle.getFuelLevel() >= 160
 	end
 end
 
@@ -232,6 +234,7 @@ local function Start()
 	turtle.digDown()
 	Wc = 0
 	Lc = 0
+	TotalBlockDone = TotalBlockDone + 3
 end
 
 function MainPart()
@@ -260,10 +263,14 @@ function MainPart()
 		turtle.turnRight()
 		LSorWS = 0
 		Hc = Hc + 3
-		if High <= Hc then
+		if High > Hc then
 			High1()
 		end
 	until High <= Hc
+	Process = TotalBlockDone / TotalBlocks * 100
+	ProcessRaw = TotalBlocks - TotalBlockDone
+	print("How Much Is Done: " .. math.floor(Process+0.5) .. "%")
+	print("TotalBlocks Still Need To Dig Is " .. ProcessRaw)
 	print("Turtle Is Done")
 end
 
@@ -294,10 +301,13 @@ print("turtle now starting")
 if turtle.getFuelLevel() == "unlimited" then 
 	print("your turtle config does need fuel")
 	NoFuelNeed = 1
-elseif turtle.getFuelLevel() < 200 then
+elseif turtle.getFuelLevel() < 160 then
 	turtle.select(1)
 	turtle.refuel(2)
 end
+FuelCount = turtle.getItemCount(1)
+FuelCount1 = turtle.getItemCount(2)
+Chest = turtle.getItemCount(3)
 Check()
 if Error == 1 then
 	repeat
