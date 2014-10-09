@@ -294,7 +294,7 @@ print("calculating")
 TotalBlocks = (Wide + 1) * (Long + 1) * High -- 1 is add because above it removed for wide and long code
 print("Total amount for block to mine is " .. TotalBlocks)
 CoalNeeded = TotalBlocks / 3 / 80
-print("Total amount for Coal needed is " .. math.floor(CoalNeeded+0.5).)
+print("Total amount for Coal needed is " .. math.floor(CoalNeeded+0.5))
 print("Sleep for 15 sec before starting. So can read what is above")
 sleep(15)
 print("turtle now starting")
