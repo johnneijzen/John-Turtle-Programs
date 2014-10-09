@@ -1,5 +1,5 @@
 -- This Version
---  0.43 10/6/2014
+--  0.44 10/6/2014
 -- Changelogs
 --  0.37 Change: Until High == Hc To Until High <= Hc so if number is not divisible by 3 will stop when it past high limit
 --  0.38 Change: Remove -5 on high so you can have you own hight
@@ -12,6 +12,7 @@
 --  0.43 i`m Lowering Fuel Limits so can this use turtle when you only need 3 coal for ex. and it uses less fuel now
 --       Limit is now 160 from 200 and refuel is now 1 from 10 so i will use one coal still it reach 160 it this makes
 --	 more fuel friendly and change check of item from instant to 15 sec so you have time to think
+--  0.44 Fix String Error
 -- TODO
 -- Enderchest Support
 
@@ -293,7 +294,7 @@ print("calculating")
 TotalBlocks = (Wide + 1) * (Long + 1) * High -- 1 is add because above it removed for wide and long code
 print("Total amount for block to mine is " .. TotalBlocks)
 CoalNeeded = TotalBlocks / 3 / 80
-print("Total amount for Coal needed is " .. math.floor(CoalNeeded+0.5) .. ".)
+print("Total amount for Coal needed is " .. math.floor(CoalNeeded+0.5).)
 print("Sleep for 15 sec before starting. So can read what is above")
 sleep(15)
 print("turtle now starting")
