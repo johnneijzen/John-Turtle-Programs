@@ -1,5 +1,5 @@
 -- This Version
--- 2.12 10/6/2014
+-- 2.13 10/11/2014
 -- ChangeLogs
 -- 2.04 - Adding Left or Right Support
 -- 2.05 - Changing Lot Code For Some Stable And Cleaner Code
@@ -11,6 +11,7 @@
 --	  Change: Torch spacing to 8 from 10
 -- 2.11 - Change: Right to left and Left to Right better understand
 -- 2.12 - Add Stop Code when item are gone
+-- 2.13 - i made big mistake i forget to end to new stop code
 -- ToDoList
 -- Add Code to place torch each time it starts
 -- Add Fuel Code so can know almost how much fuel you need
@@ -118,6 +119,7 @@ local function ForwardM()
 			else
 				print("turtle run out of chest")
 				os.shutdown()
+			end
 		end
 		repeat
 			if turtle.getFuelLevel() == "unlimited" then 
