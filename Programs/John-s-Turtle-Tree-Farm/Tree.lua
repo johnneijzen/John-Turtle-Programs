@@ -1,5 +1,5 @@
 -- Current Version
---  0.10
+--  0.12
 -- ChangeLogs
 --  0.01 - First Draft
 --  0.02 - Added Fuel Code
@@ -8,9 +8,11 @@
 --  0.05 - More Spacing Cleaning and Small Debugs
 --  0.06 - Starting Working on Back And Wide Programs 6/9/2014
 --  0.07 - More Bug Fixing. Note: Still need lot of stuff
---  0.08 - Trying Fixing back code and add left stuff on side program and Add debugging that will be remove in version 0.10 or 0.12 i just have them to test if things are working
+--  0.08 - Trying Fixing back code and add left stuff on side program 
 --  0.09 - Done Fixing Back Code now working on chest and bit more tweaking on back code
 --  0.10 - Adding Chest Code and Enderchest Not Tested i will soon.
+--  0.11 - Add waiting code for items and compress some code
+--  0.12 - Change: sapling1 > 0 to sapling1 > 1 and sapling2 > 0 to sapling2 > 1 and will accept sapling that was cut
 -- TODO
 --  Other Stuff Named TODO This After Done others
 --  And Testing after done with back and fuel programs
@@ -31,7 +33,7 @@ local long = 0
 local wideCount = 0
 local longCount = 0
 local sideMoveCount = 0 
-local otherSideMoveCount = 0 -- TODO or not need later
+local otherSideMoveCount = 0 -- TODO or not needed later
 local upCount = 0
 local turtleReachTop = 0
 local treeDetect = 0
@@ -42,7 +44,6 @@ local x = 0 -- I don't use this only for loop it may be remove later on.
 
 -- Local Programs
 local function check()
-  print("function check() start") -- Debugs
   if noFuelNeeded == 0 then
     if fuel == 0 and fuel1 == 0 then
       print("turtle has no fuel")
@@ -65,18 +66,15 @@ local function check()
     print("turtle will recheck in 8 sec")
     sleep(8)
   end
-  print("function check() done") -- Debugs
 end
 
 local function reCheck()
-  print("function reCheck() start") -- Debugs
   fuel = turtle.getItemCount(1)
   fuel1 = turtle.getItemCount(2)
   sapling1 = turtle.getItemCount(3)
   sapling2 = turtle.getItemCount(4)
   treeBlock = turtle.getItemCount(5)
   itemError = 0
-  print("function reCheck() done") -- Debugs
 end
 
 local function treeDetecter()
@@ -115,14 +113,17 @@ local function treeCutter()
   turtle.forward()
   turtle.turnLeft()
   turtle.turnLeft()
-  if sapling1 > 0 then
+  if sapling1 > 1 then
     turtle.select(3)
     turtle.place()
-    sapling1 = sapling1 - 1
-  elseif sapling2 > 0 then
+    sapling1 = turtle.getItemCount(3)
+  elseif sapling2 > 1 then
     turtle.select(4)
     turtle.place()
-    sapling2 = sapling2 - 1
+    sapling2 = turtle.getItemCount(4)
+  else
+    print("out of saplings")
+    os.shutdown()
   end
   turtle.turnLeft()
   turtle.turnLeft()
@@ -136,14 +137,17 @@ local function treePlant()
   turtle.forward()
   turtle.turnLeft()
   turtle.turnLeft()
-  if sapling1 > 0 then
+  if sapling1 > 1 then
     turtle.select(3)
     turtle.place()
-    sapling1 = sapling1 - 1
-  elseif sapling2 > 0 then
+    sapling1 = turtle.getItemCount(3)
+  elseif sapling2 > 1 then
     turtle.select(4)
     turtle.place()
-    sapling2 = sapling2 - 1
+    sapling2 = turtle.getItemCount(4)
+  else
+    print("out of saplings")
+    os.shutdown()
   end
   turtle.turnLeft()
   turtle.turnLeft()
@@ -151,29 +155,27 @@ local function treePlant()
 end
 
 local function reFuel()
-  print("function reFuel() starts") -- Debugs
   if noFuelNeeded == 0 then
     if turtle.getFuelLevel() < 100 then
-      if fuel > 10 then
+      if fuel > 1 then
         turtle.select(1)
-        turtle.refuel(10)
-        fuel = fuel - 10
-      elseif fuel1 > 10 then
+        turtle.refuel(1)
+        fuel = fuel - 1
+      elseif fuel1 > 1 then
         turtle.select(2)
-        turtle.refuel(10)
-        fuel1 = fuel1 - 10
+        turtle.refuel(1)
+        fuel1 = fuel1 - 1
       else
         print("out of fuel")
         os.shutdown()
       end
     end
   end
-  print("function reFuel() Done") -- Debugs
 end
 
 local function side() --TODO
   print("function side() starts") -- Debugs
-  turtle.forward() -- to make it simple for me
+  turtle.forward()
   longCount = 0
   sideMoveCount = sideMoveCount + 3 
   if facing == 0 then
@@ -237,7 +239,7 @@ local function chest()
   turtle.select(6)
 end
  
-local function enderChest()
+local function enderChest() -- TODO: i will fix this code then i`m done fix other stuff
   if turtle.getItemCount(13) > 1 then
     turtle.select(14)
     turtle.placeDown()
@@ -309,16 +311,22 @@ function start()
     end
   until wide == wideCount
   back()
-  if enderChestOn == 0 then
-    chest()
-  end
+  -- if enderChestOn == 0 then
+    -- chest()
+  -- end
   print("function start() done") -- Debugs
 end
 
 -- Starting
 print("Welecome to Turtle Tree Logger Program")
 print("Fuel in slot 1 & 2, and Sapling in slot 3 & 4, and one piece of wood that you are farming in slot 5")
-print("Note: If it says that items are missing but they are there just wait for recheck program that happen every 10 sec")
+print("turtle is sleep 10 sec to wait for items")
+sleep(10)
+fuel = turtle.getItemCount(1)
+fuel1 = turtle.getItemCount(2)
+sapling1 = turtle.getItemCount(3)
+sapling2 = turtle.getItemCount(4)
+treeBlock = turtle.getItemCount(5)
 print("How long for saplings")
 input1 = io.read()
 long = tonumber(input1)
@@ -335,11 +343,10 @@ if enderChestOn == 1 then
   local enderChestItem3 = turtle.getItemCount(14)
 end
 if turtle.getFuelLevel() == "unlimited" then 
-  print("your turtle config does need fuel")
+  print("your turtle configure does not need fuel")
   noFuelNeeded = 1
-elseif turtle.getFuelLevel() < 200 then
-  turtle.select(1)
-  turtle.refuel(1)
+elseif turtle.getFuelLevel() < 100 then
+  reFuel()
 end
 check()
 if itemError == 1 then
