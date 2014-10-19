@@ -1,22 +1,13 @@
 -- Current Version
---  0.14
+--  0.15
 -- ChangeLogs
---  0.01 - First Draft
---  0.02 - Added Fuel Code
---  0.03 - Testing and Debugging and fixing values
---  0.04 - Adding Plant code on Cutter Program
---  0.05 - More Spacing Cleaning and Small Debugs
---  0.06 - Starting Working on Back And Wide Programs 6/9/2014
---  0.07 - More Bug Fixing. Note: Still need lot of stuff
---  0.08 - Trying Fixing back code and add left stuff on side program 
---  0.09 - Done Fixing Back Code now working on chest and bit more tweaking on back code
 --  0.10 - Adding Chest Code and Enderchest Not Tested i will soon.
 --  0.11 - Add waiting code for items and compress some code
 --  0.12 - Change: sapling1 > 0 to sapling1 > 1 and sapling2 > 0 to sapling2 > 1 and will accept sapling that was cut
 --  0.13 - Remove: enderchest i will add back when i have time and fix spacing but still have no idea
 -- 				   what is making program crash
 --  0.14 - add repeating options
--- 
+--  0.15 - fix error that was buggy me for 4 months
 -- TODO
 --  Other Stuff Named TODO This After Done others
 --  And Testing after done with back and fuel programs
@@ -120,10 +111,22 @@ local function treeCutter()
 	if sapling1 > 1 then
 		turtle.select(3)
 		turtle.place()
+		turtle.select(6)
+		if turtle.compareTo(3) then
+			if turtle.getItemCount > 32 then
+				turtle.transferTo(3, 31)
+			end
+		end
 		sapling1 = turtle.getItemCount(3)
 	elseif sapling2 > 1 then
 		turtle.select(4)
 		turtle.place()
+		turtle.select(6)
+		if turtle.compareTo(4) then
+			if turtle.getItemCount > 32 then
+				turtle.transferTo(4, 31)
+			end
+		end
 		sapling2 = turtle.getItemCount(4)
 	else
 		print("out of saplings")
@@ -142,10 +145,22 @@ local function treePlant()
 	if sapling1 > 1 then
 		turtle.select(3)
 		turtle.place()
+		turtle.select(6)
+		if turtle.compareTo(3) then
+			if turtle.getItemCount > 32 then
+				turtle.transferTo(3, 31)
+			end
+		end
 		sapling1 = turtle.getItemCount(3)
 	elseif sapling2 > 1 then
 		turtle.select(4)
 		turtle.place()
+		turtle.select(6)
+		if turtle.compareTo(4) then
+			if turtle.getItemCount > 32 then
+				turtle.transferTo(4, 31)
+			end
+		end
 		sapling2 = turtle.getItemCount(4)
 	else
 		print("out of saplings")
