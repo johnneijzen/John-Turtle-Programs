@@ -1,5 +1,5 @@
 -- Current Version
---  0.13
+--  0.14
 -- ChangeLogs
 --  0.01 - First Draft
 --  0.02 - Added Fuel Code
@@ -15,6 +15,8 @@
 --  0.12 - Change: sapling1 > 0 to sapling1 > 1 and sapling2 > 0 to sapling2 > 1 and will accept sapling that was cut
 --  0.13 - Remove: enderchest i will add back when i have time and fix spacing but still have no idea
 -- 				   what is making program crash
+--  0.14 - add repeating options
+-- 
 -- TODO
 --  Other Stuff Named TODO This After Done others
 --  And Testing after done with back and fuel programs
@@ -43,6 +45,9 @@ local facing = 0 -- If turtle is forward then it is 0 if is going back then is 1
 local furnace = 0 -- Feature-request TODO
 local enderChestOn = 0 -- Feature-request TODO
 local x = 0 -- I don't use this only for loop it may be remove later on.
+local turtleType = 0
+local turtleTimes = 0
+local turtleTimesDone = 0
 
 -- Local Programs
 local function check()
@@ -80,7 +85,6 @@ local function reCheck()
 end
 
 local function treeDetecter()
-	print("function treeDetecter() starts") -- Debugs
 	turtle.forward()
 	turtle.select(5)
 	if turtle.compare() then
@@ -92,11 +96,9 @@ local function treeDetecter()
 		longCount = longCount + 1
 		treeDetect = 0
 	end
-  print("function treeDetecter() done") -- Debugs
 end
 
 local function treeCutter()
-	print("function treeCutter() start") -- Debugs
 	repeat
 		turtle.select(5)
 		if turtle.compareUp() then
@@ -129,11 +131,9 @@ local function treeCutter()
 	end
 	turtle.turnLeft()
 	turtle.turnLeft()
-	print("function treeCutter() done") -- Debugs
 end
 
 local function treePlant()
-	print("function treePlant() starts") -- Debugs
 	turtle.dig()
 	turtle.forward()
 	turtle.forward()
@@ -153,30 +153,42 @@ local function treePlant()
 	end
 	turtle.turnLeft()
 	turtle.turnLeft()
-	print("function treePlant() done") -- Debugs
 end
 
 local function reFuel()
 	if noFuelNeeded == 0 then
-		if turtle.getFuelLevel() < 100 then
-			if fuel > 1 then
-				turtle.select(1)
-				turtle.refuel(1)
-				fuel = fuel - 1
-			elseif fuel1 > 1 then
-				turtle.select(2)
-				turtle.refuel(1)
-				fuel1 = fuel1 - 1
-			else
-				print("out of fuel")
-				os.shutdown()
+		repeat
+			if turtle.getFuelLevel() < 100 then
+				if fuel > 1 then
+					turtle.select(1)
+					turtle.refuel(1)
+					turtle.select(5)
+					if turtle.compareTo(1) then
+						if turtle.getItemCount > 32 then
+							turtle.transferTo(1, 31)
+						end
+					end
+					fuel = turtle.getItemCount(1)
+				elseif fuel1 > 1 then
+					turtle.select(2)
+					turtle.refuel(1)
+					turtle.select(5)
+					if turtle.compareTo(2) then
+						if turtle.getItemCount > 32 then
+							turtle.transferTo(2, 31)
+						end
+					end	
+					fuel1 = turtle.getItemCount(2)
+				else
+					print("out of fuel")
+					os.shutdown()
+				end
 			end
-		end
+		until turtle.getFuelLevel() >= 100
 	end
 end
 
-local function side() --TODO
-	print("function side() starts") -- Debugs
+local function side() 
 	turtle.forward()
 	longCount = 0
 	sideMoveCount = sideMoveCount + 3 
@@ -187,7 +199,7 @@ local function side() --TODO
 		turtle.forward()
 		turtle.turnRight()
 		facing = 1
-	else 
+	else --TODO
 		facing = 0
 		turtle.turnLeft()
 		turtle.forward()
@@ -195,11 +207,9 @@ local function side() --TODO
 		turtle.forward()
 		turtle.turnLeft()
 	end
-	print("function side() Done") -- Debugs
 end
 
 local function back() --TODO
-	print("function back() starts") -- Debugs
 	if facing == 1 then
 		turtle.forward()
 		turtle.turnRight()
@@ -219,30 +229,37 @@ local function back() --TODO
 		turtle.turnLeft()
 		turtle.back()  
 	end
-  print("function back() done") -- Debugs
 end
 
 local function chest()
-	turtle.turnRight()
+	turtle.turnLeft()
+	turtle.turnLeft()
 	for slot = 6, 16 do
 		turtle.select(slot)
-		sleep(1.45) -- Small fix for slow pc because i had people problem with this
+		sleep(1.0)
 		turtle.drop()
 	end
-	turtle.turnLeft()
-	turtle.turnLeft()
-	turtle.select(3)
-	turtle.suck()
-	sapling1 = turtle.getItemCount(3)
-	turtle.select(4)
-	turtle.suck()
-	sapling2 = turtle.getItemCount(4)
-	turtle.turnRight()
-	turtle.select(6)
+end
+
+local function restart()
+	if turtleType == 0 then
+		longCount = 0
+		wideCount = 0
+	elseif turtleType == 1 then
+		sleep(180)
+		longCount = 0
+		wideCount = 0
+	elseif turtleType == 2 then
+		if turtleTimesDone ~= turtleTimes then
+			turtleTimes = turtleTime + 1
+		else
+			print("turtle is Done")
+			os.shutdown()
+		end
+	end
 end
 
 function start()
-	print("function start() starts") -- Debugs
 	turtle.forward()
 	repeat
 		repeat
@@ -261,8 +278,9 @@ function start()
 		end
 	until wide == wideCount
 	back()
---chest()
-  print("function start() done") -- Debugs
+	chest()
+	restart()
+	start()
 end
 
 -- Starting
@@ -281,18 +299,29 @@ long = tonumber(input1)
 print("How wide for Saplings")
 input2 = io.read()
 wide = tonumber(input2)
+print("what type of repeater want to use")
+print("0 = is forever but it done wait for 180 sec it useful small tree farms")
+print("1 = is forever when it reach end so soon turtle put it item he will start aging")
+print("2 = user will choose how many time")
+input3 = io.read()
+turtleType = tonumber(input3)
+if turtleType == 2 then
+	print("how many times")
+	input4 = io.read()
+	turtleTimes = tonumber(input4)
+end
 print("Turtle go to work")
 if turtle.getFuelLevel() == "unlimited" then 
-  print("your turtle configure does not need fuel")
-  noFuelNeeded = 1
+	print("your turtle configure does not need fuel")
+	noFuelNeeded = 1
 elseif turtle.getFuelLevel() < 100 then
-  reFuel()
+	reFuel()
 end
 check()
 if itemError == 1 then
-  repeat
-    reCheck()
-    check()
-  until itemError == 0
+	repeat
+		reCheck()
+		check()
+	until itemError == 0
 end
 start()
