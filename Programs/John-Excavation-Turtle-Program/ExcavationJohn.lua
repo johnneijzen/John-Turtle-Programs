@@ -1,5 +1,5 @@
 -- This Version
---  0.44 10/6/2014
+--  0.45 10/19/2014
 -- Changelogs
 --  0.37 Change: Until High == Hc To Until High <= Hc so if number is not divisible by 3 will stop when it past high limit
 --  0.38 Change: Remove -5 on high so you can have you own hight
@@ -13,6 +13,7 @@
 --       Limit is now 160 from 200 and refuel is now 1 from 10 so i will use one coal still it reach 160 it this makes
 --	 more fuel friendly and change check of item from instant to 15 sec so you have time to think
 --  0.44 Fix String Error
+--  0.45 Made mistake i made wide to lenght and lenght to wide
 -- TODO
 -- Enderchest Support
 
@@ -280,13 +281,13 @@ print("Note: This Program Stop Before Bedrock.")
 print("Slot 1: Fuel, Slot 2:Fuel, Slot 3:Chest")
 print("Note: if now put item in then it say error just wait for recheck")
 print("How long you want")
-input = io.read()
-Wide = tonumber(input)
-Wide = Wide - 1
-print("How wide you want")
 input2 = io.read()
 Long = tonumber(input2)
 Long = Long - 1
+print("How wide you want")
+input = io.read()
+Wide = tonumber(input)
+Wide = Wide - 1
 print("How Deep You Want")
 input3 = io.read()
 High = tonumber(input3)
