@@ -256,13 +256,6 @@ function MainPart()
 				end
 			end
 		until Wide == Wc
-		repeat
-			Length1()
-			Refuel()
-			Chest1()
-		until Long == Lc
-		turtle.turnRight()
-		LSorWS = 0
 		Hc = Hc + 3
 		if High > Hc then
 			High1()
