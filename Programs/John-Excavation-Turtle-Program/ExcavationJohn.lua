@@ -16,6 +16,7 @@
 --  0.45 Made mistake i made wide to lenght and lenght to wide
 -- TODO
 -- Enderchest Support
+-- Found Bug with uneven numbers like 10 long and 8 wide it seem to break whole code i`m checking the code now
 
 -- Local Variables
 local Wide = 0  -- How Wide 
@@ -256,7 +257,7 @@ function MainPart()
 				end
 			end
 		until Wide == Wc
-		repeat
+		repeat -- Dont Remove this it needed
 			Length1()
 			Refuel()
 			Chest1()
