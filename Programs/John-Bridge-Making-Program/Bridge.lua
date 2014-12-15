@@ -56,12 +56,40 @@ local function reFuel()
 end
 
 local function blockPlace() -- TODO
+    turtle.forward()
+    turtle.placeDown()
+    turtle.up()
+    turtle.placeDown()
+    turtle.turnleft()
+    turtle.forward()
+    turtle.down()
+    turtle.placeDown()
+    turtle.forward()
+    turtle.placeDown()
+    turtle.forward()
+    turtle.placeDown()
+    turtle.forward()
+    turtle.placeDown()
+    turtle.up()
+    turtle.placeDown()
+end
+
+local function back()
+    turtle.turnleft()
+    turtle.turnleft()
+    turtle.forward()
+    turtle.forward()
+    turtle.forward()
+    turtle.forward()
+    turtle.forward()
+    turtle.turnRight()
 end
 
 function main()
     repeat
         reFuel()
         blockPlace()
+        back()
         distance = distance + 1
     until distance == distanceCount
 end
