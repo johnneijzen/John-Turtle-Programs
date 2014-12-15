@@ -104,18 +104,18 @@ function start()
 	print("Please Input Your Fuel In Slot 1 and Slot 2(Optional) and Chest in Slot 3")
 	print("Please Input Your Distance You Want Turtle To Dig")
 	input = io.read()
-	distance = input
+	distance = tonumber(input)
 	print("Turtle Will Dig " + Distance + " Long")
 	if turtle.getFuelLevel() == "unlimited" then -- just check if config of fuel is to unlimited
 		noFuelNeeded = 1
 	end
-	check()
-	if missingFuel == 0 or missingChest == 0 then
+	checking()
+	if missingFuel == 1 or missingChest == 1 then
 		repeat
 			print("Please Put In Items That Are Missing")
 			sleep(10)
 			recheck()
-			check()
+			checking()
 		until missingFuel == 0 and missingChest == 0
 	end
 	main()
