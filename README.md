@@ -12,7 +12,7 @@ John Excavation Turtle Program (100% done)
 
 John Cave Builder (100% done) I will not update this one
 
-John Turtle Tunnel (10% done i just start with that program)
+John Turtle Tunnel (99% done still need testing )
 
 Pastebin Links
 
@@ -29,6 +29,7 @@ John Cave Builder[Working Buggy]
 http://pastebin.com/iKkp3xtW
 
 john Turtle Tunnel[Work in Process]
+http://pastebin.com/1HzZLhL9
 
 Dont Using This link i`m using this to test program and improve before release to public
 http://pastebin.com/tJQDbj2r
@@ -41,4 +42,4 @@ http://www.computercraft.info/forums2/index.php?/topic/17667-john-excavation-tur
 John Strip Mining Turtle[Working]
 http://www.computercraft.info/forums2/index.php?/topic/15292-version-200-john-strip-mining-turtle/page__p__145639#entry145639
 
-Note: Some Program are buggy i`m still here but have little to work on them and i`m now using IntelliJ IDEA With Lua Pluging.
+Note: Some Program are buggy im still here but have little to work on them and im now using IntelliJ IDEA With Lua Pluging.
