@@ -1,7 +1,8 @@
 -- Version
---  0.01
+--  0.02
 -- Changelog
 --  0.01 - First Draft
+--  0.02 - Added 4 wide version
 -- TODO
 -- Work on brige place Code
 
@@ -12,6 +13,7 @@ local itemFuel1 = turtle.getItemCount(2) -- Fuel Slot 2
 local distance = 0 -- Distance will dig
 local distanceCount = 0 -- Count the distance
 local missingFuel = 0 -- If there is missing fuel this will be 1
+local bridgeType = 0 -- If it is 0 then 5 wide if is 1 then 4 wide
 
 -- Checking On Items
 local function checking()
@@ -74,6 +76,24 @@ local function blockPlace() -- TODO
     turtle.placeDown()
 end
 
+local function blockPlace1() -- TODO
+    turtle.forward()
+    turtle.placeDown()
+    turtle.up()
+    turtle.placeDown()
+    turtle.turnleft()
+    turtle.forward()
+    turtle.down()
+    turtle.placeDown()
+    turtle.forward()
+    turtle.placeDown()
+    turtle.forward()
+    turtle.placeDown()
+    turtle.up()
+    turtle.placeDown()
+end
+
+
 local function back()
     turtle.turnleft()
     turtle.turnleft()
@@ -88,7 +108,11 @@ end
 function main()
     repeat
         reFuel()
-        blockPlace()
+        if bridgeType == 0 then
+            blockPlace()
+        elseif bridgeType == 1 then
+            blockPlace1()
+        end
         back()
         distance = distance + 1
     until distance == distanceCount
@@ -96,11 +120,14 @@ end
 
 function start()
     print("Welcome To John Bridge Program")
-    print("This Program Will Make 5 Wide Brige With Side Walls")
+    print("This Program Will Make 5 Wide Brige With Side Walls or 4 Wide")
+    print("If You want 5 wide then 0 if you want 4 wide then 1")
+    input = io.read()
+    bridgeType = tonumber(input)
     print("Please Input Your Fuel In Slot 1 and Slot 2(Optional)")
     print("Please Input How Far Brige Will Be")
-    input = io.read()
-    distance = tonumber(input)
+    input1 = io.read()
+    distance = tonumber(input1)
     print("Turtle Will Make " + Distance + " Long Brige")
     if turtle.getFuelLevel() == "unlimited" then -- just check if config of fuel is to unlimited
         noFuelNeeded = 1
