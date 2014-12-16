@@ -14,6 +14,7 @@ local distance = 0 -- Distance will dig
 local distanceCount = 0 -- Count the distance
 local missingFuel = 0 -- If there is missing fuel this will be 1
 local bridgeType = 0 -- If it is 0 then 5 wide if is 1 then 4 wide
+local currentSlot = 3 -- For checking on cobble
 
 -- Checking On Items
 local function checking()
@@ -108,6 +109,9 @@ end
 function main()
     repeat
         reFuel()
+        if turtle.getItemCount(currentSlot) <= 7 then -- this code will switch turtle slot when cobble is less than 7
+            currentSlot = currentSlot + 1
+        end
         if bridgeType == 0 then
             blockPlace()
         elseif bridgeType == 1 then
