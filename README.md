@@ -6,7 +6,7 @@ Programs i`m making:
 
 John Strip Mining Turtle(100% Done)
 
-John Turtle Tree Farm (80% done still working on it)
+John Turtle Tree Farm (100% done but it need better instrution)
 
 John Excavation Turtle Program (100% done)
 
