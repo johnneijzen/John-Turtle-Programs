@@ -1,10 +1,12 @@
 -- Version
---  0.02
+--  0.03 12/17/2014
 -- Changelog
 --  0.01 - First Draft
 --  0.02 - Added 4 wide version
--- TODO
--- Work on brige place Code
+--  0.03 - small bug fixing and testing
+-- TODO 
+-- Speed Up Building Code -- coming soon 0.04
+-- Add 3 wide support -- coming soon 0.04
 
 -- Locals Variables
 local noFuelNeeded = 0 -- Check if turtle is using no fuel config
@@ -43,12 +45,12 @@ local function reFuel()
                     turtle.select(1)
                     turtle.refuel(1)
                     itemFuel = itemFuel - 1
-                    turtle.select(4)
+                    turtle.select(3)
                 elseif itemFuel1 > 1 then
                     turtle.select(2)
                     turtle.refuel(1)
                     itemFuel1 = itemFuel1 - 1
-                    turtle.select(4)
+                    turtle.select(3)
                 else
                     print("out of fuel")
                     os.shutdown()
@@ -58,14 +60,16 @@ local function reFuel()
     end
 end
 
-local function blockPlace() -- TODO
+local function blockPlace()
     turtle.forward()
     turtle.placeDown()
     turtle.up()
     turtle.placeDown()
-    turtle.turnleft()
+    turtle.turnRight()
     turtle.forward()
     turtle.down()
+    turtle.placeDown()
+    turtle.forward()
     turtle.placeDown()
     turtle.forward()
     turtle.placeDown()
@@ -77,14 +81,17 @@ local function blockPlace() -- TODO
     turtle.placeDown()
 end
 
-local function blockPlace1() -- TODO
-    turtle.forward()
+local function blockPlace1()
     turtle.placeDown()
     turtle.up()
     turtle.placeDown()
-    turtle.turnleft()
+    turtle.turnRight()
     turtle.forward()
     turtle.down()
+    turtle.placeDown()
+    turtle.forward()
+    turtle.placeDown()
+    turtle.forward()
     turtle.placeDown()
     turtle.forward()
     turtle.placeDown()
@@ -96,28 +103,51 @@ end
 
 
 local function back()
-    turtle.turnleft()
-    turtle.turnleft()
+    turtle.turnLeft()
+    turtle.turnLeft()
+    turtle.forward()
     turtle.forward()
     turtle.forward()
     turtle.forward()
     turtle.forward()
     turtle.forward()
     turtle.turnRight()
+    turtle.forward()
+    turtle.down()
+end
+
+local function back1()
+    turtle.turnLeft()
+    turtle.turnLeft()
+    turtle.forward()
+    turtle.forward()
+    turtle.forward()
+    turtle.forward()
+    turtle.forward()
+    turtle.turnRight()
+    turtle.forward()
+    turtle.down()
 end
 
 function main()
+    reFuel()
+    turtle.select(3) -- this be cobble slot select
+    turtle.forward()
     repeat
         reFuel()
         if turtle.getItemCount(currentSlot) <= 7 then -- this code will switch turtle slot when cobble is less than 7
-            currentSlot = currentSlot + 1
+        currentSlot = currentSlot + 1
+        turtle.select(currentSlot)
+        else
+            turtle.select(currentSlot)
         end
         if bridgeType == 0 then
             blockPlace()
+            back()
         elseif bridgeType == 1 then
             blockPlace1()
+            back1()
         end
-        back()
         distance = distance + 1
     until distance == distanceCount
 end
@@ -132,12 +162,12 @@ function start()
     print("Please Input How Far Brige Will Be")
     input1 = io.read()
     distance = tonumber(input1)
-    print("Turtle Will Make " + Distance + " Long Brige")
+    print("Turtle Will Make " .. distance .. " Long Brige")
     if turtle.getFuelLevel() == "unlimited" then -- just check if config of fuel is to unlimited
-        noFuelNeeded = 1
+    noFuelNeeded = 1
     end
     checking()
-    if missingFuel == 1
+    if missingFuel == 1 then
         repeat
             print("Please Put In Items That Are Missing")
             sleep(10)
@@ -148,4 +178,4 @@ function start()
     main()
 end
 
-Start()
+start()
