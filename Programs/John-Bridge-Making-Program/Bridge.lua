@@ -135,7 +135,7 @@ function main()
     turtle.forward()
     repeat
         reFuel()
-        if turtle.getItemCount(currentSlot) <= 7 then -- this code will switch turtle slot when cobble is less than 7
+        if turtle.getItemCount(currentSlot) <= 8 then -- this code will switch turtle slot when cobble is less than 7
         currentSlot = currentSlot + 1
         turtle.select(currentSlot)
         else
