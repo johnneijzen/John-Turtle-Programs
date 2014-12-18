@@ -1,12 +1,12 @@
 -- Version
---  0.03 12/17/2014
+--  0.04 Dev 12/18/2014
 -- Changelog
 --  0.01 - First Draft
 --  0.02 - Added 4 wide version
 --  0.03 - small bug fixing and testing
+--  0.04 dev - Testing And tweaking and add bleeding stuff
 -- TODO 
 -- Speed Up Building Code -- coming soon 0.04
--- Add 3 wide support -- coming soon 0.04
 
 -- Locals Variables
 local noFuelNeeded = 0 -- Check if turtle is using no fuel config
@@ -17,6 +17,7 @@ local distanceCount = 0 -- Count the distance
 local missingFuel = 0 -- If there is missing fuel this will be 1
 local bridgeType = 0 -- If it is 0 then 5 wide if is 1 then 4 wide
 local currentSlot = 3 -- For checking on cobble
+local way = 0 -- Testing to Speed up the code
 
 -- Checking On Items
 local function checking()
@@ -101,6 +102,23 @@ local function blockPlace1()
     turtle.placeDown()
 end
 
+local function blockPlace2()
+    turtle.placeDown()
+    turtle.up()
+    turtle.placeDown()
+    turtle.turnRight()
+    turtle.forward()
+    turtle.down()
+    turtle.placeDown()
+    turtle.forward()
+    turtle.placeDown()
+    turtle.forward()
+    turtle.placeDown()
+    turtle.forward()
+    turtle.placeDown()
+    turtle.up()
+    turtle.placeDown()
+end
 
 local function back()
     turtle.turnLeft()
@@ -129,6 +147,18 @@ local function back1()
     turtle.down()
 end
 
+local function back2()
+    turtle.turnLeft()
+    turtle.turnLeft()
+    turtle.forward()
+    turtle.forward()
+    turtle.forward()
+    turtle.forward()
+    turtle.turnRight()
+    turtle.forward()
+    turtle.down()
+end
+
 function main()
     reFuel()
     turtle.select(3) -- this be cobble slot select
@@ -147,6 +177,9 @@ function main()
         elseif bridgeType == 1 then
             blockPlace1()
             back1()
+        elseif bridgeType == 2 then
+            blockPlace2()
+            back2()
         end
         distance = distance + 1
     until distance == distanceCount
@@ -155,7 +188,9 @@ end
 function start()
     print("Welcome To John Bridge Program")
     print("This Program Will Make 5 Wide Brige With Side Walls or 4 Wide")
-    print("If You want 5 wide then 0 if you want 4 wide then 1")
+    print("If You want 5 wide then 0")
+    print("If you want 4 wide then 1")
+    print("If you want 3 wide then 2")
     input = io.read()
     bridgeType = tonumber(input)
     print("Please Input Your Fuel In Slot 1 and Slot 2(Optional)")
