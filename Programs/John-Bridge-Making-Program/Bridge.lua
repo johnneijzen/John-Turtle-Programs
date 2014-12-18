@@ -1,12 +1,16 @@
--- Version
---  0.04 Dev 12/18/2014
--- Changelog
---  0.01 - First Draft
---  0.02 - Added 4 wide version
---  0.03 - small bug fixing and testing
---  0.04 dev - Testing And tweaking and add bleeding stuff
--- TODO 
--- Speed Up Building Code -- coming soon 0.04
+--[[
+Version
+  0.04 Dev 12/18/2014
+Changelog
+  0.01 - First Draft
+  0.02 - Added 4 wide version
+  0.03 - small bug fixing and testing
+  0.04 dev - Testing And tweaking and add bleeding stuff
+To Do List
+  Speed Up Building Code - Will be added in 0.04
+  Add more fetures
+--]]
+
 
 -- Locals Variables
 local noFuelNeeded = 0 -- Check if turtle is using no fuel config
@@ -15,7 +19,9 @@ local itemFuel1 = turtle.getItemCount(2) -- Fuel Slot 2
 local distance = 0 -- Distance will dig
 local distanceCount = 0 -- Count the distance
 local missingFuel = 0 -- If there is missing fuel this will be 1
-local bridgeType = 0 -- If it is 0 then 5 wide if is 1 then 4 wide
+local bridgeType = 0 --[[ If This is 0 then it 5 Wide
+                          If This is 1 then it 4 Wide
+                          if This is 2 then it 3 Wide--]]
 local currentSlot = 3 -- For checking on cobble
 local way = 0 -- Testing to Speed up the code
 
@@ -74,48 +80,14 @@ local function blockPlace()
     turtle.placeDown()
     turtle.forward()
     turtle.placeDown()
-    turtle.forward()
-    turtle.placeDown()
-    turtle.forward()
-    turtle.placeDown()
-    turtle.up()
-    turtle.placeDown()
-end
-
-local function blockPlace1()
-    turtle.placeDown()
-    turtle.up()
-    turtle.placeDown()
-    turtle.turnRight()
-    turtle.forward()
-    turtle.down()
-    turtle.placeDown()
-    turtle.forward()
-    turtle.placeDown()
-    turtle.forward()
-    turtle.placeDown()
-    turtle.forward()
-    turtle.placeDown()
-    turtle.forward()
-    turtle.placeDown()
-    turtle.up()
-    turtle.placeDown()
-end
-
-local function blockPlace2()
-    turtle.placeDown()
-    turtle.up()
-    turtle.placeDown()
-    turtle.turnRight()
-    turtle.forward()
-    turtle.down()
-    turtle.placeDown()
-    turtle.forward()
-    turtle.placeDown()
-    turtle.forward()
-    turtle.placeDown()
-    turtle.forward()
-    turtle.placeDown()
+    if bridgeType == 0 then
+      turtle.forward()
+      turtle.placeDown()
+    end
+    if bridgeType == 0 or bridgeType == 1 then
+      turtle.forward()
+      turtle.placeDown()
+    end
     turtle.up()
     turtle.placeDown()
 end
@@ -127,33 +99,12 @@ local function back()
     turtle.forward()
     turtle.forward()
     turtle.forward()
+    if bridgeType == 0 then
     turtle.forward()
+    end
+    if bridgeType == 0 or bridgeType == 1 then
     turtle.forward()
-    turtle.turnRight()
-    turtle.forward()
-    turtle.down()
-end
-
-local function back1()
-    turtle.turnLeft()
-    turtle.turnLeft()
-    turtle.forward()
-    turtle.forward()
-    turtle.forward()
-    turtle.forward()
-    turtle.forward()
-    turtle.turnRight()
-    turtle.forward()
-    turtle.down()
-end
-
-local function back2()
-    turtle.turnLeft()
-    turtle.turnLeft()
-    turtle.forward()
-    turtle.forward()
-    turtle.forward()
-    turtle.forward()
+    end
     turtle.turnRight()
     turtle.forward()
     turtle.down()
@@ -165,22 +116,18 @@ function main()
     turtle.forward()
     repeat
         reFuel()
-        if turtle.getItemCount(currentSlot) <= 8 then -- this code will switch turtle slot when cobble is less than 7
-        currentSlot = currentSlot + 1
+        repeat
+            if turtle.getItemCount(currentSlot) <= 8 then -- this code will switch turtle slot when cobble is less than 7
+                currentSlot = currentSlot + 1
+            elseif turtle.getItemCount(currentSlot) >= 8 then
+                currentSlot = currentSlot
+            else
+                os.shutdown()
+            end
+        until turtle.getItemCount(currentSlot) >= 8
         turtle.select(currentSlot)
-        else
-            turtle.select(currentSlot)
-        end
-        if bridgeType == 0 then
-            blockPlace()
-            back()
-        elseif bridgeType == 1 then
-            blockPlace1()
-            back1()
-        elseif bridgeType == 2 then
-            blockPlace2()
-            back2()
-        end
+        blockPlace()
+        back()
         distance = distance + 1
     until distance == distanceCount
 end
