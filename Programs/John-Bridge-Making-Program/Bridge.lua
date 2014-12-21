@@ -21,9 +21,7 @@ local itemFuel1 = turtle.getItemCount(2) -- Fuel Slot 2
 local distance = 0 -- Distance will dig
 local distanceCount = 0 -- Count the distance
 local missingFuel = 0 -- If there is missing fuel this will be 1
-local bridgeSize = 0 --[[ If This is 0 then it 5 Wide
-                          If This is 1 then it 4 Wide
-                          if This is 2 then it 3 Wide--]]
+local bridgeSize = 0 -- Brige Wide
 local currentSlot = 3 -- For checking on cobble
 local way = 0 -- Testing to Speed up the code
 
@@ -114,11 +112,11 @@ local function blockPlaceLeft()
     turtle.placeDown()
     turtle.forward()
     turtle.placeDown()
-    if bridgeSize == 0 then
+    if bridgeSize == 5 then
         turtle.forward()
         turtle.placeDown()
     end
-    if bridgeSize == 0 or bridgeSize == 1 then
+    if bridgeSize == 5 or bridgeSize == 4 then
         turtle.forward()
         turtle.placeDown()
     end
