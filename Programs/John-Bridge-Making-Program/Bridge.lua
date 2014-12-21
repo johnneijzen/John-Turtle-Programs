@@ -1,11 +1,12 @@
 --[[
 Version
-  0.04 Dev 12/18/2014
+  0.04 Dev 2 12/18/2014
 Changelog
   0.01 - First Draft
   0.02 - Added 4 wide version
   0.03 - small bug fixing and testing
   0.04 dev - Testing And tweaking and add bleeding stuff
+  0.04 dev 2 - add speed code by making building process 2 sided not 1 sided
 To Do List
   Speed Up Building Code - Will be added in 0.04
   Add more fetures
@@ -67,7 +68,7 @@ local function reFuel()
     end
 end
 
-local function blockPlace()
+local function blockPlaceRight()
     turtle.forward()
     turtle.placeDown()
     turtle.up()
@@ -92,22 +93,29 @@ local function blockPlace()
     turtle.placeDown()
 end
 
-local function back()
+local function blockPlaceLeft()
+    turtle.forward()
+    turtle.placeDown()
+    turtle.up()
+    turtle.placeDown()
     turtle.turnLeft()
-    turtle.turnLeft()
-    turtle.forward()
-    turtle.forward()
-    turtle.forward()
-    turtle.forward()
-    if bridgeType == 0 then
-    turtle.forward()
-    end
-    if bridgeType == 0 or bridgeType == 1 then
-    turtle.forward()
-    end
-    turtle.turnRight()
     turtle.forward()
     turtle.down()
+    turtle.placeDown()
+    turtle.forward()
+    turtle.placeDown()
+    turtle.forward()
+    turtle.placeDown()
+    if bridgeType == 0 then
+        turtle.forward()
+        turtle.placeDown()
+    end
+    if bridgeType == 0 or bridgeType == 1 then
+        turtle.forward()
+        turtle.placeDown()
+    end
+    turtle.up()
+    turtle.placeDown()
 end
 
 function main()
@@ -126,8 +134,13 @@ function main()
             end
         until turtle.getItemCount(currentSlot) >= 8
         turtle.select(currentSlot)
-        blockPlace()
-        back()
+        if way == 0 then
+            blockPlaceRight()
+            way = 1
+        else
+            blockPlaceLeft()
+            way = 0
+        end
         distance = distance + 1
     until distance == distanceCount
 end
