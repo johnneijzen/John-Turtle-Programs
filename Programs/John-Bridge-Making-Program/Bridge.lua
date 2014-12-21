@@ -1,6 +1,6 @@
 --[[
 Version
-  0.04 12/18/2014
+  0.04 dev 3 12/21/2014
 Changelog
   0.01 - First Draft
   0.02 - Added 4 wide version
