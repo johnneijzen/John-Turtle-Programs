@@ -1,6 +1,6 @@
 --[[
 Version
-  0.04 dev 3 12/21/2014
+  0.04 12/21/2014
 Changelog
   0.01 - First Draft
   0.02 - Added 4 wide version
@@ -8,8 +8,8 @@ Changelog
   0.04 dev - Testing And tweaking and add bleeding stuff
   0.04 dev 2 - add speed code by making building process 2 sided not 1 sided
   0.04 dev 3 - Size editing and Testing more
+  0.04 - fully tested and working
 To Do List
-  Make side more 
   Add more fetures
 --]]
 
