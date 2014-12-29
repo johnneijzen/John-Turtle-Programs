@@ -1,14 +1,15 @@
 --[[
 Version
-  0.04 Dev 2 12/18/2014
+  0.04 12/21/2014
 Changelog
   0.01 - First Draft
   0.02 - Added 4 wide version
   0.03 - small bug fixing and testing
   0.04 dev - Testing And tweaking and add bleeding stuff
   0.04 dev 2 - add speed code by making building process 2 sided not 1 sided
+  0.04 dev 3 - Size editing and Testing more
+  0.04 - fully tested and working
 To Do List
-  Speed Up Building Code - Will be added in 0.04
   Add more fetures
 --]]
 
@@ -20,9 +21,7 @@ local itemFuel1 = turtle.getItemCount(2) -- Fuel Slot 2
 local distance = 0 -- Distance will dig
 local distanceCount = 0 -- Count the distance
 local missingFuel = 0 -- If there is missing fuel this will be 1
-local bridgeType = 0 --[[ If This is 0 then it 5 Wide
-                          If This is 1 then it 4 Wide
-                          if This is 2 then it 3 Wide--]]
+local bridgeSize = 0 -- Brige Wide
 local currentSlot = 3 -- For checking on cobble
 local way = 0 -- Testing to Speed up the code
 
@@ -70,6 +69,7 @@ end
 
 local function blockPlaceRight()
     turtle.forward()
+    turtle.down()
     turtle.placeDown()
     turtle.up()
     turtle.placeDown()
@@ -81,20 +81,24 @@ local function blockPlaceRight()
     turtle.placeDown()
     turtle.forward()
     turtle.placeDown()
-    if bridgeType == 0 then
-      turtle.forward()
-      turtle.placeDown()
+    turtle.forward()
+    turtle.placeDown()
+    if bridgeSize == 5 then
+        turtle.forward()
+        turtle.placeDown()
     end
-    if bridgeType == 0 or bridgeType == 1 then
-      turtle.forward()
-      turtle.placeDown()
+    if bridgeSize == 5 or bridgeSize == 4 then
+        turtle.forward()
+        turtle.placeDown()
     end
     turtle.up()
     turtle.placeDown()
+    turtle.turnLeft()
 end
 
 local function blockPlaceLeft()
     turtle.forward()
+    turtle.down()
     turtle.placeDown()
     turtle.up()
     turtle.placeDown()
@@ -106,33 +110,35 @@ local function blockPlaceLeft()
     turtle.placeDown()
     turtle.forward()
     turtle.placeDown()
-    if bridgeType == 0 then
+    turtle.forward()
+    turtle.placeDown()
+    if bridgeSize == 5 then
         turtle.forward()
         turtle.placeDown()
     end
-    if bridgeType == 0 or bridgeType == 1 then
+    if bridgeSize == 5 or bridgeSize == 4 then
         turtle.forward()
         turtle.placeDown()
     end
     turtle.up()
     turtle.placeDown()
+    turtle.turnRight()
 end
 
 function main()
     reFuel()
     turtle.select(3) -- this be cobble slot select
-    turtle.forward()
     repeat
         reFuel()
-        repeat
-            if turtle.getItemCount(currentSlot) <= 8 then -- this code will switch turtle slot when cobble is less than 7
-                currentSlot = currentSlot + 1
-            elseif turtle.getItemCount(currentSlot) >= 8 then
-                currentSlot = currentSlot
-            else
-                os.shutdown()
-            end
-        until turtle.getItemCount(currentSlot) >= 8
+    repeat
+        if turtle.getItemCount(currentSlot) <= 8 then -- this code will switch turtle slot when cobble is less than 7
+        currentSlot = currentSlot + 1
+        elseif turtle.getItemCount(currentSlot) >= 8 then
+            currentSlot = currentSlot
+        else
+            os.shutdown()
+        end
+    until turtle.getItemCount(currentSlot) >= 8
         turtle.select(currentSlot)
         if way == 0 then
             blockPlaceRight()
@@ -147,12 +153,10 @@ end
 
 function start()
     print("Welcome To John Bridge Program")
-    print("This Program Will Make 5 Wide Brige With Side Walls or 4 Wide")
-    print("If You want 5 wide then 0")
-    print("If you want 4 wide then 1")
-    print("If you want 3 wide then 2")
+    print("This Program Make Brige Size From 3 Wide to 5 Wide")
+    print("Please Enter Brige Size")
     input = io.read()
-    bridgeType = tonumber(input)
+    bridgeSize = tonumber(input)
     print("Please Input Your Fuel In Slot 1 and Slot 2(Optional)")
     print("Please Input How Far Brige Will Be")
     input1 = io.read()
