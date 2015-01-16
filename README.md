@@ -10,8 +10,6 @@ John Turtle Tree Farm (100% done but it need better instrution)
 
 John Excavation Turtle Program (100% done)
 
-John Cave Builder (100% done) I will not update this one
-
 John Turtle Tunnel (99% done still need testing )
 
 John Bridge Making Program(99% done still need testing)
@@ -26,9 +24,6 @@ http://pastebin.com/rR9JXSvy
 
 John`s Turtle Tree Farm[Work In Process]
 http://pastebin.com/QWuaMugj
-
-John Cave Builder[Working Buggy]
-http://pastebin.com/iKkp3xtW
 
 john Turtle Tunnel[Work in Process]
 http://pastebin.com/1HzZLhL9
