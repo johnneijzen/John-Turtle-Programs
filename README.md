@@ -12,7 +12,7 @@ John Excavation Turtle Program (100% done)
 
 John Turtle Tunnel (99% done still need testing )
 
-John Bridge Making Program(99% done still need testing)
+John Bridge Making Program(100% Done Features still coming)
 
 Pastebin Links
 
@@ -22,13 +22,13 @@ http://pastebin.com/cWwJ0FYW
 John Excavation Turtle Program[Fully Working]
 http://pastebin.com/rR9JXSvy
 
-John`s Turtle Tree Farm[Work In Process]
+John`s Turtle Tree Farm[80% im bit stuck at bugs]
 http://pastebin.com/QWuaMugj
 
-john Turtle Tunnel[Work in Process]
+john Turtle Tunnel[Need Testing]
 http://pastebin.com/1HzZLhL9
 
-John Bridge Making Program[Work in Process]
+John Bridge Making Program[Fully Working]
 http://pastebin.com/4L71hyca
 
 Dont Using This link i`m using this to test program and improve before release to public
@@ -40,6 +40,9 @@ John Excavation Turtle Program[Fully Working]
 http://www.computercraft.info/forums2/index.php?/topic/17667-john-excavation-turtle-program/
 
 John Strip Mining Turtle[Working]
-http://www.computercraft.info/forums2/index.php?/topic/15292-version-200-john-strip-mining-turtle/page__p__145639#entry145639
+http://www.computercraft.info/forums2/index.php?/topic/15292-213-john-strip-mining-turtle/
+
+John Bridge Making Program[Fully Working]
+http://www.computercraft.info/forums2/index.php?/topic/21402-john-bridge-making-program/
 
 Note: Some Program are buggy im still here but have little to work on them and im now using IntelliJ IDEA With Lua Pluging.
