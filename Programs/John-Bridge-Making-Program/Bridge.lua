@@ -13,7 +13,6 @@ To Do List
   Add more fetures
 --]]
 
-
 -- Locals Variables
 local noFuelNeeded = 0 -- Check if turtle is using no fuel config
 local itemFuel = turtle.getItemCount(1) -- Fuel Slot 1
