@@ -1,9 +1,10 @@
 --[[
 Version
-  0.02 30/1/2015
+  0.03 31/1/2015 2:41 AM
 Changelog
   0.01 - Starting Of Rewriting
   0.02 - More Writing
+  0.03 - Adding Fuel Code
 To Do List
   Fixing Bugs
 --]]
@@ -95,6 +96,28 @@ local function chestDump()
     if Chest == 0 then
         print("Out Of Chest")
         os.shutdown()
+    end
+end
+
+-- Refuel
+local function refuel()
+    if NoFuelNeed == 0 then
+        repeat
+            if turtle.getFuelLevel() < 160 then
+                if FuelCount > 0 then
+                    turtle.select(2)
+                    turtle.refuel(1)
+                    fuelCount = FuelCount - 1
+                elseif FuelCount1 > 0 then
+                    turtle.select(3)
+                    turtle.refuel(1)
+                    fuelCount1 = FuelCount1 - 1
+                else
+                    print("out of fuel")
+                    os.shutdown()
+                end
+            end
+        until turtle.getFuelLevel() >= 160
     end
 end
 
@@ -198,11 +221,11 @@ local function deep()
     turtle.digDown()
     turtle.down()
     turtle.digDown()
-    if ALorAR == 1 then
+    --[[if ALorAR == 1 then -- TODO
         turtle.turnLeft()
     else
         turtle.turnRight()
-    end
+    end --]]
     wideCount = 0
     longCount = 0
     totalBlockDone = totalBlockDone + 3
