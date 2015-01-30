@@ -1,8 +1,9 @@
 --[[
 Version
-  0.01 29/1/2015
+  0.02 30/1/2015
 Changelog
   0.01 - Starting Of Rewriting
+  0.02 - More Writing
 To Do List
   Fixing Bugs
 --]]
@@ -32,9 +33,11 @@ local processRaw = 0
 local process = 0
 local enderChest = 0 -- TODO
 local blockUp = 0 -- Fixing to Chest Probleem and moving probleem
+local processRaw = 0
+local process = 0
 
 -- Checking
-local function Check()
+local function check()
     if noFuelNeed == 0 then
         if fuelCount == 0 then
             print("Turtle has no fuel")
@@ -56,16 +59,103 @@ local function Check()
     end
     if error == 1 then
         print("Items are missing please try again")
-        print("Turtle will recheck in 10 sec")
+        print("Turtle will recheck in 8 sec")
     end
 end
 
 -- Recheck if user forget something turtle will check after 6 sec
-local function Recheck()
+local function reCheck()
     chest = turtle.getItemCount(1)
     fuelCount = turtle.getItemCount(2)
     fuelCount1 = turtle.getItemCount(3)
     error = 0
+end
+
+local function chestDump()
+    repeat -- The Fix to Gravel Chest Bug. It check if gravel above then it dig till it gone
+        turtle.digUp()
+        sleep(0.7)
+        if turtle.detectUp() then
+            turtle.digUp()
+            blockUp = 1
+        else
+            blockUp = 0
+        end
+    until blockUp == 0
+    turtle.select(1)
+    turtle.placeUp()
+    chest = chest - 1
+    for slot = 4, 16 do
+        turtle.select(slot)
+        sleep(0.7) -- Small fix for slow pc because i had people problem with this
+        turtle.dropUp()
+    end
+    turtle.select(4)
+    if Chest == 0 then
+        print("Out Of Chest")
+        os.shutdown()
+    end
+end
+
+local function mineLong()
+    if turtle.detect() then
+        turtle.dig()
+    end
+    if turtle.forward() then
+        longCount = longCount + 1
+    else
+        repeat
+            turtle.dig()
+            sleep(0.7)
+            if turtle.forward() then
+                blockUp = 0
+            else
+                blockUp = 1
+            end
+        until blockUp == 0
+        longCount = longCount + 1
+        print(totalBlocks - totalBlockDone)
+    end
+    if turtle.detectUp() then
+        turtle.digUp()
+    end
+    if turtle.detectDown() then
+        turtle.digDown()
+    end
+    totalBlockDone = totalBlockDone + 3
+end
+
+local function wideMineLeft() -- TODO
+
+end
+
+local function WideMineRight() -- TODO
+
+end
+
+local function main()
+    repeat -- Repeat for Deep
+        repeat --Repeat for each level
+            mineLong()
+            reFuel()
+            if turtle.getItemCount(16)> 0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
+                chestDump()
+            end
+            if Long == Lc then
+                if wide ~= wideCount then
+                    process = TotalBlockDone / TotalBlocks * 100
+                    processRaw = TotalBlocks - TotalBlockDone
+                    print("How Much Is Done: " .. math.floor(process+0.5) .. " %")
+                    print("TotalBlocks Still Need To Dig Is " .. processRaw)
+                --[[if LSorWS == 0 then
+                        Wide1()
+                    else
+                        Wide2()
+                    end --]] -- this need better fix
+                end
+            end
+        until wideCount == wide and longCount == long
+    until deepCount == deep
 end
 
 local function start()
@@ -109,13 +199,13 @@ local function start()
     check()
     if error == 1 then
         repeat
-            sleep(6)
-            recheck()
+            sleep(8)
+            reCheck()
             check()
         until error == 0
     end
     print("Turtle will now start!")
-    MainPart()
+    main()
 end
 
 Start()
