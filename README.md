@@ -9,6 +9,7 @@ John Strip Mining Turtle(100% Done)
 John Turtle Tree Farm (100% done but it need better instrution)
 
 John Excavation Turtle Program (100% done)
+John Excavation Turtle Program V2 Rewriten (5% done)
 
 John Turtle Tunnel (99% done still need testing )
 
