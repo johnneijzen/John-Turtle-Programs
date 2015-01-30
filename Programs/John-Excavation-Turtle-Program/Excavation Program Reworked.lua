@@ -29,6 +29,7 @@ local reCheck = 0 -- Recheck Code
 -- Others
 local totalBlockDone = 0 -- How many Block Mined
 local LSorWS = 0 -- Go Left or Go Right This is for Wide Code
+local ALorAR = 0 -- align left Or align Right
 local processRaw = 0
 local process = 0
 local enderChest = 0 -- TODO
@@ -74,7 +75,7 @@ end
 local function chestDump()
     repeat -- The Fix to Gravel Chest Bug. It check if gravel above then it dig till it gone
         turtle.digUp()
-        sleep(0.7)
+        sleep(0.6)
         if turtle.detectUp() then
             turtle.digUp()
             blockUp = 1
@@ -87,7 +88,7 @@ local function chestDump()
     chest = chest - 1
     for slot = 4, 16 do
         turtle.select(slot)
-        sleep(0.7) -- Small fix for slow pc because i had people problem with this
+        sleep(0.6) -- Small fix for slow pc because i had people problem with this
         turtle.dropUp()
     end
     turtle.select(4)
@@ -106,7 +107,7 @@ local function mineLong()
     else
         repeat
             turtle.dig()
-            sleep(0.7)
+            sleep(0.6)
             if turtle.forward() then
                 blockUp = 0
             else
@@ -126,11 +127,85 @@ local function mineLong()
 end
 
 local function wideMineLeft() -- TODO
-
+    turtle.turnLeft()
+    if turtle.detect() then
+        turtle.dig()
+        sleep(0.6) -- Minor bug fix if there is gravel
+    end
+    if turtle.forward() then
+        --notting
+    else
+        repeat
+            turtle.dig()
+            sleep(0.6)
+            if turtle.forward() then
+                blockUp = 0
+            else
+                blockUp = 1
+            end
+        until blockUp == 0
+    end
+    if turtle.detectUp() then
+        turtle.digUp()
+    end
+    if turtle.detectDown() then
+        turtle.digDown()
+    end
+    turtle.turnLeft()
+    LSorWS = 0
+    longCount = 0
+    wideCount = wideCount + 1
+    totalBlockDone = totalBlockDone + 3
 end
 
-local function WideMineRight() -- TODO
+local function wideMineRight() -- TODO
+    turtle.turnRight()
+    if turtle.detect() then
+        turtle.dig()
+        sleep(0.6)
+    end
+    if turtle.forward() then
+        --Notting
+    else
+        repeat
+            turtle.dig()
+            sleep(0.6)
+            if turtle.forward() then
+                blockUp = 0
+            else
+                blockUp = 1
+            end
+        until blockUp == 0
+    end
+    if turtle.detectUp() then
+        turtle.digUp()
+    end
+    if turtle.detectDown() then
+        turtle.digDown()
+    end
+    turtle.turnRight()
+    LSorWS = 1
+    longCount = 0
+    wideCount = wideCount + 1
+    totalBlockDone = totalBlockDone + 3
+end
 
+local function deep()
+    turtle.digDown()
+    turtle.down()
+    turtle.digDown()
+    turtle.down()
+    turtle.digDown()
+    turtle.down()
+    turtle.digDown()
+    if ALorAR == 1 then
+        turtle.turnLeft()
+    else
+        turtle.turnRight()
+    end
+    wideCount = 0
+    longCount = 0
+    totalBlockDone = totalBlockDone + 3
 end
 
 local function main()
@@ -147,15 +222,26 @@ local function main()
                     processRaw = TotalBlocks - TotalBlockDone
                     print("How Much Is Done: " .. math.floor(process+0.5) .. " %")
                     print("TotalBlocks Still Need To Dig Is " .. processRaw)
-                --[[if LSorWS == 0 then
-                        Wide1()
+                    if LSorWS == 0 then
+                        wideMineRight()
                     else
-                        Wide2()
-                    end --]] -- this need better fix
+                        wideMineLeft()
+                    end
                 end
             end
         until wideCount == wide and longCount == long
     until deepCount == deep
+end
+
+local function Start()
+    turtle.digDown()
+    turtle.down()
+    turtle.digDown()
+    turtle.down()
+    turtle.digDown()
+    wideCount = 0
+    longCount = 0
+    totalBlockDone = totalBlockDone + 3
 end
 
 local function start()
@@ -205,6 +291,7 @@ local function start()
         until error == 0
     end
     print("Turtle will now start!")
+    Start()
     main()
 end
 
