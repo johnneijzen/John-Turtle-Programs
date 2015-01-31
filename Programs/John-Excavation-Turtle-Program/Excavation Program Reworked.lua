@@ -74,28 +74,30 @@ local function reCheck()
 end
 
 local function chestDump()
-    repeat -- The Fix to Gravel Chest Bug. It check if gravel above then it dig till it gone
-        turtle.digUp()
-        sleep(0.6)
-        if turtle.detectUp() then
+    if turtle.getItemCount(16)> 0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
+        repeat -- The Fix to Gravel Chest Bug. It check if gravel above then it dig till it gone
             turtle.digUp()
-            blockUp = 1
-        else
-            blockUp = 0
+            sleep(0.6)
+            if turtle.detectUp() then
+                turtle.digUp()
+                blockUp = 1
+            else
+                blockUp = 0
+            end
+        until blockUp == 0
+        turtle.select(1)
+        turtle.placeUp()
+        chest = chest - 1
+        for slot = 4, 16 do
+            turtle.select(slot)
+            sleep(0.6) -- Small fix for slow pc because i had people problem with this
+            turtle.dropUp()
         end
-    until blockUp == 0
-    turtle.select(1)
-    turtle.placeUp()
-    chest = chest - 1
-    for slot = 4, 16 do
-        turtle.select(slot)
-        sleep(0.6) -- Small fix for slow pc because i had people problem with this
-        turtle.dropUp()
-    end
-    turtle.select(4)
-    if Chest == 0 then
-        print("Out Of Chest")
-        os.shutdown()
+        turtle.select(4)
+        if Chest == 0 then
+            print("Out Of Chest")
+            os.shutdown()
+        end
     end
 end
 
@@ -221,11 +223,11 @@ local function deep()
     turtle.digDown()
     turtle.down()
     turtle.digDown()
-    --[[if ALorAR == 1 then -- TODO
+    if ALorAR == 1 then -- TODO
         turtle.turnLeft()
     else
         turtle.turnRight()
-    end --]]
+    end
     wideCount = 0
     longCount = 0
     totalBlockDone = totalBlockDone + 3
@@ -235,10 +237,8 @@ local function main()
     repeat -- Repeat for Deep
         repeat --Repeat for each level
             mineLong()
-            reFuel()
-            if turtle.getItemCount(16)> 0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
-                chestDump()
-            end
+            refuel()
+            chestDump()
             if Long == Lc then
                 if wide ~= wideCount then
                     process = TotalBlockDone / TotalBlocks * 100
