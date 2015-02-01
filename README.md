@@ -9,7 +9,7 @@ John Strip Mining Turtle(100% Done)
 John Turtle Tree Farm (100% done but it need better instrution)
 
 John Excavation Turtle Program (100% done)
-John Excavation Turtle Program V2 Rewriten (5% done)
+John Excavation Turtle Program Rewriten (100% done)
 
 John Turtle Tunnel (99% done still need testing )
 
@@ -20,8 +20,10 @@ Pastebin Links
 John Strip Mining Turtle[Working]
 http://pastebin.com/cWwJ0FYW
 
-John Excavation Turtle Program[Fully Working]
+John Excavation Turtle Program[Old]
 http://pastebin.com/rR9JXSvy
+John Excavation Turtle Program[New]
+http://pastebin.com/w8F028Tp
 
 John`s Turtle Tree Farm[80% im bit stuck at bugs]
 http://pastebin.com/QWuaMugj
@@ -38,7 +40,7 @@ http://pastebin.com/tJQDbj2r
 Computercraft Links
 
 John Excavation Turtle Program[Fully Working]
-http://www.computercraft.info/forums2/index.php?/topic/17667-john-excavation-turtle-program/
+http://www.computercraft.info/forums2/index.php?/topic/17667-john-excavation-turtle-program-reworked/
 
 John Strip Mining Turtle[Working]
 http://www.computercraft.info/forums2/index.php?/topic/15292-213-john-strip-mining-turtle/
