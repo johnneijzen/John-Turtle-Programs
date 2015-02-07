@@ -93,20 +93,20 @@ end
 
 local function chestDump()
 	if turtle.getItemCount(16)> 0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
-	if Chest ~= 0 then
-		turtle.select(3)
-		turtle.digDown()
-		turtle.placeDown()
-		for slot = 4, 16 do
-			turtle.select(slot)
-			sleep(0.6) -- Small fix for slow pc because i had people problem with this
-			turtle.dropDown()
-		end
+		if Chest ~= 0 then
+			turtle.select(3)
+			turtle.digDown()
+			turtle.placeDown()
+			for slot = 4, 16 do
+				turtle.select(slot)
+				sleep(0.6) -- Small fix for slow pc because i had people problem with this
+				turtle.dropDown()
+			end
 		turtle.select(4)
-	else
-		print("Out Of Chest")
-		os.shutdown()
-	end
+		else
+			print("Out Of Chest")
+			os.shutdown()
+		end
 	end
 end
 
