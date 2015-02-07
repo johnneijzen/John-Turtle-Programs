@@ -1,12 +1,14 @@
 --[[
 Version
-  0.05 1/2/2015 1:41 PM
+  0.07 1/2/2015 1:41 PM
 Changelog
   0.01 - Starting Of Rewriting
   0.02 - More Writing
   0.03 - Adding Fuel Code
   0.04 - Small but many program error fixed
   0.05 - Fully Test
+  0.06 - Fixing Minor Bug when add 3 to deep because firstdig had no 3 add to deepcount
+  0.07 - Fixing High Error
 --]]
 
 -- Local Variables
@@ -153,67 +155,67 @@ local function mineLong()
 end
 
 local function wideMineLeft() -- TODO
-    turtle.turnLeft()
-    if turtle.detect() then
+turtle.turnLeft()
+if turtle.detect() then
+    turtle.dig()
+    sleep(0.6) -- Minor bug fix if there is gravel
+end
+if turtle.forward() then
+    --notting
+else
+    repeat
         turtle.dig()
-        sleep(0.6) -- Minor bug fix if there is gravel
-    end
-    if turtle.forward() then
-        --notting
-    else
-        repeat
-            turtle.dig()
-            sleep(0.6)
-            if turtle.forward() then
-                blockUp = 0
-            else
-                blockUp = 1
-            end
-        until blockUp == 0
-    end
-    if turtle.detectUp() then
-        turtle.digUp()
-    end
-    if turtle.detectDown() then
-        turtle.digDown()
-    end
-    turtle.turnLeft()
-    LSorWS = 0
-    longCount = 0
-    wideCount = wideCount + 1
-    totalBlockDone = totalBlockDone + 3
+        sleep(0.6)
+        if turtle.forward() then
+            blockUp = 0
+        else
+            blockUp = 1
+        end
+    until blockUp == 0
+end
+if turtle.detectUp() then
+    turtle.digUp()
+end
+if turtle.detectDown() then
+    turtle.digDown()
+end
+turtle.turnLeft()
+LSorWS = 0
+longCount = 0
+wideCount = wideCount + 1
+totalBlockDone = totalBlockDone + 3
 end
 
 local function wideMineRight() -- TODO
-    turtle.turnRight()
-    if turtle.detect() then
+turtle.turnRight()
+if turtle.detect() then
+    turtle.dig()
+    sleep(0.6)
+end
+if turtle.forward() then
+    --Notting
+else
+    repeat
         turtle.dig()
         sleep(0.6)
-    end
-    if turtle.forward() then
-        --Notting
-    else
-        repeat
-            turtle.dig()
-            sleep(0.6)
-            if turtle.forward() then
-                blockUp = 0
-            else
-                blockUp = 1
-            end
-        until blockUp == 0
-    end
-    if turtle.detectUp() then
-        turtle.digUp()
-    end
-    if turtle.detectDown() then
-        turtle.digDown()
-    end
-    turtle.turnRight()
-    LSorWS = 1
-    longCount = 0
-    wideCount = wideCount + 1
-    totalBlockDone = totalBlockDone + 3
+        if turtle.forward() then
+            blockUp = 0
+        else
+            blockUp = 1
+        end
+    until blockUp == 0
+end
+if turtle.detectUp() then
+    turtle.digUp()
+end
+if turtle.detectDown() then
+    turtle.digDown()
+end
+turtle.turnRight()
+LSorWS = 1
+longCount = 0
+wideCount = wideCount + 1
+totalBlockDone = totalBlockDone + 3
 end
 
 local function deepMine()
@@ -233,28 +235,27 @@ local function deepMine()
 end
 
 local function main()
-    repeat -- Repeat for Deep
     repeat --Repeat for each level
-        mineLong()
-        refuel()
-        chestDump()
-        if long == longCount then
-            if wide ~= wideCount then
-                process = totalBlockDone / totalBlocks * 100
-                processRaw = totalBlocks - totalBlockDone
-                print("How Much Is Done: " .. math.floor(process+0.5) .. " %")
-                print("TotalBlocks Still Need To Dig Is " .. processRaw)
-                if LSorWS == 0 then
-                    wideMineRight()
-                else
-                    wideMineLeft()
-                end
-            elseif wide == wideCount then
+    mineLong()
+    refuel()
+    chestDump()
+    if longCount == long then
+        if wideCount ~= wide then
+            process = totalBlockDone / totalBlocks * 100
+            processRaw = totalBlocks - totalBlockDone
+            print("How Much Is Done: " .. math.floor(process+0.5) .. " %")
+            print("TotalBlocks Still Need To Dig Is " .. processRaw)
+            if LSorWS == 0 then
+                wideMineRight()
+            else
+                wideMineLeft()
+            end
+        elseif wideCount >= wide then
                 deepMine()
             end
         end
-    until wideCount == wide and longCount == long
     until deepCount >= deep
+    print("turtle is Done")
 end
 
 local function firstDig()
@@ -265,6 +266,7 @@ local function firstDig()
     turtle.digDown()
     wideCount = 0
     longCount = 0
+    deepCount = deepCount + 3
     totalBlockDone = totalBlockDone + 3
 end
 
