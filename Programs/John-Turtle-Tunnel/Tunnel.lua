@@ -1,8 +1,9 @@
 -- This Version
--- 0.02
+-- 0.03
 -- ChangeLogs
 -- 0.01 - New Programed
 -- 0.02 - Allmost Done Not Yet Tested but it should work of looks
+-- 0.03 - bug fix and chest code add
 
 -- Locals Variables
 local noFuelNeeded = 0 -- Check if turtle is using no fuel config
@@ -90,11 +91,31 @@ local function dig()
 	turtle.turnLeft()
 end
 
+local function chestDump()
+	if turtle.getItemCount(16)> 0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
+	if Chest ~= 0 then
+		turtle.select(3)
+		turtle.digDown()
+		turtle.placeDown()
+		for slot = 4, 16 do
+			turtle.select(slot)
+			sleep(0.6) -- Small fix for slow pc because i had people problem with this
+			turtle.dropDown()
+		end
+		turtle.select(4)
+	else
+		print("Out Of Chest")
+		os.shutdown()
+	end
+	end
+end
+
 function main()
 	repeat
 		reFuel()
 		dig()
-		distance = distance + 1
+		distanceCount = distanceCount + 1
+		chestDump()
 	until distance == distanceCount
 end
 
@@ -105,9 +126,9 @@ function start()
 	print("Please Input Your Distance You Want Turtle To Dig")
 	input = io.read()
 	distance = tonumber(input)
-	print("Turtle Will Dig " + Distance + " Long")
+	print("Turtle Will Dig " .. distance .. " Long")
 	if turtle.getFuelLevel() == "unlimited" then -- just check if config of fuel is to unlimited
-		noFuelNeeded = 1
+	noFuelNeeded = 1
 	end
 	checking()
 	if missingFuel == 1 or missingChest == 1 then
@@ -121,4 +142,4 @@ function start()
 	main()
 end
 
-Start()
+start()
