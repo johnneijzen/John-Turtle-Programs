@@ -1,6 +1,6 @@
 --[[
 Version
-  0.04 12/21/2014
+  0.05 5/31/2015
 Changelog
   0.01 - First Draft
   0.02 - Added 4 wide version
@@ -9,9 +9,11 @@ Changelog
   0.04 dev 2 - add speed code by making building process 2 sided not 1 sided
   0.04 dev 3 - Size editing and Testing more
   0.04 - fully tested and working
+  0.05 - small fix was made with distance count
 To Do List
   Add more fetures
 --]]
+
 
 -- Locals Variables
 local noFuelNeeded = 0 -- Check if turtle is using no fuel config
@@ -146,7 +148,7 @@ function main()
             blockPlaceLeft()
             way = 0
         end
-        distance = distance + 1
+        distanceCount = distanceCount + 1
     until distance == distanceCount
 end
 
