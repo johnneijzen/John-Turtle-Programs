@@ -49,4 +49,6 @@ http://www.computercraft.info/forums2/index.php?/topic/21402-john-bridge-making-
 
 Note: Some Program are buggy im still here but have little to work on them and im now using IntelliJ IDEA With Lua Pluging.
 
-Since Now im studying Computer Science i think i rewrite all my turtle program begin aging but i keep old as backup just in case
+P.s Since Now im studying Computer Science i think i rewrite all my turtle program begin aging but i keep old as backup just in case
+
+P.P.S Im Now Go to used LUA Editor for computercraft not old way like using Intellij IDEA with Lua Pluging
