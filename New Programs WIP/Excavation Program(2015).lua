@@ -1,10 +1,10 @@
 --[[
 Version
-  0.02 10/11/2015
+	0.02 10/11/2015
 Changelog
-  0.01 - Starting Of Rewriting 20/8/2015
-  0.02 - More Rewriting...... 
---]]
+	0.01 - Starting Of Rewriting 20/8/2015
+	0.02 - More Rewriting...... 
+]]
 
 -- Local Variables in My New Program style it now a-z not random
 -- Area
@@ -19,6 +19,8 @@ local corrent = n
 local coalNeeded = 0
 local progress = 0
 local progressPercent = 0
+local redstoneStart = 0 -- 0 is normal start and 1 is starting with redstone.
+local redstoneOn = 0 -- 1 if redstone is detected and 0 if not
 local totalBlocks = 0
 local totalBlocksDone = 0
 -- Inventory
@@ -29,18 +31,16 @@ local fuelCount1 = 0
 local noFuelNeed = 0 -- This is 0 if fuel is needed and 1 is not needed
 local missingItems = 0
 -- Dig
-local ALorAR = 0 -- Align Left or Align Right TODO
 local blockUp = 0 -- Fixing to Chest Probleem and moving probleem
 local LorR = 0 -- Left or Right This is for Wide Code
-local redstoneStart = 0 -- 0 is normal start and 1 is starting with redstone.
-local redstoneOn = 0 -- 1 if redstone is detected and 0 if not
+
 -- Main Functions in order when is it used.
 
 -- ItemCheck
 local function itemCheck()
-    chest = turtle.getItemCount(1)
-    fuelCount = turtle.getItemCount(2)
-    fuelCount1 = turtle.getItemCount(3)
+    chest = turtle.getItemCount(3)
+    fuelCount = turtle.getItemCount(1)
+    fuelCount1 = turtle.getItemCount(2)
     missingItems = 0
 end
 
@@ -49,7 +49,7 @@ local function check()
     if noFuelNeed == 0 then
         if fuelCount == 0 then
             print("Turtle has no fuel")
-            print("Put fuel in Second and Thrid slot")
+            print("Put fuel in First and Second slot")
             missingItems = 1
         else
             print("Turtle has Fuel")
@@ -60,14 +60,14 @@ local function check()
     end
     if chest == 0 then
         print("No chest in Turtle")
-        print("Put chest in 1 slot")
+        print("Put chest in Thrid slot")
         missingItems = 1
     else
         print("Turtle has chest")
     end
     if missingItems == 1 then
         print("Items are missing please try again")
-        print("Turtle will recheck in 8 sec")
+        print("Turtle will recheck in 5 sec")
     end 
 end
 
@@ -84,7 +84,7 @@ local function chestDump()
                 blockUp = 0
             end
         until blockUp == 0
-        turtle.select(1)
+        turtle.select(3)
         turtle.placeUp()
         chest = chest - 1
         for slot = 4, 16 do
@@ -106,11 +106,11 @@ local function refuel()
         repeat
             if turtle.getFuelLevel() < 160 then
                 if fuelCount > 0 then
-                    turtle.select(2)
+                    turtle.select(1)
                     turtle.refuel(1)
                     fuelCount = fuelCount - 1
                 elseif fuelCount1 > 0 then
-                    turtle.select(3)
+                    turtle.select(2)
                     turtle.refuel(1)
                     fuelCount1 = fuelCount1 - 1
                 else
@@ -243,7 +243,7 @@ end
 
 local function start()
     print("Welcome To Excavation Turtle Program")
-    print("Slot 1: Chest, Slot 2: Fuel, Slot 3: Fuel")
+    print("Slot 1: Fuel, Slot 2: Fuel, Slot 3: Chest")
     print("Note: If now put item in then it say Error just wait it fix it self")
     print("Whats is Lenght you want")
     long = tonumber(read())
@@ -267,23 +267,26 @@ local function start()
     if turtle.getFuelLevel() == "unlimited" then
         print("Your turtle config does need fuel")
         noFuelNeed = 1
-    elseif turtle.getFuelLevel() < 160 then
-        turtle.select(2)
-        turtle.refuel(2)
     end
 	print("Do You Want Redstone as Starting Input")
 	print("Note: It Only Detect Back of Turtle")
 	print("if not then type 0 if yes then type 1")
 	starting = read()
-    reCheck()
+    itemCheck()
     check()
     if missingItems == 1 then
         repeat
-            sleep(6)
-            reCheck()
+            sleep(5)
+            itemCheck()
             check()
         until missingItems == 0
     end
+	if noFuelNeed == 0 then
+		if turtle.getFuelLevel() < 160 then
+			turtle.select(1)
+			turtle.refuel(2)
+		end
+	end
 	if starting == 0 then
 		print("Turtle will now start!")
 		firstDig()
