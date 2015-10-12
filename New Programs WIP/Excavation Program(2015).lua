@@ -1,9 +1,12 @@
 --[[
 Version
-	0.02 10/11/2015
+	0.05 10/12/2015
 Changelog
 	0.01 - Starting Of Rewriting 20/8/2015
 	0.02 - More Rewriting...... 
+	0.03 - Testing phase....... 10/12/2015 8:00 PM
+	0.04 - Minor Enchaments and bug fixing 10/12/2015 10:00 PM
+	0.05 - Fully Working it pass Testing Phase if there are bugs please report on github 10/12/2015 11:50 PM
 ]]
 
 -- Local Variables in My New Program style it now a-z not random
@@ -31,8 +34,9 @@ local fuelCount1 = 0
 local noFuelNeed = 0 -- This is 0 if fuel is needed and 1 is not needed
 local missingItems = 0
 -- Dig
-local blockUp = 0 -- Fixing to Chest Probleem and moving probleem
+local blocked = 0 -- Fixing to Chest Probleem and moving probleem
 local LorR = 0 -- Left or Right This is for Wide Code
+local doneDig = 0
 
 -- Main Functions in order when is it used.
 
@@ -74,16 +78,16 @@ end
 -- ItemDump
 local function chestDump()
     if turtle.getItemCount(16)> 0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
-        repeat -- The Fix to Gravel Chest Bug. It check if gravel above then it dig till it gone
-            turtle.digUp()
-            sleep(0.6)
-            if turtle.detectUp() then
+        repeat -- Better Fix To Gravel Problem. Compacted and Faster and less like to break.
+			sleep(0.6) -- I let turtle wait for 0.6 second for gravel to fall
+            if turtle.detectUp() then -- if there is gravel remove it before placing chest
                 turtle.digUp()
-                blockUp = 1
+				sleep(0.6)
+                blocked = 1
             else
-                blockUp = 0
+                blocked = 0
             end
-        until blockUp == 0
+        until blocked == 0
         turtle.select(3)
         turtle.placeUp()
         chest = chest - 1
@@ -104,7 +108,7 @@ end
 local function refuel()
     if noFuelNeed == 0 then
         repeat
-            if turtle.getFuelLevel() < 160 then
+            if turtle.getFuelLevel() < 120 then
                 if fuelCount > 0 then
                     turtle.select(1)
                     turtle.refuel(1)
@@ -118,7 +122,7 @@ local function refuel()
                     os.shutdown()
                 end
             end
-        until turtle.getFuelLevel() >= 160
+        until turtle.getFuelLevel() >= 120
     end
 end
 
@@ -128,18 +132,19 @@ local function mineLong()
         turtle.dig()
     end
     if turtle.forward() then
-        longCount = longCount + 1
+        -- Notting
     else
         repeat
-            turtle.dig()
-            sleep(0.6)
-            if turtle.forward() then
-                blockUp = 0
+            if turtle.detect() then -- First check if there is block front if there is dig if not next step.
+				turtle.dig()
+				sleep(0.6)
+			end
+            if turtle.forward() then -- try to move if turtle can move blocked == 0 if cant move then blocked 1
+                blocked = 0
             else
-                blockUp = 1
+                blocked = 1
             end
-        until blockUp == 0
-        longCount = longCount + 1
+        until blocked == 0
     end
     if turtle.detectUp() then
         turtle.digUp()
@@ -147,7 +152,8 @@ local function mineLong()
     if turtle.detectDown() then
         turtle.digDown()
     end
-    totalBlockDone = totalBlockDone + 3
+	longCount = longCount + 1
+    totalBlocksDone = totalBlocksDone + 3
 end
 
 -- Mining Width
@@ -159,20 +165,21 @@ local function mineWide()
 	end
 	if turtle.detect() then
 		turtle.dig()
-		sleep(0.6)
 	end
 	if turtle.forward() then
 		--Notting
 	else
 		repeat
-			turtle.dig()
-			sleep(0.6)
-			if turtle.forward() then
-				blockUp = 0
-			else
-				blockUp = 1
+			if turtle.detect() then
+				turtle.dig()
+				sleep(0.6)
 			end
-		until blockUp == 0
+			if turtle.forward() then
+				blocked = 0
+			else
+				blocked = 1
+			end
+		until blocked == 0
 	end
 	if turtle.detectUp() then
 		turtle.digUp()
@@ -189,7 +196,7 @@ local function mineWide()
 	end
 	longCount = 0
 	wideCount = wideCount + 1
-	totalBlockDone = totalBlockDone + 3
+	totalBlocksDone = totalBlocksDone + 3
 end
 
 -- Mine Deep
@@ -206,7 +213,7 @@ local function mineDeep()
     wideCount = 0
     longCount = 0
     deepCount = deepCount + 3
-    totalBlockDone = totalBlockDone + 3
+    totalBlocksDone = totalBlocksDone + 3
 end
 
 local function firstDig()
@@ -218,7 +225,7 @@ local function firstDig()
     wideCount = 0
     longCount = 0
     deepCount = deepCount + 3
-    totalBlockDone = totalBlockDone + 3
+    totalBlocksDone = totalBlocksDone + 3
 end
 
 local function main()
@@ -227,17 +234,22 @@ local function main()
 		refuel()
 		chestDump()
 		if longCount == long then
-			if wideCount ~= wide then
-				process = totalBlockDone / totalBlocks * 100
-				processRaw = totalBlocks - totalBlockDone
-				print("How Much Is Done: " .. math.floor(process+0.5) .. " %")
-				print("TotalBlocks Still Need To Dig Is " .. processRaw)
+			process = totalBlocksDone / totalBlocks * 100
+			processRaw = totalBlocks - totalBlocksDone
+			print("How Much Is Done: " .. math.floor(process+0.5) .. " %")
+			print("TotalBlocks Still Need To Dig Is " .. processRaw)
+			if wideCount == wide then
+				if deepCount < deep then
+					mineDeep()
+				end
+			else
 				mineWide()
-			elseif wideCount >= wide then
-                mineDeep()
             end
         end
-    until deepCount >= deep
+		if longCount == long and wideCount == wide and deepCount >= deep then
+			doneDig = 1
+		end
+    until doneDig == 1
     print("turtle is Done")
 end
 
@@ -271,7 +283,7 @@ local function start()
 	print("Do You Want Redstone as Starting Input")
 	print("Note: It Only Detect Back of Turtle")
 	print("if not then type 0 if yes then type 1")
-	starting = read()
+	starting = tonumber(read())
     itemCheck()
     check()
     if missingItems == 1 then
@@ -282,7 +294,7 @@ local function start()
         until missingItems == 0
     end
 	if noFuelNeed == 0 then
-		if turtle.getFuelLevel() < 160 then
+		if turtle.getFuelLevel() < 120 then
 			turtle.select(1)
 			turtle.refuel(2)
 		end
@@ -293,6 +305,7 @@ local function start()
 		main()
 	elseif starting == 1 then
 		repeat
+			os.pullEvent("redstone") -- Wait For Redstone Input without it break with words Too long without yielding.
 			if redstone.getInput("back") then
 				On = 1
 			end	
