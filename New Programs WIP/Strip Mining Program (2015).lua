@@ -1,10 +1,11 @@
 --[[
 Version
-  0.03 10/13/2015
+  0.04 10/13/2015
 Changelog
   0.01 - Rewriting.
   0.02 - More Rewritting.....
   0.03 - Testing Phase
+  0.04 - One minnor bug Fixed
 ]]
 
 -- Local Variables in My New Program style it now a-z not random
@@ -79,16 +80,16 @@ local function chestDump()
 	if turtle.getItemCount(16)> 0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
 		turtle.digDown()
 		turtle.select(2)
-		turtle.placedDown()
-		chest = chest - 1
+		turtle.placeDown()
+		chests = chests - 1
 		for slot = 5, 16 do
 			turtle.select(slot)
 			sleep(0.6) -- Small fix for slow pc because i had people problem with this
 			turtle.dropDown()
 		end
 		turtle.select(4)
-		if chest == 0 then
-			print("Out Of Chest")
+		if chests == 0 then
+			print("Out Of chests")
 			os.shutdown()
 		end
 	end
