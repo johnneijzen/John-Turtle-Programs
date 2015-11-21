@@ -8,13 +8,13 @@ Best way is to leave comment or post in here https://github.com/johnneijzen/John
 Work In Progress:
 
 John Excavation Turtle Program (100% Passed. If there are bugs tell me)
-
+http://pastebin.com/Qb8Dzw4f
 John Strip Mining Turtle (100% Passed. If there are bugs tell me)
-
+http://pastebin.com/rm19VMjj
 John Turtle Tree Farm (0%)
 
 John Turtle Tunnel (0%)
 
 John Turtle Fill Program (0%)
-
+http://pastebin.com/pGhCBajG
 John Bridge Making Program (0%)
