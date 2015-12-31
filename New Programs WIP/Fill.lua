@@ -1,10 +1,10 @@
 --[[
 Version
-	0.01 10/15/2015
+        0.01 10/15/2015
 Changelog
-	0.01 - First Draft
+        0.01 - First Draft
 ]]
-
+ 
 -- Local Variables in My New Program style it now a-z not random
 -- Area
 local long = 0
@@ -13,11 +13,13 @@ local wide = 0
 local wideCount = 0
 --Misc
 local buildSlot = 3
-local fuelItem = 0
-local selectType = 0
 local donePlacing = 0
+local fuelItem = turtle.getItemCount(1)
+local noFuelNeed = 0
 local LorR = 0
+local selectType = 0
 
+ 
 local function refuel()
 	if noFuelNeed == 0 then
 		repeat
@@ -31,10 +33,10 @@ local function refuel()
 					os.shutdown()
 				end
 			end
-		until turtle.getFuelLevel() >= 120
+		until turtle.getFuelLevel() >= 100
 	end
 end
-
+ 
 local function placeLong()
 	if turtle.getItemCount(buildSlot) == 0 then
 		repeat
@@ -50,13 +52,14 @@ local function placeLong()
 	turtle.forward()
 	longCount = longCount + 1
 end
-
+ 
 local function placeWide()
 	if LorR == 0 then
 		turtle.turnRight()
 	else
 		turtle.turnLeft()
 	end
+	turtle.placeDown()
 	turtle.forward()
 	if turtle.getItemCount(buildSlot) == 0 then
 		repeat
@@ -79,13 +82,17 @@ local function placeWide()
 	longCount = 0
 	wideCount = wideCount + 1
 end
-
+ 
 local function fill()
 	repeat
 		refuel()
 		placeLong()
 		if longCount == long then
-			placeWide()
+			if wideCount == wide then
+				-- Notting
+			else
+				placeWide()
+			end
 		end
 		if longCount == long and wideCount == wide then
 			donePlacing = 1
@@ -93,14 +100,16 @@ local function fill()
 	until donePlacing == 1
 	print("turtle is Done")
 end
-
+ 
 --starting
 local function starting()
 	print("welcome to John Fill Program")
 	print("Please enter lenght you want to fill")
 	long = tonumber(read())
-	print("Please Enter wide you want to fill")
+	long = long - 1
+	print("Please enter wide you want to fill")
 	wide = tonumber(read())
+	wide = wide - 1
 	print("Please enter what type fill you want")
 	print("1 = Fill, 2 = Walls(WIP), 3 = Cube(WIP)")
 	selectType = tonumber(read())
@@ -116,5 +125,5 @@ local function starting()
 		-- cube()
 	end
 end
-
+ 
 starting()
