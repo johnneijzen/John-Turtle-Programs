@@ -294,15 +294,11 @@ local function start()
 	print("Note: It Only Detect Back of Turtle")
 	print("if not then type 0 if yes then type 1")
 	starting = tonumber(read())
-	itemCheck()
-	check()
-	if missingItems == 1 then
-		repeat
-			sleep(5)
-			itemCheck()
-			check()
-		until missingItems == 0
-	end
+	repeat
+		itemCheck()
+		check()
+		sleep(5)
+	until missingItems == 0
 	if noFuelNeed == 0 then
 		if turtle.getFuelLevel() < 120 then
 			turtle.select(1)
