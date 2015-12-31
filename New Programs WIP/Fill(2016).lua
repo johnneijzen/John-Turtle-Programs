@@ -1,10 +1,11 @@
 --[[
 Version
-        0.03 31/12/2015
+        0.04 31/12/2015
 Changelog
         0.01 - First Draft
 		0.02 - Updates
 		0.03 - Buggy Fixing And Compacting Code
+		0.04 - Fixed
 ]]
  
 -- Local Variables in My New Program style it now a-z not random
@@ -46,6 +47,7 @@ local function refuel()
 end
  
 local function placeLong()
+	refuel()
 	buildSlotMover()
 	turtle.select(buildSlot)
 	turtle.placeDown()
@@ -58,6 +60,7 @@ local function placeLong()
 end
  
 local function placeWide()
+	refuel()
 	if LorR == 0 then
 		turtle.turnRight()
 	else
@@ -80,6 +83,7 @@ local function placeWide()
 end
 
 local function buildSlotMover()
+	turtle.select(buildSlot)
 	if turtle.getItemCount(buildSlot) == 0 then
 		repeat
 			buildSlot = buildSlot + 1
@@ -112,9 +116,12 @@ end
 local function placeWallLong()
 	longCount = 0
 	repeat
+		refuel()
 		buildSlotMover()
 		turtle.select(buildSlot)
 		turtle.placeDown()
+		buildSlotMover()
+		turtle.select(buildSlot)
 		turtle.placeUp()
 		buildSlotMover()
 		turtle.select(buildSlot)
@@ -137,9 +144,12 @@ end
 local function placeWallWide()
 	wideCount = 0
 	repeat
+		refuel()
 		buildSlotMover()
 		turtle.select(buildSlot)
 		turtle.placeDown()
+		buildSlotMover()
+		turtle.select(buildSlot)
 		turtle.placeUp()
 		buildSlotMover()
 		turtle.select(buildSlot)
@@ -162,9 +172,12 @@ end
 local function placeWallEnd()
 	wideCount = 0
 	repeat
+		refuel()
 		buildSlotMover()
 		turtle.select(buildSlot)
 		turtle.placeDown()
+		buildSlotMover()
+		turtle.select(buildSlot)
 		turtle.placeUp()
 		buildSlotMover()
 		turtle.select(buildSlot)
@@ -193,6 +206,7 @@ end
 
 local function wall()
 	repeat
+		refuel()
 		turtle.up()
 		turtle.turnRight()
 		turtle.turnRight()
@@ -203,9 +217,8 @@ local function wall()
 		placeWallLong()
 		turtle.turnRight()
 		placeWallEnd()
-		print("turtle is Done")
 		highCount = highCount + 3
-	until high == highCount 
+	until highCount > high 
 end
  
  -- Checking
@@ -229,7 +242,6 @@ local function check()
 end
 
 local function itemCheck()
-	chest = turtle.getItemCount(3)
 	fuelCount = turtle.getItemCount(1)
 	fuelCount1 = turtle.getItemCount(2)
 	missingItems = 0
@@ -256,7 +268,9 @@ local function starting()
 	repeat
 		itemCheck()
 		check()
-		sleep(5)
+		if missingItems == 1 then
+			sleep(5)
+		end
 	until missingItems == 0
 	if selectType == 1 then
 		fill()
