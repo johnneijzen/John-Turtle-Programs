@@ -68,8 +68,8 @@ local function check()
 	if turtle.compareTo(2) then
 		-- noting
 	else
-		printf("Move Chest To Thrid Slot")
-		printf("Otherwise it use chest as fuel")
+		print("Move Chest To Thrid Slot")
+		print("Otherwise it use chest as fuel")
 		missingItems = 1
 	end
 	if chest == 0 then
