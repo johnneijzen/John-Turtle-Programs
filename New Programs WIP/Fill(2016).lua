@@ -1,9 +1,10 @@
 --[[
 Version
-        0.02 31/12/2015
+        0.03 31/12/2015
 Changelog
         0.01 - First Draft
 		0.02 - Updates
+		0.03 - Buggy Fixing And Compacting Code
 ]]
  
 -- Local Variables in My New Program style it now a-z not random
@@ -23,7 +24,6 @@ local noFuelNeed = 0
 local LorR = 0
 local selectType = 0
 
- 
 local function refuel()
 	if noFuelNeed == 0 then
 		repeat
@@ -46,15 +46,7 @@ local function refuel()
 end
  
 local function placeLong()
-	if turtle.getItemCount(buildSlot) == 0 then
-		repeat
-			buildSlot = buildSlot + 1
-			if buildSlot > 16 then
-				print("Out of Build Materials")
-				os.shutdown()
-			end
-		until turtle.getItemCount(buildSlot) > 0
-	end
+	buildSlotMover()
 	turtle.select(buildSlot)
 	turtle.placeDown()
 	if turtle.forward() then
@@ -73,15 +65,7 @@ local function placeWide()
 	end
 	turtle.placeDown()
 	turtle.forward()
-	if turtle.getItemCount(buildSlot) == 0 then
-		repeat
-			buildSlot = buildSlot + 1
-			if buildSlot > 16 then
-				print("Out of Build Materials")
-				os.shutdown()
-			end
-		until turtle.getItemCount(buildSlot) > 0
-	end
+	buildSlotMover()
 	turtle.select(buildSlot)
 	turtle.placeDown()
 	if LorR == 0 then
@@ -94,7 +78,19 @@ local function placeWide()
 	longCount = 0
 	wideCount = wideCount + 1
 end
- 
+
+local function buildSlotMover()
+	if turtle.getItemCount(buildSlot) == 0 then
+		repeat
+			buildSlot = buildSlot + 1
+			if buildSlot > 16 then
+				print("Out of Build Materials")
+				os.shutdown()
+			end
+		until turtle.getItemCount(buildSlot) > 0
+	end
+end
+
 local function fill()
 	repeat
 		refuel()
@@ -116,17 +112,12 @@ end
 local function placeWallLong()
 	longCount = 0
 	repeat
-		if turtle.getItemCount(buildSlot) == 0 then
-			repeat
-				buildSlot = buildSlot + 1
-				if buildSlot > 16 then
-					print("Out of Build Materials")
-					os.shutdown()
-				end
-			until turtle.getItemCount(buildSlot) > 0
-		end
+		buildSlotMover()
+		turtle.select(buildSlot)
 		turtle.placeDown()
 		turtle.placeUp()
+		buildSlotMover()
+		turtle.select(buildSlot)
 		if turtle.back() then
 			turtle.place()
 			longCount = longCount + 1
@@ -146,17 +137,12 @@ end
 local function placeWallWide()
 	wideCount = 0
 	repeat
-		if turtle.getItemCount(buildSlot) == 0 then
-			repeat
-				buildSlot = buildSlot + 1
-				if buildSlot > 16 then
-					print("Out of Build Materials")
-					os.shutdown()
-				end
-			until turtle.getItemCount(buildSlot) > 0
-		end
+		buildSlotMover()
+		turtle.select(buildSlot)
 		turtle.placeDown()
 		turtle.placeUp()
+		buildSlotMover()
+		turtle.select(buildSlot)
 		if turtle.back() then
 			turtle.place()
 			wideCount = wideCount + 1
@@ -176,17 +162,12 @@ end
 local function placeWallEnd()
 	wideCount = 0
 	repeat
-		if turtle.getItemCount(buildSlot) == 0 then
-			repeat
-				buildSlot = buildSlot + 1
-				if buildSlot > 16 then
-					print("Out of Build Materials")
-					os.shutdown()
-				end
-			until turtle.getItemCount(buildSlot) > 0
-		end
+		buildSlotMover()
+		turtle.select(buildSlot)
 		turtle.placeDown()
 		turtle.placeUp()
+		buildSlotMover()
+		turtle.select(buildSlot)
 		if turtle.back() then
 			turtle.place()
 			wideCount = wideCount + 1
@@ -201,12 +182,13 @@ local function placeWallEnd()
 			wideCount = wideCount + 1
 		end
 	until wideCount == wide - 1
-	turtle.up()
 	turtle.placeDown()
 	turtle.up()
 	turtle.placeDown()
-	turtle.forward()
-	turtle.turnRight()
+	turtle.up()
+	turtle.placeDown()
+	turtle.back()
+	turtle.turnLeft()
 end
 
 local function wall()
