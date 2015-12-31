@@ -1,6 +1,6 @@
 --[[
 Version
-	0.06 10/12/2015
+	0.07 31/12/2015
 Changelog
 	0.01 - Starting Of Rewriting 20/8/2015
 	0.02 - More Rewriting...... 
@@ -8,6 +8,7 @@ Changelog
 	0.04 - Minor Enchaments and bug fixing 10/12/2015 10:00 PM
 	0.05 - Fully Working it pass Testing Phase if there are bugs please report on github 10/12/2015 11:50 PM
 	0.06 - Quick Auto reformater So make everything tap not space 10/13/2015
+	0.07 - Minor Improvement in itemCheck that you didnt put chest in fuelslot.
 ]]
 
 -- Local Variables in My New Program style it now a-z not random
@@ -62,6 +63,14 @@ local function check()
 		if fuelCount1 == 0 then
 			print("Turtle has no extra fuel but if is short job it okey")
 		end
+	end
+	turtle.select(1)
+	if turtle.compareTo(2) then
+		-- noting
+	else
+		printf("Move Chest To Thrid Slot")
+		printf("Otherwise it use chest as fuel")
+		missingItems = 1
 	end
 	if chest == 0 then
 		print("No chest in Turtle")
