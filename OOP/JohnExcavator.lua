@@ -28,6 +28,7 @@ local coalNeeded = 0
 local itemError = 0
 local noFuelNeed = 0
 local totalBlocks = 0
+local amountofblockdone = 0
 
 -- Location
 local mPosDepth,msPosLenght,mPosWidth = 0,0,0 -- WIP i have plans to use this for moving item to surface without to place random chests
