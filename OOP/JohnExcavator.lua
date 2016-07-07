@@ -1,10 +1,11 @@
-local version = 0.01 -- WIP For Updater
+local version = 0.02 -- WIP For Updater
 
 --[[
 	Version
-		0.01 7/7/2016
+		0.02 7/8/2016
 	Changelog
-		0.01 - Rewriting
+		0.01 - Rewriting 7/7/2016
+		0.02 - Adding MORE FETURES 7/8/2016 
 ]]--
 
 -- Global Variables 
@@ -20,39 +21,54 @@ local wideCount = 0
 -- Inventory
 local chest = 0
 local fuelCount = 0
+local fuelCount1 = 0
 local itemError = 0
 
 -- Misc
-local corrent
+local blocked = 0
+local corrent = 'N'
 local coalNeeded = 0
+local doneDig = 0
 local itemError = 0
 local noFuelNeed = 0
 local totalBlocks = 0
-local amountofblockdone = 0
+local totalBlocksDone = 0
+local LorR = 0
 
 -- Location
-local mPosDepth,msPosLenght,mPosWidth = 0,0,0 -- WIP i have plans to use this for moving item to surface without to place random chests
+local mineLenghtPoint, mineWidthPoint, mineDepthPoint = 0,0,0
+local currentLenghtPoint, currentWidthPoint, currentDepthPoint = 0,0,0
 
-local function mine()
+local function goToStartPoint() -- WIP TODO
+	mineLenghtPoint = longCount
+	mineWidthPoint = wideCount
+	mineDepthPoint = deepCount
+	currentLenghtPoint = longCount
+	currentWidthPoint - wideCount
+	currentDepthPoint = deepCount
+end
+
+local function goToMinePoint() -- WIP TODO
 
 end
 
-local function mineWidth()
-
-end
-
-local function mineLength()
-
+local function newItemDump() -- WIP TODO
+	goToStartPoint()
+	for slot = 4, 16 do
+		turtle.select(slot)
+		turtle.dropUp()
+		sleep(0.5)
+	end
+	goToMinePoint()
 end
 
 -- ItemDump Note: this will be remove soon for new ItemDump Code that work bit like Excavate program build into turtles
 local function chestDump()
 	if turtle.getItemCount(16)> 0 then -- If slot 16 in turtle has item slot 4 to 16 will go to chest
-		repeat -- Better Fix To Gravel Problem. Compacted and Faster and less like to break.
-			sleep(0.6) -- I let turtle wait for 0.6 second for gravel to fall
-			if turtle.detectUp() then -- if there is gravel remove it before placing chest
+		repeat
+			sleep(0.6)
+			if turtle.detectUp() then
 				turtle.digUp()
-				sleep(0.6)
 				blocked = 1
 			else
 				blocked = 0
@@ -63,10 +79,9 @@ local function chestDump()
 		chest = chest - 1
 		for slot = 4, 16 do
 			turtle.select(slot)
-			sleep(0.6) -- Small fix for slow pc because i had people problem with this
 			turtle.dropUp()
+			sleep(0.5)
 		end
-		turtle.select(4)
 		if chest == 0 then
 			print("Out Of Chest")
 			os.shutdown()
@@ -128,6 +143,124 @@ local function itemCheck()
 			print("Turtle will recheck in 5 sec")
 		end
 	until itemError == 0
+end
+
+local function mineLength()
+	if turtle.detect() then
+		turtle.dig()
+	end
+	if not turtle.forward() then
+		repeat
+			if turtle.detect() then -- First check if there is block front if there is dig if not next step.
+				turtle.dig()
+				sleep(0.6)
+			end
+			if turtle.forward() then -- try to move if turtle can move blocked == 0 if cant move then blocked 1
+				blocked = 0
+			else
+				blocked = 1
+			end
+		until blocked == 0
+	end
+	if turtle.detectUp() then
+		turtle.digUp()
+	end
+	if turtle.detectDown() then
+		turtle.digDown()
+	end
+	longCount = longCount + 1
+	totalBlocksDone = totalBlocksDone + 3
+end
+
+local function mineWidth()
+	if LorR == 0 then
+		turtle.turnRight()
+	else
+		turtle.turnLeft()
+	end
+	if turtle.detect() then
+		turtle.dig()
+	end
+	if not turtle.forward() then
+		repeat
+			if turtle.detect() then
+				turtle.dig()
+				sleep(0.6)
+			end
+			if turtle.forward() then
+				blocked = 0
+			else
+				blocked = 1
+			end
+		until blocked == 0
+	end
+	if turtle.detectUp() then
+		turtle.digUp()
+	end
+	if turtle.detectDown() then
+		turtle.digDown()
+	end
+	if LorR == 0 then
+		turtle.turnRight()
+		LorR = 1
+	else
+		turtle.turnLeft()
+		LorR = 0
+	end
+	longCount = 0
+	wideCount = wideCount + 1
+	totalBlocksDone = totalBlocksDone + 3
+end
+
+local function mineDepth()
+	turtle.digDown()
+	turtle.down()
+	turtle.digDown()
+	turtle.down()
+	turtle.digDown()
+	turtle.down()
+	turtle.digDown()
+	turtle.turnRight()
+	turtle.turnRight()
+	wideCount = 0
+	longCount = 0
+	deepCount = deepCount + 3
+	totalBlocksDone = totalBlocksDone + 3
+end
+
+local function digFirstPart()
+	turtle.digDown()
+	turtle.down()
+	turtle.digDown()
+	turtle.down()
+	turtle.digDown()
+	wideCount = 0
+	longCount = 0
+	deepCount = deepCount + 3
+	totalBlocksDone = totalBlocksDone + 3
+end
+
+local function mine()
+	digFirstPart()
+	repeat
+		mineLength()
+		refuel()
+		chestDump()
+		if longCount == long then
+			print("How Much Is Done: " .. math.floor((totalBlocksDone / totalBlocks * 100) + 0.5) .. "%")
+			print("TotalBlocks Still Need To Dig Is: " .. totalBlocks/totalBlocksDone)
+			if wideCount == wide then
+				if deepCount < deep then
+					mineDepth()
+				end
+			else
+				mineWidth()
+			end
+		end
+		if longCount == long and wideCount == wide and deepCount >= deep then
+			doneDig = 1
+		end
+	until doneDig == 1
 end
 
 local function main()

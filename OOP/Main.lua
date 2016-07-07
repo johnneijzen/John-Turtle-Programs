@@ -1,7 +1,18 @@
+local version = 0.01 -- WIP For Updater
+
+--[[
+	Version
+		0.01 7/8/2016
+	Changelog
+		0.01 - Hmm 7/7/2016
+]]--
+
+-- Global
 local selector = 0;
 local userSelect = 0;
 local key;
 
+-- Display
 local function display()
 	print("List Programs")
 	if selector == 0 then
@@ -21,6 +32,7 @@ local function display()
 	end
 end
 
+-- Selecting
 local function selector()
 	if(selector == 0) then
 	-- Runs Excavation Program
@@ -33,6 +45,7 @@ local function selector()
 	end
 end
 
+-- Main Function
 local function main()
 	print("Welcome John Turtle Programs Program")
 	repeat -- Basically Menu Program
