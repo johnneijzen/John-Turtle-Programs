@@ -47,7 +47,7 @@ local function Check()
 	end
 	if ItemFuel == 0 then
 		print("No Fuel Items")
-		error = 1
+		Error = 1
 	else
 		print("there is fuel")
 	end
