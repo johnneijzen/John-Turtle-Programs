@@ -52,3 +52,5 @@ Note: Some Program are buggy im still here but have little to work on them and i
 P.s Since Now im studying Computer Science i think i rewrite all my turtle program begin aging but i keep old as backup just in case
 
 P.P.S Im Now Go to used LUA Editor for computercraft not old way like using Intellij IDEA with Lua Pluging
+
+P.P.S you may want to check https://github.com/johnneijzen/John-Computer-Craft-Program-2017 instead it basically it complete rewrite for most of these programs
